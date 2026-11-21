@@ -148,6 +148,8 @@ for step in range(3):
 
 ---
 
+See also [SPECTRE_PHASON_FLIPS.md](SPECTRE_PHASON_FLIPS.md) for how phason flips of the tiling change the neighbour structure this network is built on.
+
 ## Future Directions & Extensions
 
 * **Exact Hat/Spectre Substitution Gluing:** Upgrade `expand_single_tile()` from sector-offset placement to exact edge-matching substitution rules so shared boundaries match to machine precision across all 559 tiles.

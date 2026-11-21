@@ -66,7 +66,7 @@ A central discovery of Batle and Bednorz (2026) is how the **choice of gauged is
    Here, the local even-orientation counter $N_K^{\text{even}} = \sum_{t \subset K} \mathbf{1}[t \text{ is even}]$ separates the two sectors with macroscopic gap [2]:
 
    $$
-   \Delta = \langle N_K^{\text{even}} \rangle_{(1)} - \langle N_K^{\text{even}} \rangle_{(2)} = \lvert K \rvert_{\text{tiles}} \frac{\sqrt{15}}{5} \approx 0.7483\,\lvert K \rvert_{\text{tiles}}
+   \Delta = \langle N_K^{\text{even}} \rangle_{(1)} - \langle N_K^{\text{even}} \rangle_{(2)} = \lvert K \rvert_{\text{tiles}} \frac{\sqrt{15}}{5} \approx 0.7746\,\lvert K \rvert_{\text{tiles}}
    $$
 
 2. **Operating Under Continuous $SE(2)$ (Frame-Independent Continuum Limit):**
