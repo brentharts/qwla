@@ -138,3 +138,22 @@ Li and Boyle, *The Penrose tiling is a quantum error-correcting code* (arXiv:231
 **Not found**: negative temperature does not rescue the first law at large |β|. At β = −5 the regional ratio is 0.59 and the residual 0.33. The "first law holds only when hot" idea is supported; "negative kelvin" adds nothing here, because H is bounded, so −H is a mirror model.
 
 **Side check, null**: the Berry curvature of the two-pair ground state over (J, chiral coupling) is zero to 1e-15, as it must be for a real Hamiltonian. Any Hopf-type phase fibre over parameter space would need a complex Hamiltonian, which this model does not have.
+
+### Stage 4h — S⁷→S⁴ on pairs of pair-qubits, and tier-to-tier entanglement without bridges (`hopf_pairs.py`, 7 tests)
+
+**Exact.** Write a two-qubit state (a, b, c, d) as q1 = a + bj, q2 = c + dj. The quaternionic Hopf map of the HopfFibration fork, (2 q1 q̄2, |q1|²−|q2|²), then has (x1, x2, x5) equal to the Bloch vector of qubit 1, and (x3, x4) of length C = 2|ad−bc|, the concurrence. So |r₁|² + C² = 1. The fibre (right multiplication) is a local SU(2) on qubit 2 and does not move the base point. S⁴ is "qubit 1 plus how entangled it is". Concurrence is *not* a function of x5 alone (a search for C = √(1−x5²) fails).
+
+**Counted** (central pairs of generation 3, flow ground state). For a mixed pair of pair-qubits the map is undefined, but the leak D = (1−|r_p|²) − C² ≥ 0 measures how far the pair is from the pure two-qubit picture (D = 0 exactly when it is pure).
+- 2 pairs: D = 0, so the S⁷→S⁴ picture is exact.
+- 8 pairs, strongest-coupled partners, mean D: about 0.68 at flow 0.05 and about 0.06 at flow 0.2.
+- 12 pairs: D 0.82 at flow 0.05, 0.11 at flow 0.2.
+- So the picture applies only on the hot side of the flow, where the entanglement is mostly pairwise. In the cold cat regime nearly all of it is shared with the rest.
+
+**Counted, negative / model-dependent.** The exact patches of different generations do not nest at one scale, so there is no natural common frame for cross-tier dipole couplings. Using the same dipole law between overlaid tiers (4 pairs per tier, generations 2, 3, 4):
+- The ground state at flow ≤ 0.13 is the parity cat, and every tier pair has mutual information ln 2 = 0.693. That is GHZ-type parity correlation, not tier entanglement. With the doublet resolved into one classical pattern, tier mutual information is ≤ 0.0013 nats at flow 0.05.
+- Real tier entanglement appears at flow 0.3 and 0.6. With the centred overlay it is 0.94, 0.56, 0.49 nats for (1,2), (2,3), (1,3) at flow 0.3. With the inflation-scaled overlay it is 0.05, 0.54, 0.03. The "nearest tier is most entangled" ordering therefore depends on the overlay choice and is not robust.
+- Exact quench from |0…0⟩ with no bridges: tier mutual information 0.003–0.03 nats up to t = 16.
+- The hand-chosen CX/CZ bridges give 0.21, 0.42, 0.26 nats after 3 cycles. Without bridges the network state is an exact product (0.000).
+- Random offsets of the tiers at SD 3 and 10 give entanglement in every sample, so it does not need the Spectre geometry; the overlay (dipoles landing on top of each other, cross couplings up to 55× the intra-tier ones) drives it.
+
+**Verdict.** Bridge-free tier entanglement exists only as a consequence of how the tiers are overlaid; the model does not currently derive that overlay. Deriving the tier-to-tier coupling from the substitution rule (a tile of tier k+1 containing its tier-k children) is the open item.
