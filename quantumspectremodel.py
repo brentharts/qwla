@@ -51,6 +51,7 @@ class SubstitutionPatch:
     vertex_to_node: Dict[Tuple[int, int], int] = field(default_factory=dict)
     node_to_qubit: Dict[int, int] = field(default_factory=dict)
     pair_to_qubit: Dict[int, int] = field(default_factory=dict)     # pair index -> qubit
+    b: float = 1.0                                                   # second edge length of Tile(1, b); 1 = Spectre
 
     @property
     def n_tiles(self) -> int:
@@ -86,15 +87,19 @@ def build_substitution_tier(
 ) -> SubstitutionPatch:
     """
     Exact patch at generation k. `start_kind` "Single" gives 1, 9, 71, 559, 4401 tiles
-    and "Mystic" gives 2, 8, 62, 488, 3842. Only a = b = 1 is the Spectre; the tile is
-    placed by the exact transforms, so other a, b are refused.
+    and "Mystic" gives 2, 8, 62, 488, 3842. The tiles are placed by the exact transforms
+    at a = b = 1 (the Spectre); b != 1 then moves every vertex to its position in the
+    Tile(1, b) family by `set_patch_b` (the tiling is the same for every b, only the scale
+    of the two planes of the lift changes). The scale a is fixed at 1.
     """
     if target_generation < 0:
         raise ValueError("target_generation must be >= 0")
     if start_kind not in _SPECIES:
         raise ValueError(f"Unknown tile kind: {start_kind!r}")
-    if not (math.isclose(a, 1.0) and math.isclose(b, 1.0)):
-        raise ValueError("exact patches are Spectres: use a = b = 1")
+    if not math.isclose(a, 1.0):
+        raise ValueError("exact patches fix the scale a = 1 (b may vary, see set_patch_b)")
+    if not b > 0.0:
+        raise ValueError("b must be positive")
 
     species = _SPECIES[start_kind]
     leaves = se.build(target_generation)[target_generation][0][species]
@@ -117,6 +122,8 @@ def build_substitution_tier(
     patch = SubstitutionPatch(generation=target_generation, tiles=tiles, species=species)
     cluster_shared_vertices(patch)
     find_pairs(patch)
+    if not math.isclose(b, 1.0):
+        set_patch_b(patch, b)
     return patch
 
 
@@ -136,6 +143,53 @@ def cluster_shared_vertices(patch: SubstitutionPatch) -> None:
 def tile_centroid(tile: Tile) -> np.ndarray:
     """Centroid of the straight outline (the Bezier edges are point symmetric about their chords)."""
     return _centroid(np.array([np.asarray(v.position, float) for v in tile.vertices]))
+
+
+# ---- the Spectre -> Hat family: the same tiling at every b -------------------------------
+#
+# A vertex is p + q w + z (r + s w) in Z[zeta_12]. Moving along the family Tile(1, b) keeps the
+# integer vector and rescales the plane z (r + s w) against p + q w:
+#
+#     x_b(p, q, r, s) = (p + q w) + b z (r + s w),     w = e^{i pi / 3},  z = e^{i pi / 6}.
+#
+# Checked: at b = 1 it is the Spectre; every tile has edge lengths (b, b, a, a, b, b, a, a, a, a, b,
+# b, a, a) (a = 1; Tile(1, b)) or the swapped pattern (Tile(b, 1)), and the swapped class is the
+# odd-orientation (Mystic) minority, 8, 63 and 496 tiles at generations 2, 3 and 4; tile areas are
+# exactly A(1, b) and A(b, 1); every flat pair consists of two Tile(1, b) tiles, so a pair has area
+# 2 A(1, b); and the dipole couplings agree with the independent patch code of `toymodel_v6`
+# (spectre-monotile-py, `t4_patch`) to 1e-14 at b = 1.2, 1.5 and sqrt(3).
+
+def tile_area_ab(a: float, b: float) -> float:
+    """Area of Tile(a, b): 2 sqrt3 a^2 + 3 a b + sqrt3 b^2 (independent of the curve strength)."""
+    r3 = math.sqrt(3.0)
+    return 2.0 * r3 * a * a + 3.0 * a * b + r3 * b * b
+
+
+def exact_position(key: Sequence[int], b: float = 1.0) -> Tuple[float, float]:
+    """Position at b of the lattice point `key` = (p, q, r, s) of Z[zeta_12]."""
+    p, q, r, s = (int(x) for x in key)
+    z = (p + q * se.W) + b * se.Z * (r + s * se.W)
+    return (z.real, z.imag)
+
+
+def tile_polygon_at_b(tile: Tile, b: float) -> np.ndarray:
+    """The 14 straight-outline vertices (model order) of `tile` at b, from its exact vertices."""
+    return np.array([exact_position(k, b) for k in tile.data["exact_vertices"]])
+
+
+def set_patch_b(patch: SubstitutionPatch, b: float) -> None:
+    """
+    Move every tile of `patch` to Tile(1, b) geometry. Resets any bit displacement (P8 returns to
+    the flat position of the new geometry) and updates `tile.data["p8_base"]` and `patch.b`.
+    The curve handles keep their relative construction, so areas stay A(1, b) and A(b, 1).
+    """
+    if not b > 0.0:
+        raise ValueError("b must be positive")
+    for tile in patch.tiles:
+        for v, key in zip(tile.vertices, tile.data["exact_vertices"]):
+            v.position = exact_position(key, b)
+        tile.data["p8_base"] = np.array(tile.vertices[FLAT_MODEL].position, dtype=float)
+    patch.b = float(b)
 
 
 def find_pairs(patch: SubstitutionPatch) -> List[Tuple[int, int]]:
@@ -215,23 +269,39 @@ def pair_qubit_tiles(patch: SubstitutionPatch) -> Dict[int, Tuple[Tile, Tile]]:
     return {q: tuple(patch.tiles[t] for t in patch.pairs[p]) for p, q in patch.pair_to_qubit.items()}
 
 
+def _dipole_matrix(cents: Dict[int, Tuple[np.ndarray, np.ndarray]]) -> np.ndarray:
+    n = len(cents)
+    W = np.zeros((n, n))
+    inv = lambda X, Y: 1.0 / np.linalg.norm(X - Y)
+    for p in range(n):
+        for q in range(p + 1, n):
+            Ap, Bp = cents[p]
+            Aq, Bq = cents[q]
+            W[p, q] = W[q, p] = inv(Ap, Aq) - inv(Ap, Bq) - inv(Bp, Aq) + inv(Bp, Bq)
+    return W
+
+
 def pair_couplings(patch: SubstitutionPatch) -> np.ndarray:
     """
     Dipole coupling matrix W between the pair qubits (indexed by qubit). The bit is read
     as a charge +-1 at the centroid of each tile, with opposite charges in a pair, so
     W_pq = 1/r_AA' - 1/r_AB' - 1/r_BA' + 1/r_BB' (the Coulomb energy of two dipoles,
-    in units of (a*h)^2). It has both signs and falls as r^-3.
+    in units of (a*h)^2). It has both signs and falls as r^-3. Uses the current tile geometry
+    (the patch's b; displacements of P8 move the centroids slightly, so call it before bits are set).
     """
-    n = len(patch.pair_to_qubit)
-    cents = {q: (tile_centroid(A), tile_centroid(B)) for q, (A, B) in pair_qubit_tiles(patch).items()}
-    W = np.zeros((n, n))
-    for p in range(n):
-        for q in range(p + 1, n):
-            Ap, Bp = cents[p]
-            Aq, Bq = cents[q]
-            inv = lambda X, Y: 1.0 / np.linalg.norm(X - Y)
-            W[p, q] = W[q, p] = inv(Ap, Aq) - inv(Ap, Bq) - inv(Bp, Aq) + inv(Bp, Bq)
-    return W
+    return _dipole_matrix({q: (tile_centroid(A), tile_centroid(B)) for q, (A, B) in pair_qubit_tiles(patch).items()})
+
+
+def pair_couplings_at_b(patch: SubstitutionPatch, b: float) -> np.ndarray:
+    """
+    The same matrix at b, from the exact vertices, without touching the patch: independent of the
+    patch's current b and of any bit displacement. The qubit pairs are those of `assign_qubits_to_patch`.
+    """
+    cents = {}
+    for p, q in patch.pair_to_qubit.items():
+        i, j = patch.pairs[p]
+        cents[q] = (_centroid(tile_polygon_at_b(patch.tiles[i], b)), _centroid(tile_polygon_at_b(patch.tiles[j], b)))
+    return _dipole_matrix(cents)
 
 
 # ---- the bit acts on the geometry -------------------------------------------------------
@@ -399,6 +469,77 @@ def test_bit_outlines_stay_simple_up_to_the_flow_value_of_h():
     assert not bit_outlines_are_simple(steep, math.sqrt(3.0))
     A, B = next(iter(pair_qubit_tiles(patch).values()))
     assert abs(A.area() - A0) < 1e-9, "the check must leave the pair at z = 0"
+
+
+def test_patch_at_b_is_the_tile_family_with_the_odd_class_swapped():
+    r3 = math.sqrt(3.0)
+    pattern_a = np.array([1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0], bool)       # True = a b-edge of Tile(1, b)
+    for gen, minority in ((2, 8), (3, 63)):                                      # documented odd-orientation counts
+        patch = build_substitution_tier(gen)
+        base = [np.array([v.position for v in t.vertices]) for t in patch.tiles]
+        b = 1.5
+        set_patch_b(patch, b)
+        swapped = 0
+        for t in patch.tiles:
+            P = tile_polygon_at_b(t, b)
+            L = np.linalg.norm(np.roll(P, -1, axis=0) - P, axis=1)
+            if np.allclose(L, np.where(pattern_a, b, 1.0)):
+                assert abs(t.area() - tile_area_ab(1.0, b)) < 1e-9
+            else:
+                assert np.allclose(L, np.where(pattern_a, 1.0, b)), L
+                assert abs(t.area() - tile_area_ab(b, 1.0)) < 1e-9
+                swapped += 1
+            assert outline_is_simple(t)
+        assert swapped == minority, (gen, swapped)
+        assert patch.b == b
+        set_patch_b(patch, 1.0)
+        assert all(np.allclose(np.array([v.position for v in t.vertices]), P0) for t, P0 in zip(patch.tiles, base))
+    assert abs(tile_area_ab(1.0, 1.0) - A0) < 1e-12 and abs(tile_area_ab(1.0, r3) - (2 * r3 + 3 * r3 + 3 * r3)) < 1e-12
+
+
+def test_building_at_b_equals_moving_to_b_and_pairs_do_not_depend_on_b():
+    one = build_substitution_tier(3)
+    at = build_substitution_tier(3, b=1.5)
+    assert one.pairs == at.pairs and at.b == 1.5
+    set_patch_b(one, 1.5)
+    assert all(np.allclose([v.position for v in t.vertices], [v.position for v in u.vertices]) for t, u in zip(one.tiles, at.tiles))
+    sums = {round(at.tiles[i].area() + at.tiles[j].area(), 9) for i, j in at.pairs}
+    assert sums == {round(2 * tile_area_ab(1.0, 1.5), 9)}, "every pair is two Tile(1, b) tiles: the ledger baseline"
+    for bad in ({"b": 0.0}, {"b": -1.0}, {"a": 2.0}):
+        try:
+            build_substitution_tier(2, **bad)
+        except ValueError:
+            continue
+        raise AssertionError(f"{bad} should be refused")
+
+
+def test_couplings_at_b_match_toymodel_v6():
+    # Reference values from spectre-monotile-py, research/toymodel_v6/t6_patch.py (independent patch
+    # code, tiles placed by rigid motions): the 14 central pairs of the generation-3 patch.
+    ref = {1.2: (0.058838762326, 0.905111729954, -0.175252192217),
+           1.5: (0.060142482672, 0.934352767593, -0.182908148696),
+           math.sqrt(3.0): (0.060508607724, 0.948242260986, -0.186243729110)}
+    patch = build_substitution_tier(3)
+    assign_qubits_to_patch(patch, max_qubits=14)
+    iu = np.triu_indices(14, 1)
+    for b, (wmax, wabs, wsum) in ref.items():
+        W = pair_couplings_at_b(patch, b)
+        assert abs(np.abs(W).max() - wmax) < 1e-10 and abs(np.abs(W[iu]).sum() - wabs) < 1e-10 and abs(W[iu].sum() - wsum) < 1e-10, b
+        moved = build_substitution_tier(3, b=b)
+        assign_qubits_to_patch(moved, max_qubits=14)
+        assert np.allclose(pair_couplings(moved), W, atol=1e-13), "geometry at b and the exact-vertex route agree"
+    assert np.allclose(pair_couplings_at_b(patch, 1.0), pair_couplings(patch), atol=1e-13)
+
+
+def test_bit_at_b_changes_area_by_h_and_keeps_the_pair():
+    b, h = 1.5, 0.3
+    patch = build_substitution_tier(2, b=b)
+    assign_qubits_to_patch(patch, max_qubits=6)
+    A, B = next(iter(pair_qubit_tiles(patch).values()))
+    base = tile_area_ab(1.0, b)
+    for z in (1.0, -0.6, 0.0):
+        set_pair_bit(A, B, z, h)
+        assert abs(A.area() - (base + h * z)) < 1e-9 and abs(B.area() - (base - h * z)) < 1e-9
 
 
 def run_tests(verbose: bool = True) -> int:

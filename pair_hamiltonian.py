@@ -31,17 +31,26 @@ from quantumspectremodel import (
     assign_qubits_to_patch,
     build_substitution_tier,
     pair_couplings,
+    pair_couplings_at_b,
 )
 from state import State
 
 
 # ---- couplings --------------------------------------------------------------------------
 
-def central_couplings(generation: int, n_pairs: int) -> np.ndarray:
-    """W for the `n_pairs` pairs nearest the centre of the generation-`generation` patch."""
+@lru_cache(maxsize=None)
+def _central_patch(generation: int, n_pairs: int):
     patch = build_substitution_tier(generation)
     assign_qubits_to_patch(patch, max_qubits=n_pairs)
-    return pair_couplings(patch)
+    return patch                      # never mutated: couplings at b are read from the exact vertices
+
+
+def central_couplings(generation: int, n_pairs: int, b: float = 1.0) -> np.ndarray:
+    """
+    W for the `n_pairs` pairs nearest the centre of the generation-`generation` patch, with the tiles
+    at Tile(1, b) (b = 1 is the Spectre). The pairs are the same for every b.
+    """
+    return pair_couplings_at_b(_central_patch(generation, n_pairs), b)
 
 
 def coupling_scale(W: np.ndarray) -> float:
@@ -67,11 +76,12 @@ def coupling_scale(W: np.ndarray) -> float:
 #                coupling at the Spectre end is K0 = 1.
 #   b(tau)     = 1 + (sqrt3 - 1) tau                                 the second edge of the tile
 #
-# Exact patches need a = b = 1, which is the Spectre end tau = 0. For tau > 0 the couplings W are
-# kept at b = 1 and only rescaled by (h(tau)/h(0))^2. Against the v6 scan (couplings recomputed at
-# b(tau)) on the 10 central pairs of generation 3, the coupling matrix is off by 0.3% (tau = 0.02),
-# 0.7% (0.05), 1.8% (0.13), 4.0% (0.3) in the Frobenius norm and the largest concurrence by at most
-# 0.014; see `test_flow_agrees_with_toymodel_v6`.
+# The couplings are recomputed at b(tau) from the exact vertices of the lift (`flow_couplings`,
+# `flow_scan_exact`, and `TriSpectreNetwork(flow_tau=...)`), which agrees with the independent patch
+# code of toymodel_v6 to 1e-14. `flow_scan(W, ...)` keeps the cheaper approximation that rescales a
+# b = 1 matrix by (h(tau)/h(0))^2; against the exact scan on the 10 central pairs of generation 3 it is
+# off by 0.3% (tau = 0.02), 0.7% (0.05), 1.8% (0.13) and 4.0% (0.3) in the Frobenius norm of the
+# couplings and by at most 0.014 in the largest concurrence.
 
 FLOW_OMEGA0_DEG = 120.0
 FLOW_SIGMA = 1.0
@@ -123,6 +133,12 @@ def flow_parameters(tau: float = 0.0) -> FlowParameters:
 def tau_effective(W: np.ndarray, J: float, kappa: float) -> float:
     """tau = J / (kappa w): the ratio of tunnelling to coupling scale that `tau_scan` uses."""
     return J / (kappa * coupling_scale(W))
+
+
+def flow_couplings(generation: int, n_pairs: int, tau: float) -> np.ndarray:
+    """K(tau) = kappa(tau) W(b(tau)) for the central pairs: the coupling matrix of the flow, exact in b."""
+    fp = flow_parameters(tau)
+    return fp.kappa * central_couplings(generation, n_pairs, fp.b)
 
 
 # ---- exact Hamiltonian ------------------------------------------------------------------
@@ -391,8 +407,25 @@ def tau_scan(W: np.ndarray, taus: np.ndarray) -> List[Dict[str, float]]:
     return [{"tau": float(tau), **ground_measures(W, tau * w, 1.0)} for tau in taus]
 
 
+def flow_scan_exact(generation: int, n_pairs: int, flow_taus) -> List[Dict[str, float]]:
+    """
+    The same measures along the Spectre-to-Hat flow with the couplings recomputed at b(tau) from the
+    exact vertices. Reproduces the `toymodel_v6` scan (research/toymodel_v6/t6_patch.py, E6.10).
+    """
+    rows = []
+    for t in flow_taus:
+        fp = flow_parameters(float(t))
+        W = central_couplings(generation, n_pairs, fp.b)
+        rows.append({"flow_tau": float(t), "b": fp.b, "tau_eff": tau_effective(W, fp.J, fp.kappa), "J": fp.J,
+                     "kappa": fp.kappa, "h": fp.h, **ground_measures(W, fp.J, fp.kappa)})
+    return rows
+
+
 def flow_scan(W: np.ndarray, flow_taus) -> List[Dict[str, float]]:
-    """The same measures along the Spectre-to-Hat flow (J and kappa from `flow_parameters`)."""
+    """
+    The same measures along the flow with a b = 1 matrix `W` kept fixed (an approximation, see the
+    note above `FLOW_OMEGA0_DEG`; `flow_scan_exact` recomputes the couplings at b(tau)).
+    """
     rows = []
     for t in flow_taus:
         fp = flow_parameters(float(t))
@@ -513,17 +546,36 @@ def test_flow_endpoints_and_normalisation():
 
 
 def test_flow_agrees_with_toymodel_v6():
-    # Reference numbers from spectre-monotile-py, research/toymodel_v6/t6_patch.py (independent
-    # patch code, couplings recomputed at b(tau)): kappa() = 5.787156, and for the 10 central pairs
-    # of generation 3 tau_eff = 0.244 and largest concurrence 0.407 at flow time 0 (b = 1, so
-    # exact here), 0.647 at flow time 0.05 (b = 1.037: our b = 1 couplings are an approximation).
+    # Reference numbers from spectre-monotile-py, research/toymodel_v6/t6_patch.py (independent patch
+    # code, couplings recomputed at b(tau)), 10 central pairs of generation 3, printed to 6 digits:
+    # flow time -> (largest concurrence, best CHSH value, even-sector gap = our `gap_same_parity`).
     assert abs(flow_kappa_norm() - 5.787156) < 1e-5, flow_kappa_norm()
-    W = central_couplings(3, 10)
-    rows = flow_scan(W, [0.0, 0.05])
+    ref = {0.0: (0.406999, 2.100569, 0.092063), 0.02: (0.564979, 2.236532, 0.109792),
+           0.05: (0.646626, 2.325482, 0.172050), 0.08: (0.618725, 2.297254, 0.274204),
+           0.13: (0.509048, 2.197416, 0.563390), 0.2: (0.353903, 2.098177, 1.151606),
+           0.3: (0.201975, 2.033164, 1.958446)}
+    rows = flow_scan_exact(3, 10, list(ref))
+    for r in rows:
+        c, chsh, gap = ref[r["flow_tau"]]
+        assert abs(r["max_concurrence"] - c) < 2e-6, (r["flow_tau"], r["max_concurrence"], c)
+        assert abs(r["chsh_best"] - chsh) < 2e-5, (r["flow_tau"], r["chsh_best"], chsh)
+        assert abs(r["gap_same_parity"] - gap) < 2e-6, (r["flow_tau"], r["gap_same_parity"], gap)
     assert abs(rows[0]["tau_eff"] - 0.244) < 1e-3, rows[0]["tau_eff"]
-    assert abs(rows[0]["max_concurrence"] - 0.407) < 1e-3, rows[0]["max_concurrence"]
-    assert abs(rows[1]["max_concurrence"] - 0.647) < 0.015, rows[1]["max_concurrence"]
-    assert 0.2 < rows[0]["tau_eff"] < rows[1]["tau_eff"] < 1.0, "the flow starts inside the entangled window"
+    taus = [r["tau_eff"] for r in rows]
+    assert 0.2 < taus[0] and all(x < y for x, y in zip(taus, taus[1:])), "the flow starts inside the entangled window"
+
+
+def test_rescaled_flow_scan_is_the_stated_approximation():
+    W = central_couplings(3, 10)
+    exact = flow_scan_exact(3, 10, [0.05, 0.3])
+    approx = flow_scan(W, [0.05, 0.3])
+    for e, a in zip(exact, approx):
+        assert 0 < abs(e["max_concurrence"] - a["max_concurrence"]) < 0.015
+    K_exact = flow_couplings(3, 10, 0.3)
+    K_resc = (flow_parameters(0.3).h / flow_parameters(0.0).h) ** 2 * flow_parameters(0.0).kappa * W
+    err = np.linalg.norm(K_exact - K_resc) / np.linalg.norm(K_exact)
+    assert 0.02 < err < 0.06, err                          # 4% at flow time 0.3, as documented
+    assert np.allclose(flow_couplings(3, 10, 0.0), flow_parameters(0.0).kappa * W)
 
 
 def test_old_default_scale_was_far_from_the_flow():

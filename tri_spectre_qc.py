@@ -42,6 +42,7 @@ from quantumspectremodel import (
     assign_qubits_to_patch,
     bit_outlines_are_simple,
     build_substitution_tier,
+    tile_area_ab,
     pair_couplings,
     pair_qubit_tiles,
     set_pair_bit,
@@ -144,7 +145,7 @@ class TriSpectreNetwork:
     def __init__(
         self,
         a: float = 1.0,
-        b: float = 1.0,
+        b: Optional[float] = None,
         curve_strength: float = 0.5,
         qubits_per_tier: Tuple[int, int, int] = (4, 4, 4),
         generations: Tuple[int, int, int] = (2, 3, 4),
@@ -158,6 +159,10 @@ class TriSpectreNetwork:
         (0 = the Spectre end, where the exact patches live). Give both J and h to set them by hand;
         then kappa defaults to (a h)^2, the old rule, unless it is given too. Giving only one of
         J and h is an error. `kappa` alone overrides just the coupling strength of the flow.
+
+        The tiles sit at Tile(1, b): b defaults to the flow's b(flow_tau) (1 at the Spectre end, so
+        flow_tau = 0 is the exact Spectre patch), or to 1 when J and h are given by hand. The
+        couplings W are those of that geometry, not a rescaled b = 1 matrix.
         """
         if J is None and h is None:
             fp = flow_parameters(flow_tau)
@@ -169,7 +174,11 @@ class TriSpectreNetwork:
         else:
             kappa = (a * h) ** 2 if kappa is None else kappa
             self.flow = None
-        self.J, self.h, self.kappa = J, h, kappa
+        if b is None:
+            b = self.flow.b if self.flow is not None else 1.0
+        self.J, self.h, self.kappa, self.b = J, h, kappa, b
+        self.pair_area = 2.0 * tile_area_ab(1.0, b)       # ledger baseline: a pair is two Tile(1, b) tiles
+        self.tile_area = tile_area_ab(1.0, b)
         self.computers: List[SpectreQuantumComputer] = []
         offset = 0
         for gen, budget in zip(generations, qubits_per_tier):
@@ -235,7 +244,7 @@ class TriSpectreNetwork:
                 "mean_z": round(float(np.mean(zs)), 4),
                 "area_min": round(min(areas), 4),
                 "area_max": round(max(areas), 4),
-                "pair_area_sum_err": round(max(abs(s - 2 * A0) for s in qc.pair_area_sums()), 12),
+                "pair_area_sum_err": round(max(abs(s - self.pair_area) for s in qc.pair_area_sums()), 12),
             })
         return rows
 
@@ -352,6 +361,26 @@ def test_feedback_at_the_flow_h_moves_areas_by_a_large_fraction_of_a0():
     assert max(r["area_max"] - A0 for r in rows) > 0.2 * math.sqrt(3.0), rows    # h = sqrt(3), not 0.3
     for qc in net.computers:
         assert bit_outlines_are_simple(qc.patch, net.h, max_pairs=qc.n_qubits)
+
+
+def test_network_at_flow_time_uses_the_exact_couplings_and_the_b_ledger():
+    from pair_hamiltonian import central_couplings
+    from quantumspectremodel import pair_couplings_at_b
+    net = TriSpectreNetwork(qubits_per_tier=(3, 3, 3), generations=(2, 2, 3), flow_tau=0.1)
+    fp = flow_parameters(0.1)
+    assert abs(net.b - fp.b) < 1e-15 and 1.0 < net.b < math.sqrt(3.0)
+    for qc in net.computers:
+        assert qc.patch.b == net.b
+        assert np.allclose(qc.W, pair_couplings_at_b(qc.patch, net.b), atol=1e-12)    # exact vertices, not a rescaling
+    # the gen-3 tier is the central 3 pairs of the same cluster `pair_hamiltonian` uses
+    assert np.allclose(net.computers[2].W, central_couplings(3, 3, net.b), atol=1e-12)
+    net.run_local_dynamics(dt=0.05, steps=2)
+    net.sync_geometry()
+    rows = net.summary()
+    assert all(r["pair_area_sum_err"] < 1e-9 for r in rows), rows            # baseline is 2 A(1, b), not 2 A0
+    assert all(r["area_min"] < net.tile_area < r["area_max"] for r in rows), rows
+    assert net.pair_area > 2 * A0 and abs(net.tile_area - tile_area_ab(1.0, net.b)) < 1e-12
+    assert TriSpectreNetwork(qubits_per_tier=(2, 2, 2), generations=(2, 2, 3), flow_tau=0.1, b=1.0).b == 1.0
 
 
 def run_tests(verbose: bool = True) -> int:
