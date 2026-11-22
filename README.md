@@ -72,6 +72,7 @@ This project connects a matrix-free, functional quantum state simulator (`State`
 | **`state.py`** | Matrix-free functional quantum state simulator (the QWLA `State`). | `State` (`x`, `z`, `s`, `t`, `phase`, `rz`, `h`, `cx`, `cz`, `ccx`, `expectation_z`, safe `measure`). |
 | **`spectre_exact.py`** | Exact integer (`Z[zeta_12]`) Spectre substitution, vendored from `brentharts/spectre`. | `build()`, `outline()`. |
 | **`quantumspectremodel.py`** | Exact patches as `Tile` objects, bump-and-dent pairs, pair qubits and the bit-to-geometry map. | `SubstitutionPatch`, `build_substitution_tier()`, `find_pairs()`, `assign_qubits_to_patch()`, `pair_couplings()`, `set_pair_bit()`. |
+| **`make_figures.py`** | Redraws the figures in `figures/`. | `fig_tiers`, `fig_bit`, `fig_dynamics`, `fig_couplings`, `fig_counts`. |
 | **`tri_spectre_qc.py`** | Coupled three-tier network: pair-qubit Hamiltonian, Trotter evolution, bridges, geometry feedback. | `SpectreQuantumComputer`, `TriSpectreNetwork`, `trotter_step()`, `exact_expectation_z()`, `step_coupled_cycle()`. |
 
 ---
@@ -83,7 +84,24 @@ Checked by running the code: `spectremodel.py` (11 tests), `quantumspectremodel.
 * **Exact patches.** Tiles are placed by the exact integer substitution of `spectre_exact.py` (vendored from `brentharts/spectre`), so patches are edge-matched Spectre tilings. An earlier version placed children by sector offsets and counted a Mystic as one tile, which is why it reported 8, 63 and 496 tiles for the sequence 9, 71, 559; a Mystic is two tiles.
 * **Qubits on pairs.** One qubit per bump-and-dent pair (two tiles whose flat 14th vertices meet alone), not per vertex: a tile can carry the bit only with a partner, and a qubit per vertex of a 559-tile patch is far beyond a state simulator. The 9-tile patch has no pair (pair counts 0, 0, 6, 82, 804 at generations 0 to 4), so the default tiers are generations 2, 3, 4 (71, 559, 4401 tiles); the number of qubits per tier is a budget, with the pairs nearest the centre first.
 * **Dynamics and feedback.** The tiers evolve under `H = -J sum X + kappa sum W_pq Z_p Z_q` (dipole couplings `W` from the exact tile centroids), by Trotter steps checked against dense diagonalisation. `<Z_p>` then moves the flat vertex of both tiles of pair `p` by `+-h<Z_p>`, which changes their areas by `+-a h <Z_p>` exactly and keeps the area of the pair fixed. The old feedback could never act (a Hadamard on every qubit makes `<Z>` zero for all later RZ and CZ gates) and it fed `<Z>` into `curve_strength`, which cannot change the area at all: the area of a point-symmetric Bezier tile is independent of `k`.
+* **Weak couplings.** At the default scale (`J = 1`, `kappa = 0.09`) the geometric couplings are about 1% of the tunnelling, so the pairs behave almost independently; see the figures section.
 * **Still a toy.** The couplings, the tunnelling `J`, the cross-tier bridges and the Trotter schedule are definitions of this model, not derivations; see [ROADMAP_QUANTUM_GRAVITY.md](ROADMAP_QUANTUM_GRAVITY.md).
+
+---
+
+## Figures
+
+`python3 make_figures.py` redraws all of them into `figures/` (about 1 minute; every number comes from the code here).
+
+| Figure | Shows |
+| :--- | :--- |
+| ![tiers](figures/fig_tiers.png) | **`fig_tiers.png`** The three exact tiers (71, 559, 4401 tiles; 6, 82, 804 pairs). Red and blue are the two tiles of a bump-and-dent pair, orange outlines the pairs that carry a qubit. |
+| ![bit](figures/fig_bit_geometry.png) | **`fig_bit_geometry.png`** The bit moves the flat vertex `P8` of both tiles of a pair; their areas are `A0 +- a h <tau^z>` and the pair keeps its area. |
+| ![dynamics](figures/fig_dynamics.png) | **`fig_dynamics.png`** Trotter evolution against exact diagonalisation on four pairs, the default weak-coupling scale, and the area feedback. |
+| ![couplings](figures/fig_couplings.png) | **`fig_couplings.png`** Dipole couplings `W_pq` of 120 central pairs of generation 4: both signs, falling roughly as `r^-3` (fitted slope about -2.85). |
+| ![counts](figures/fig_pair_counts.png) | **`fig_pair_counts.png`** Tiles and pairs per generation (1 to 34649; 6 to 7012) and `P_k/N_k` rising toward `rho_0 = (5 - sqrt(15))/5 = 0.2254`. |
+
+**A caution from the dynamics figure.** The geometric couplings are small: `|W| <= 0.06` for the central pairs of generation 2, so with `J = 1` and `kappa = (a h)^2 = 0.09` they are about 1% of the tunnelling and the four pairs oscillate identically. The default network therefore behaves like independent qubits. The left and right panels use `J = 0.05`, `kappa = 1` (both are definitions of the model) to let the couplings act; whether a physical choice makes them comparable is an open modelling question (Roadmap, Stage 2).
 
 ---
 

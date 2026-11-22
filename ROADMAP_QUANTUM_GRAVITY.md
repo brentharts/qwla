@@ -43,6 +43,7 @@ Pass: a test recovering the pair-rule table from the patch, and pair counts to g
 
 ### Stage 2: dynamics of the qubits
 Load the dipolar pair Hamiltonian into the QWLA `State` simulator for small clusters (6 to 14 pairs, matrix-free) and compare with the exact diagonalisation in `research/toymodel_v6` and `v10`. Measure the ground-state concurrence, CHSH of reduced pairs, and the gap along the Spectre-to-Hat parameter.
+Finding so far (`figures/fig_dynamics.png`): with the geometric dipole couplings (`|W| <= 0.06` in units of `(a h)^2` for the central pairs) and `J = 1`, `kappa = 0.09`, the couplings are about 1% of the tunnelling and the pairs are nearly independent; the Trotter evolution agrees with exact diagonalisation to 1e-4 at `J = 0.05`, `kappa = 1`. A principled choice of `J` and `kappa` (for example from the Spectre-to-Hat flow) is needed before the frustration matters.
 Pass: agreement with the exact values (cat ground state at zero tunnelling; largest pairwise concurrence at an intermediate `tau`). A mismatch is a bug in one of the two programs.
 
 ### Stage 3: flips as dynamics
