@@ -12,6 +12,14 @@ the tunnelling between the two positions. Evolution is first-order Trotter with 
 `State`. Geometry -> quantum: the centroids set W. Quantum -> geometry: <Z_p> displaces the flat
 vertex P8 of both tiles of pair p (`set_pair_bit`), changing their areas by +-a h <Z_p>.
 
+Parameters. Unless J and h are given, they come from the Spectre-to-Hat flow of
+`pair_hamiltonian.flow_parameters` (definitions of `toymodel_v6` in spectre-monotile-py): at the
+Spectre end (flow_tau = 0) h = sqrt(3), J = exp(-3/2) = 0.223 and kappa = 17.4, which puts every
+tier at tau = J / (kappa w) of about 0.2 to 0.3, inside the window where the pair qubits entangle.
+The earlier defaults (J = 1, h = 0.3, kappa = (a h)^2 = 0.09) were at tau of about 200, a product
+state in which the couplings were about 1% of the tunnelling; they are still available by passing
+J=1.0, h=0.3 explicitly.
+
 Note on the earlier version: it put every qubit in a Hadamard state, after which <Z> = 0 for
 every later RZ/CZ, so the feedback could never act, and it projected the joint state onto
 invented marginal amplitudes. Here one joint `State` is kept and read directly.
@@ -25,10 +33,14 @@ import numpy as np
 from bitarray import frozenbitarray as bitarray
 from functional import seq
 
+import warnings
+
+from pair_hamiltonian import FlowParameters, coupling_scale, flow_parameters, tau_effective
 from quantumspectremodel import (
     A0,
     SubstitutionPatch,
     assign_qubits_to_patch,
+    bit_outlines_are_simple,
     build_substitution_tier,
     pair_couplings,
     pair_qubit_tiles,
@@ -136,11 +148,28 @@ class TriSpectreNetwork:
         curve_strength: float = 0.5,
         qubits_per_tier: Tuple[int, int, int] = (4, 4, 4),
         generations: Tuple[int, int, int] = (2, 3, 4),
-        J: float = 1.0,
-        h: float = 0.3,
+        J: Optional[float] = None,
+        h: Optional[float] = None,
+        kappa: Optional[float] = None,
+        flow_tau: float = 0.0,
     ):
-        self.J, self.h = J, h
-        self.kappa = (1.0 * h) ** 2          # (a h)^2 with a = 1
+        """
+        With J and h left as None they (and kappa) come from the Spectre-to-Hat flow at `flow_tau`
+        (0 = the Spectre end, where the exact patches live). Give both J and h to set them by hand;
+        then kappa defaults to (a h)^2, the old rule, unless it is given too. Giving only one of
+        J and h is an error. `kappa` alone overrides just the coupling strength of the flow.
+        """
+        if J is None and h is None:
+            fp = flow_parameters(flow_tau)
+            J, h = fp.J, fp.h
+            kappa = fp.kappa if kappa is None else kappa
+            self.flow: Optional[FlowParameters] = fp
+        elif J is None or h is None:
+            raise ValueError("give both J and h, or neither (then the Spectre-to-Hat flow sets them)")
+        else:
+            kappa = (a * h) ** 2 if kappa is None else kappa
+            self.flow = None
+        self.J, self.h, self.kappa = J, h, kappa
         self.computers: List[SpectreQuantumComputer] = []
         offset = 0
         for gen, budget in zip(generations, qubits_per_tier):
@@ -150,6 +179,12 @@ class TriSpectreNetwork:
             self.computers.append(qc)
             offset += qc.n_qubits
         self.n_qubits = offset
+        for qc in self.computers:
+            if not bit_outlines_are_simple(qc.patch, self.h, max_pairs=qc.n_qubits):
+                warnings.warn(
+                    f"h = {self.h:.3g} with curve_strength = {curve_strength} makes a pair tile's outline cross "
+                    f"itself for some value of the bit; lower curve_strength or h", RuntimeWarning, stacklevel=2)
+                break
         self.state = State(n_qubits=self.n_qubits, n_bits=self.n_qubits)   # |00..0>: every bump on tile A
         self.patches = [qc.patch for qc in self.computers]
 
@@ -182,6 +217,10 @@ class TriSpectreNetwork:
             self.entangle_across_computers()
         self.sync_geometry()
 
+    def tau_eff(self) -> List[float]:
+        """tau = J / (kappa w) of each tier's qubits: about 0.2 to 0.3 on the flow, 200 for J=1, h=0.3."""
+        return [tau_effective(qc.W, self.J, self.kappa) for qc in self.computers if qc.n_qubits > 1]
+
     def summary(self) -> List[Dict[str, object]]:
         rows = []
         for qc in self.computers:
@@ -192,6 +231,7 @@ class TriSpectreNetwork:
                 "tiles": qc.patch.n_tiles,
                 "pairs": qc.patch.n_pairs,
                 "qubits": qc.n_qubits,
+                "tau_eff": round(tau_effective(qc.W, self.J, self.kappa), 3) if qc.n_qubits > 1 else None,
                 "mean_z": round(float(np.mean(zs)), 4),
                 "area_min": round(min(areas), 4),
                 "area_max": round(max(areas), 4),
@@ -234,6 +274,84 @@ def test_all_tiles_outside_pairs_are_untouched():
         for i, t in enumerate(qc.patch.tiles):
             if i not in in_pair:
                 assert abs(t.area() - A0) < 1e-9
+
+
+def _fast_net(**kw):
+    return TriSpectreNetwork(qubits_per_tier=(3, 3, 3), generations=(2, 2, 3), **kw)
+
+
+def test_default_network_takes_j_kappa_h_from_the_flow():
+    net = _fast_net()
+    fp = flow_parameters(0.0)
+    assert net.flow == fp and (net.J, net.h, net.kappa) == (fp.J, fp.h, fp.kappa)
+    assert abs(net.h - math.sqrt(3.0)) < 1e-12
+    # the entangled window of `pair_hamiltonian` is tau of about 0.3 to 1.2 (it moves a little with the
+    # cluster: three qubits per tier give 0.25 to 0.54); the old defaults sat at about 200
+    assert all(0.15 < t < 1.2 for t in net.tau_eff()), net.tau_eff()
+    mid = _fast_net(flow_tau=0.1)
+    assert mid.h < net.h and mid.J > net.J and mid.kappa < net.kappa
+
+
+def test_explicit_j_and_h_give_back_the_old_scale():
+    old = _fast_net(J=1.0, h=0.3)
+    assert old.flow is None and abs(old.kappa - 0.09) < 1e-15
+    assert all(t > 100 for t in old.tau_eff()), old.tau_eff()               # a product state
+    assert _fast_net(J=1.0, h=0.3, kappa=2.0).kappa == 2.0
+    assert _fast_net(kappa=3.0).h == flow_parameters(0.0).h                  # kappa alone overrides only kappa
+    for bad in ({"J": 1.0}, {"h": 0.3}):
+        try:
+            _fast_net(**bad)
+        except ValueError:
+            continue
+        raise AssertionError(f"{bad} should be refused")
+
+
+def test_flow_scale_makes_the_pairs_interact_and_the_old_scale_did_not():
+    patch = build_substitution_tier(2)
+    assign_qubits_to_patch(patch, max_qubits=4)
+    W = pair_couplings(patch)
+    fp = flow_parameters(0.0)
+    spread = lambda J, k, t: np.ptp(exact_expectation_z(W, J, k, t))          # noqa: E731
+    assert max(spread(1.0, 0.09, t) for t in (2.0, 5.0, 10.0)) < 1e-3          # four identical qubits
+    assert spread(fp.J, fp.kappa, 5.0) > 0.5                                    # the couplings act
+
+
+def test_trotter_matches_exact_at_the_flow_parameters():
+    patch = build_substitution_tier(2)
+    assign_qubits_to_patch(patch, max_qubits=4)
+    W = pair_couplings(patch)
+    fp = flow_parameters(0.0)
+    t = 2.0
+    ref = exact_expectation_z(W, fp.J, fp.kappa, t)
+    assert np.ptp(ref) > 0.2, "the check is trivial if the pairs move alike"
+    errs = []
+    for steps in (20, 40):
+        st = State(n_qubits=4)
+        for _ in range(steps):
+            trotter_step(st, W, 0, fp.J, fp.kappa, t / steps)
+        errs.append(np.abs(np.array([st.expectation_z(p) for p in range(4)]) - ref).max())
+    assert errs[1] < 2e-3 and errs[0] / errs[1] > 3.0, errs                      # second order in dt
+
+
+def test_flow_h_is_safe_for_the_default_curve_strength_and_unsafe_beyond():
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
+        _fast_net()                                                              # curve_strength 0.5: no warning
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        _fast_net(curve_strength=0.8)
+    assert any(issubclass(w.category, RuntimeWarning) for w in caught)
+
+
+def test_feedback_at_the_flow_h_moves_areas_by_a_large_fraction_of_a0():
+    net = _fast_net()
+    for _ in range(2):
+        net.step_coupled_cycle(dt=0.6, steps=6)
+    rows = net.summary()
+    assert all(r["pair_area_sum_err"] < 1e-9 for r in rows), rows
+    assert max(r["area_max"] - A0 for r in rows) > 0.2 * math.sqrt(3.0), rows    # h = sqrt(3), not 0.3
+    for qc in net.computers:
+        assert bit_outlines_are_simple(qc.patch, net.h, max_pairs=qc.n_qubits)
 
 
 def run_tests(verbose: bool = True) -> int:

@@ -112,63 +112,70 @@ def fig_bit():
 
 
 def fig_dynamics():
+    from pair_hamiltonian import flow_parameters, tau_effective
+
     patch = qm.build_substitution_tier(2)
     qm.assign_qubits_to_patch(patch, max_qubits=4)
     W = qm.pair_couplings(patch)
-    # The geometric couplings are small (|W| <= 0.06 in units of (a h)^2), so to see them act the
-    # tunnelling is taken small as well: J = 0.05, kappa = 1 (both are definitions of the model).
-    J, kap, h = 0.05, 1.0, 0.3
-    T, dt = 40.0, 0.25
-    n_steps = int(round(T / dt))
-    st = State(n_qubits=4)
-    ts, trot = [0.0], [[st.expectation_z(p) for p in range(4)]]
-    for s in range(n_steps):
-        trotter_step(st, W, 0, J, kap, dt)
-        ts.append((s + 1) * dt)
-        trot.append([st.expectation_z(p) for p in range(4)])
-    trot = np.array(trot)
-    tex = np.linspace(0, T, 41)
-    exact = np.array([exact_expectation_z(W, J, kap, t) for t in tex])
-    err = np.abs(trot[::int(round(1.0 / dt))] - exact).max()
     cols = ["#d1495b", "#2e86ab", "#f2a93b", "#3d9970"]
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+
+    def run(J, kap, T, dt):
+        st = State(n_qubits=4)
+        ts, zs = [0.0], [[st.expectation_z(p) for p in range(4)]]
+        for s in range(int(round(T / dt))):
+            trotter_step(st, W, 0, J, kap, dt)
+            ts.append((s + 1) * dt)
+            zs.append([st.expectation_z(p) for p in range(4)])
+        return np.array(ts), np.array(zs)
+
+    def with_exact(ax, J, kap, T, dt, title):
+        ts, trot = run(J, kap, T, dt)
+        tex = np.linspace(0, T, int(T) + 1)
+        exact = np.array([exact_expectation_z(W, J, kap, t) for t in tex])
+        err = np.abs(trot[::int(round(1.0 / dt))][:len(tex)] - exact).max()
+        for p in range(4):
+            ax.plot(ts, trot[:, p], color=cols[p], lw=1.3, label=f"pair {p}")
+            ax.plot(tex, exact[:, p], "o", color=cols[p], ms=3.2, mfc="none")
+        ax.set_xlabel("time $t$")
+        ax.set_ylabel("$\\langle Z_p\\rangle$")
+        ax.set_title(title.replace("{err:.1e}", f"{err:.1e}"), fontsize=8)
+        ax.legend(fontsize=7, frameon=False, ncol=2)
+        return ts, trot
+
+    fig, axes = plt.subplots(1, 4, figsize=(19, 4))
+    # (a) small tunnelling so that the weak geometric couplings act: J = 0.05, kappa = 1
+    with_exact(axes[0], 0.05, 1.0, 40.0, 0.25,
+               "(a) $J=0.05,\\ \\kappa=1$: Trotter (lines), exact (circles)\nmax difference {err:.1e}")
+    # (b) the former default scale, J = 1, kappa = (a h)^2 = 0.09 (h = 0.3)
+    ts, zw = run(1.0, 0.09, 4.0, 0.025)
     for p in range(4):
-        axes[0].plot(ts, trot[:, p], color=cols[p], lw=1.3, label=f"pair {p}")
-        axes[0].plot(tex, exact[:, p], "o", color=cols[p], ms=3.2, mfc="none")
-    axes[0].set_xlabel("time $t$")
-    axes[0].set_ylabel("$\\langle Z_p\\rangle$")
-    axes[0].set_title(f"$J=0.05,\\ \\kappa=1$: Trotter (lines), exact (circles)\nmax difference {err:.1e}", fontsize=9)
-    axes[0].legend(fontsize=8, frameon=False, ncol=2)
-    # all-equal weak-coupling case for contrast
-    st = State(n_qubits=4)
-    zw = [[st.expectation_z(p) for p in range(4)]]
-    for s in range(n_steps):
-        trotter_step(st, W, 0, 1.0, 0.09, dt / 10)
-        zw.append([st.expectation_z(p) for p in range(4)])
-    zw = np.array(zw)
-    tw = np.arange(n_steps + 1) * dt / 10
-    for p in range(4):
-        axes[1].plot(tw, zw[:, p], color=cols[p], lw=1.3, label=f"pair {p}")
+        axes[1].plot(ts, zw[:, p], color=cols[p], lw=1.3, label=f"pair {p}")
     axes[1].set_xlabel("time $t$")
-    axes[1].set_title("$J=1,\\ \\kappa=(ah)^2=0.09$ (default scale):\ncouplings $\\sim1\\%$ of $J$, the four curves coincide", fontsize=8)
-    axes[1].legend(fontsize=8, frameon=False, ncol=2)
-    # geometry feedback from the first run
+    axes[1].set_title(f"(b) former default $J=1,\\ \\kappa=0.09$: $\\tau_{{\\rm eff}}$ = "
+                      f"{tau_effective(W, 1.0, 0.09):.0f}\ncouplings $\\sim1\\%$ of $J$, the four curves coincide", fontsize=8)
+    axes[1].legend(fontsize=7, frameon=False, ncol=2)
+    # (c) the Spectre-to-Hat flow at the Spectre end: J = c(0), kappa = kappa_norm h(0)^2, h = sqrt 3
+    fp = flow_parameters(0.0)
+    T, dt = 15.0, 0.05
+    ts_f, trot_f = with_exact(
+        axes[2], fp.J, fp.kappa, T, dt,
+        f"(c) flow default $J={fp.J:.3f},\\ \\kappa={fp.kappa:.1f}$: $\\tau_{{\\rm eff}}$ = {tau_effective(W, fp.J, fp.kappa):.2f}\n"
+        "Trotter (lines), exact (circles), max difference {err:.1e}")
+    # (d) geometry feedback of the flow default, h = sqrt 3
     st = State(n_qubits=4)
     areas = {q: [] for q in range(4)}
-    ts2 = []
-    for s in range(n_steps + 1):
-        ts2.append(s * dt)
+    for s in range(int(round(T / dt)) + 1):
         for q, (A, B) in qm.pair_qubit_tiles(patch).items():
-            qm.set_pair_bit(A, B, st.expectation_z(q), h)
+            qm.set_pair_bit(A, B, st.expectation_z(q), fp.h)
             areas[q].append(A.area() - A0)
-        trotter_step(st, W, 0, J, kap, dt)
+        trotter_step(st, W, 0, fp.J, fp.kappa, dt)
     for q in range(4):
-        axes[2].plot(ts2, areas[q], color=cols[q], lw=1.3, label=f"tile A of pair {q}")
-    axes[2].axhline(0, color="#999", lw=0.6)
-    axes[2].set_xlabel("time $t$")
-    axes[2].set_ylabel("$A_A-A_0$  (tile B: opposite sign)")
-    axes[2].set_title(f"geometry feedback of the left panel, $h={h}$", fontsize=9)
-    axes[2].legend(fontsize=8, frameon=False)
+        axes[3].plot(ts_f, areas[q], color=cols[q], lw=1.3, label=f"tile A of pair {q}")
+    axes[3].axhline(0, color="#999", lw=0.6)
+    axes[3].set_xlabel("time $t$")
+    axes[3].set_ylabel("$A_A-A_0$  (tile B: opposite sign)")
+    axes[3].set_title(f"(d) geometry feedback of (c), $h=\\sqrt{{3}}={fp.h:.3f}$", fontsize=8)
+    axes[3].legend(fontsize=7, frameon=False)
     fig.suptitle("Pair-qubit dynamics on the generation-2 patch, all four central pairs start with tile A as the bump", y=1.03)
     _save(fig, "fig_dynamics.png")
 

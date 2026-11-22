@@ -16,7 +16,10 @@ This module provides
 Run `python3 pair_hamiltonian.py --tests-only` for the checks, or without arguments for the
 tau scan (tau = J / (kappa * w), w the rms nearest-neighbour coupling).
 """
+import math
 import sys
+from dataclasses import dataclass
+from functools import lru_cache
 from itertools import product
 from typing import Dict, List, Optional, Tuple
 
@@ -46,6 +49,80 @@ def coupling_scale(W: np.ndarray) -> float:
     n = W.shape[0]
     big = np.array([np.max(np.abs(W[p][np.arange(n) != p])) for p in range(n)])
     return float(np.sqrt(np.mean(big ** 2)))
+
+
+# ---- the Spectre-to-Hat flow: J, kappa and h from the tile ---------------------------------
+#
+# Definitions D6.3, D6.6 and D6.7 of `toymodel_v6` (spectre-monotile-py, research/toymodel_v6,
+# STAGE1.md). They are choices, not derivations; they replace the hand-chosen J = 1, h = 0.3 that
+# the network used to default to, which put it at tau = J / (kappa w) of about 200 (a product
+# state) instead of the window where the pairs entangle.
+#
+#   h(tau)     = tan(omega0 (1 - tau) / 2),  omega0 = 120 degrees    the jump of the 14th vertex
+#                                                                    (sqrt3 at the Spectre, 0 at the Hat)
+#   c(tau)     = exp(-(2 h)^2 / (8 sigma^2)),  sigma = 1             overlap of the two positions
+#   Gamma(tau) = J0 c(tau)                                           tunnelling,  J0 = 1
+#   K(tau)     = kappa(tau) W,  kappa(tau) = kappa_norm h(tau)^2     coupling of the bits read as charges
+#   kappa_norm = K0 / (h(0)^2 max|W|) over the six pairs of generation 2, so the strongest
+#                coupling at the Spectre end is K0 = 1.
+#   b(tau)     = 1 + (sqrt3 - 1) tau                                 the second edge of the tile
+#
+# Exact patches need a = b = 1, which is the Spectre end tau = 0. For tau > 0 the couplings W are
+# kept at b = 1 and only rescaled by (h(tau)/h(0))^2. Against the v6 scan (couplings recomputed at
+# b(tau)) on the 10 central pairs of generation 3, the coupling matrix is off by 0.3% (tau = 0.02),
+# 0.7% (0.05), 1.8% (0.13), 4.0% (0.3) in the Frobenius norm and the largest concurrence by at most
+# 0.014; see `test_flow_agrees_with_toymodel_v6`.
+
+FLOW_OMEGA0_DEG = 120.0
+FLOW_SIGMA = 1.0
+FLOW_J0 = 1.0
+FLOW_K0 = 1.0
+
+
+def flow_b(tau: float) -> float:
+    return 1.0 + (math.sqrt(3.0) - 1.0) * tau
+
+
+def flow_h(tau: float) -> float:
+    return math.tan(math.radians(FLOW_OMEGA0_DEG * (1.0 - tau)) / 2.0)
+
+
+def flow_overlap(tau: float) -> float:
+    return math.exp(-((2.0 * flow_h(tau)) ** 2) / (8.0 * FLOW_SIGMA ** 2))
+
+
+@lru_cache(maxsize=None)
+def flow_kappa_norm() -> float:
+    """kappa_norm = K0 / (h(0)^2 max|W|), W over the six pairs of the generation-2 patch (b = 1)."""
+    patch = build_substitution_tier(2)
+    assign_qubits_to_patch(patch, max_qubits=None)
+    return FLOW_K0 / (flow_h(0.0) ** 2 * float(np.abs(pair_couplings(patch)).max()))
+
+
+@dataclass(frozen=True)
+class FlowParameters:
+    """Model parameters at flow time tau: H = -J sum X + kappa sum W_pq Z_p Z_q, bit displacement h."""
+
+    tau: float
+    b: float
+    h: float
+    J: float
+    kappa: float
+    overlap: float
+
+
+def flow_parameters(tau: float = 0.0) -> FlowParameters:
+    """J, kappa and h of the Spectre-to-Hat flow at tau in [0, 1]; tau = 0 is the Spectre (exact patches)."""
+    if not 0.0 <= tau <= 1.0:
+        raise ValueError(f"flow time must lie in [0, 1], got {tau}")
+    h = flow_h(tau)
+    c = flow_overlap(tau)
+    return FlowParameters(tau=tau, b=flow_b(tau), h=h, J=FLOW_J0 * c, kappa=flow_kappa_norm() * h * h, overlap=c)
+
+
+def tau_effective(W: np.ndarray, J: float, kappa: float) -> float:
+    """tau = J / (kappa w): the ratio of tunnelling to coupling scale that `tau_scan` uses."""
+    return J / (kappa * coupling_scale(W))
 
 
 # ---- exact Hamiltonian ------------------------------------------------------------------
@@ -288,29 +365,39 @@ def run_state(W, J, kappa, t, steps, order=2) -> np.ndarray:
 
 # ---- scans -------------------------------------------------------------------------------
 
+def ground_measures(W: np.ndarray, J: float, kappa: float) -> Dict[str, float]:
+    """Gaps, best pairwise concurrence and CHSH, half-system entropy and mean <Z> at one (J, kappa)."""
+    n = W.shape[0]
+    g = parity_gap(W, J, kappa)
+    _, psi = ground_state(W, J, kappa)
+    C = pairwise_concurrence(psi, n)
+    iu = np.triu_indices(n, 1)
+    k = int(np.argmax(C[iu]))
+    p, q = iu[0][k], iu[1][k]
+    return {
+        "gap": g["gap"],
+        "gap_same_parity": g["gap_same_parity"],
+        "max_concurrence": float(C[iu][k]),
+        "best_pair": (int(p), int(q)),
+        "chsh_best": chsh_max(reduced_two_qubit(psi, n, p, q)),
+        "S_half": entanglement_entropy(psi, n, list(range(n // 2))),
+        "mean_Z": float(np.mean(z_expectations(psi, n))),
+    }
+
+
 def tau_scan(W: np.ndarray, taus: np.ndarray) -> List[Dict[str, float]]:
     """Scan tau = J / (kappa w) at fixed kappa = 1 and report gaps and entanglement."""
-    n = W.shape[0]
     w = coupling_scale(W)
+    return [{"tau": float(tau), **ground_measures(W, tau * w, 1.0)} for tau in taus]
+
+
+def flow_scan(W: np.ndarray, flow_taus) -> List[Dict[str, float]]:
+    """The same measures along the Spectre-to-Hat flow (J and kappa from `flow_parameters`)."""
     rows = []
-    for tau in taus:
-        J = tau * w
-        g = parity_gap(W, J, 1.0)
-        _, psi = ground_state(W, J, 1.0)
-        C = pairwise_concurrence(psi, n)
-        iu = np.triu_indices(n, 1)
-        k = int(np.argmax(C[iu]))
-        p, q = iu[0][k], iu[1][k]
-        rows.append({
-            "tau": float(tau),
-            "gap": g["gap"],
-            "gap_same_parity": g["gap_same_parity"],
-            "max_concurrence": float(C[iu][k]),
-            "best_pair": (int(p), int(q)),
-            "chsh_best": chsh_max(reduced_two_qubit(psi, n, p, q)),
-            "S_half": entanglement_entropy(psi, n, list(range(n // 2))),
-            "mean_Z": float(np.mean(z_expectations(psi, n))),
-        })
+    for t in flow_taus:
+        fp = flow_parameters(float(t))
+        rows.append({"flow_tau": float(t), "tau_eff": tau_effective(W, fp.J, fp.kappa), "J": fp.J,
+                     "kappa": fp.kappa, "h": fp.h, **ground_measures(W, fp.J, fp.kappa)})
     return rows
 
 
@@ -410,6 +497,40 @@ def test_trotter_state_matches_exact_evolution_8_pairs():
     e1, e2, e2b = err(16, 1), err(16, 2), err(32, 2)
     assert e2 < 0.01 and e2 < e1 / 5, (e1, e2)
     assert 3.0 < e2 / e2b < 5.0, (e2, e2b)      # second order: error / 4 when dt halves
+
+
+def test_flow_endpoints_and_normalisation():
+    f0, f1 = flow_parameters(0.0), flow_parameters(1.0)
+    assert abs(f0.h - math.sqrt(3.0)) < 1e-12 and abs(f1.h) < 1e-12
+    assert abs(f0.overlap - math.exp(-1.5)) < 1e-12 and abs(f0.J - 0.22313016014842982) < 1e-12
+    assert abs(f0.b - 1.0) < 1e-12 and abs(f1.b - math.sqrt(3.0)) < 1e-12
+    assert f1.kappa == 0.0 and f1.J > f0.J, "the Hat is the paramagnet: no coupling, full tunnelling"
+    patch = build_substitution_tier(2)
+    assign_qubits_to_patch(patch, max_qubits=None)
+    assert abs(np.abs(f0.kappa * pair_couplings(patch)).max() - FLOW_K0) < 1e-12, "strongest coupling at tau = 0 is K0"
+    kappas = [flow_parameters(t).kappa for t in np.linspace(0, 1, 11)]
+    assert all(x > y for x, y in zip(kappas, kappas[1:])), "coupling falls along the flow"
+
+
+def test_flow_agrees_with_toymodel_v6():
+    # Reference numbers from spectre-monotile-py, research/toymodel_v6/t6_patch.py (independent
+    # patch code, couplings recomputed at b(tau)): kappa() = 5.787156, and for the 10 central pairs
+    # of generation 3 tau_eff = 0.244 and largest concurrence 0.407 at flow time 0 (b = 1, so
+    # exact here), 0.647 at flow time 0.05 (b = 1.037: our b = 1 couplings are an approximation).
+    assert abs(flow_kappa_norm() - 5.787156) < 1e-5, flow_kappa_norm()
+    W = central_couplings(3, 10)
+    rows = flow_scan(W, [0.0, 0.05])
+    assert abs(rows[0]["tau_eff"] - 0.244) < 1e-3, rows[0]["tau_eff"]
+    assert abs(rows[0]["max_concurrence"] - 0.407) < 1e-3, rows[0]["max_concurrence"]
+    assert abs(rows[1]["max_concurrence"] - 0.647) < 0.015, rows[1]["max_concurrence"]
+    assert 0.2 < rows[0]["tau_eff"] < rows[1]["tau_eff"] < 1.0, "the flow starts inside the entangled window"
+
+
+def test_old_default_scale_was_far_from_the_flow():
+    W = central_couplings(3, 10)
+    old = tau_effective(W, 1.0, 0.3 ** 2)           # J = 1, kappa = (a h)^2 with h = 0.3
+    new = tau_effective(W, flow_parameters(0.0).J, flow_parameters(0.0).kappa)
+    assert old > 100 * new, (old, new)
 
 
 def run_tests(verbose: bool = True) -> int:

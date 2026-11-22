@@ -261,6 +261,47 @@ def set_pair_bit(tile_a: Tile, tile_b: Tile, z: float, h: float) -> None:
         tile.vertices[FLAT_MODEL].position = base + sign * z * h * bump_direction(tile)
 
 
+def outline_is_simple(tile: Tile, samples: int = 40) -> bool:
+    """True when the sampled Bezier outline of `tile` does not cross itself (all segment pairs, vectorised)."""
+    out = tile.outline(samples=samples)
+    pts = np.asarray(np.column_stack(out) if isinstance(out, tuple) else out, float)
+    if np.linalg.norm(pts[0] - pts[-1]) < 1e-9:
+        pts = pts[:-1]
+    n = len(pts)
+    P, Q = pts, np.roll(pts, -1, axis=0)
+
+    def orient(a, b, c):   # a, b: (n, 2) segment ends; c: (m, 2) points -> (n, m)
+        return ((b[:, None, 0] - a[:, None, 0]) * (c[None, :, 1] - a[:, None, 1])
+                - (b[:, None, 1] - a[:, None, 1]) * (c[None, :, 0] - a[:, None, 0]))
+
+    d1, d2 = orient(P, Q, P), orient(P, Q, Q)        # ends of segment j against segment i
+    cross = (d1 * d2 < 0) & ((d1 * d2).T < 0)         # strict crossing needs both directions to straddle
+    idx = np.arange(n)
+    gap = np.abs(idx[:, None] - idx[None, :])
+    neighbours = (gap <= 1) | (gap == n - 1)          # segments sharing an end point are not a crossing
+    return not bool(np.any(cross & ~neighbours))
+
+
+def bit_outlines_are_simple(patch: SubstitutionPatch, h: float, max_pairs: Optional[int] = None) -> bool:
+    """
+    True when both values of the bit (z = +1 and z = -1, displacement h) leave every checked pair
+    tile with a simple outline. Only the qubit pairs are checked (the first `max_pairs` if given);
+    each pair is returned to z = 0 afterwards. The reflex value is the one that fails first: with
+    curve_strength 0.5 it is valid at h = sqrt(3) and crosses by h = 2, with curve_strength 0.8 it
+    crosses already at sqrt(3) (the adjacent-edge crossing of MATH_GAPS.md O1 in spectre-monotile-py).
+    """
+    tiles = list(pair_qubit_tiles(patch).values())
+    if max_pairs is not None:
+        tiles = tiles[:max_pairs]
+    ok = True
+    for A, B in tiles:
+        for z in (1.0, -1.0):
+            set_pair_bit(A, B, z, h)
+            ok = ok and outline_is_simple(A) and outline_is_simple(B)
+        set_pair_bit(A, B, 0.0, h)
+    return ok
+
+
 def build_three_tier_hierarchy(
     a: float = 1.0,
     b: float = 1.0,
@@ -344,6 +385,20 @@ def test_bit_changes_area_by_a_h_and_conserves_the_pair():
         assert abs(A.area() + B.area() - 2 * A0) < 1e-9
     set_pair_bit(A, B, 0.0, h)
     assert abs(A.area() - A0) < 1e-9
+
+
+def test_bit_outlines_stay_simple_up_to_the_flow_value_of_h():
+    # the flow of pair_hamiltonian.flow_parameters has h = sqrt(3) at the Spectre end
+    patch = build_substitution_tier(2, curve_strength=0.5)
+    assign_qubits_to_patch(patch, max_qubits=6)
+    assert bit_outlines_are_simple(patch, 0.3)
+    assert bit_outlines_are_simple(patch, math.sqrt(3.0))
+    assert not bit_outlines_are_simple(patch, 2.3), "the check must be able to fail"
+    steep = build_substitution_tier(2, curve_strength=0.8)
+    assign_qubits_to_patch(steep, max_qubits=6)
+    assert not bit_outlines_are_simple(steep, math.sqrt(3.0))
+    A, B = next(iter(pair_qubit_tiles(patch).values()))
+    assert abs(A.area() - A0) < 1e-9, "the check must leave the pair at z = 0"
 
 
 def run_tests(verbose: bool = True) -> int:
