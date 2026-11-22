@@ -75,17 +75,22 @@ This project connects a matrix-free, functional quantum state simulator (`State`
 | **`make_figures.py`** | Redraws the 2D figures in `figures/`. | `fig_tiers`, `fig_bit`, `fig_dynamics`, `fig_couplings`, `fig_counts`. |
 | **`make_figures_3d.py`** | Redraws the 3D figures in `figures/`. | `fig_stack`, `fig_spacetime`, `fig_relief`, `fig_lift`. |
 | **`tri_spectre_qc.py`** | Coupled three-tier network: pair-qubit Hamiltonian, Trotter evolution, bridges, geometry feedback. | `SpectreQuantumComputer`, `TriSpectreNetwork`, `trotter_step()`, `exact_expectation_z()`, `step_coupled_cycle()`. |
+| **`pair_hamiltonian.py`** | Roadmap Stage 2: exact (sparse, parity-resolved) pair Hamiltonian up to about 20 pairs, entanglement measures, and the matrix-free `State` Trotter evolution checked against it. | `sector_hamiltonian()`, `ground_state()`, `parity_gap()`, `concurrence()`, `chsh_max()`, `entanglement_entropy()`, `trotter2()`, `tau_scan()`. |
+| **`entanglement_geometry.py`** | Roadmap Stage 4: mutual information against distance (with shuffled-position null and partial correlation given `abs(W)`), entanglement entropy against boundary and volume. | `mutual_information()`, `geometry_vs_null()`, `fit_area_volume()`, `random_regions()`, `measure()`. |
+| **`make_figures_entanglement.py`** | Redraws the Stage 2 and Stage 4 figures. | `fig_tau_scan`, `fig_geometry`. |
 
 ---
 
 ## Status
 
-Checked by running the code: `spectremodel.py` (11 tests), `quantumspectremodel.py` (6 tests) and `tri_spectre_qc.py` (3 tests) all pass with `--tests-only`. What the code does now:
+Checked by running the code: `spectremodel.py` (11 tests), `quantumspectremodel.py` (6 tests), `tri_spectre_qc.py` (3 tests), `pair_hamiltonian.py` (6 tests) and `entanglement_geometry.py` (6 tests) all pass with `--tests-only`. What the code does now:
 
 * **Exact patches.** Tiles are placed by the exact integer substitution of `spectre_exact.py` (vendored from `brentharts/spectre`), so patches are edge-matched Spectre tilings. An earlier version placed children by sector offsets and counted a Mystic as one tile, which is why it reported 8, 63 and 496 tiles for the sequence 9, 71, 559; a Mystic is two tiles.
 * **Qubits on pairs.** One qubit per bump-and-dent pair (two tiles whose flat 14th vertices meet alone), not per vertex: a tile can carry the bit only with a partner, and a qubit per vertex of a 559-tile patch is far beyond a state simulator. The 9-tile patch has no pair (pair counts 0, 0, 6, 82, 804 at generations 0 to 4), so the default tiers are generations 2, 3, 4 (71, 559, 4401 tiles); the number of qubits per tier is a budget, with the pairs nearest the centre first.
 * **Dynamics and feedback.** The tiers evolve under `H = -J sum X + kappa sum W_pq Z_p Z_q` (dipole couplings `W` from the exact tile centroids), by Trotter steps checked against dense diagonalisation. `<Z_p>` then moves the flat vertex of both tiles of pair `p` by `+-h<Z_p>`, which changes their areas by `+-a h <Z_p>` exactly and keeps the area of the pair fixed. The old feedback could never act (a Hadamard on every qubit makes `<Z>` zero for all later RZ and CZ gates) and it fed `<Z>` into `curve_strength`, which cannot change the area at all: the area of a point-symmetric Bezier tile is independent of `k`.
 * **Weak couplings.** At the default scale (`J = 1`, `kappa = 0.09`) the geometric couplings are about 1% of the tunnelling, so the pairs behave almost independently; see the figures section.
+* **Entanglement of the ground state (Stage 2, exact up to 16 pairs).** With `tau = J / (kappa w)` (`w` the rms nearest-neighbour coupling, about 0.05), the ground state is the even cat state for `tau` below about 0.3, an ordered phase whose cat-doublet splitting falls from 1.6e-4 (6 pairs) to 2e-13 (16 pairs), and a paramagnet above about 1. The largest pairwise concurrence peaks at an intermediate `tau` of 0.4 to 1.2 for every size from 6 to 14 pairs, but the peak does not grow with size (0.38, 0.52, 0.65, 0.51, 0.44, 0.35 for 6 to 16 pairs) and the CHSH value above 2 (up to 2.33 at 10 pairs) is gone by 16 pairs. It is a finite-size effect, not a phase. The default `J = 1`, `kappa = 0.09` is `tau` of about 200, deep in the paramagnet; the interesting window is `J` of about 0.002 to 0.005.
+* **Geometry from entanglement (Stage 4, exact up to 20 pairs).** Mutual information between pairs falls with their distance (Spearman rho of -0.62 to -0.67 at `tau = 1` for 12 to 20 pairs, about -0.85 in the paramagnet) against a shuffled-position null of 0.00 +- 0.13. A large part of this is inherited from the Hamiltonian, whose couplings are built from the same positions; controlling for `abs(W)` leaves a partial rho of -0.3 to -0.4 at `tau = 1` (2.5 to 4 standard deviations from the null). Entropy of random regions follows the boundary better than the volume (rms 0.19 against 0.23 bits at 16 pairs, 0.23 against 0.29 at 20), but 20 qubits cannot establish a scaling law. Not a result about spacetime: see Roadmap, Stage 4.
 * **Still a toy.** The couplings, the tunnelling `J`, the cross-tier bridges and the Trotter schedule are definitions of this model, not derivations; see [ROADMAP_QUANTUM_GRAVITY.md](ROADMAP_QUANTUM_GRAVITY.md).
 
 ---
@@ -101,6 +106,15 @@ Checked by running the code: `spectremodel.py` (11 tests), `quantumspectremodel.
 | ![dynamics](figures/fig_dynamics.png) | **`fig_dynamics.png`** Trotter evolution against exact diagonalisation on four pairs, the default weak-coupling scale, and the area feedback. |
 | ![couplings](figures/fig_couplings.png) | **`fig_couplings.png`** Dipole couplings `W_pq` of 120 central pairs of generation 4: both signs, falling roughly as `r^-3` (fitted slope about -2.85). |
 | ![counts](figures/fig_pair_counts.png) | **`fig_pair_counts.png`** Tiles and pairs per generation (1 to 34649; 6 to 7012) and `P_k/N_k` rising toward `rho_0 = (5 - sqrt(15))/5 = 0.2254`. |
+
+### Entanglement figures (Stages 2 and 4)
+
+`python3 make_figures_entanglement.py` (about 15 s) draws two more into `figures/`.
+
+| Figure | Shows |
+| :--- | :--- |
+| ![tau](figures/fig_stage2_tau_scan.png) | **`fig_stage2_tau_scan.png`** Largest pairwise concurrence, best CHSH value and cat-doublet splitting against `tau` for 8 to 14 central pairs of generation 3. The concurrence peak and the Bell violation do not survive growth in size. |
+| ![geometry](figures/fig_stage4_geometry.png) | **`fig_stage4_geometry.png`** 16 central pairs of generation 4: mutual information against distance at `tau` = 1 and 3 with the shuffled-position control, and the entropy of random regions against the boundary they cut. |
 
 ### 3D figures
 
@@ -136,10 +150,11 @@ Checked by running the code: `spectremodel.py` (11 tests), `quantumspectremodel.
 Install the Python dependencies required by the simulator and geometry engine:
 
 ```bash
-pip install numpy bitarray pyfunctional
+pip install numpy bitarray pyfunctional scipy matplotlib
 ```
 
-* `numpy` & `matplotlib` (optional, for CLI plotting): Used by `spectremodel.py` for Bezier evaluation, Gauss-Legendre exact area quadrature, and rendering.
+* `numpy` & `matplotlib`: Used by `spectremodel.py` for Bezier evaluation, Gauss-Legendre exact area quadrature, and rendering; `matplotlib` also draws the figures.
+* `scipy`: Sparse exact diagonalisation (`pair_hamiltonian.py`) and rank statistics and Delaunay links (`entanglement_geometry.py`).
 * `bitarray` & `pyfunctional`: Used by `state.py` for immutable `frozenbitarray` basis keys and functional `seq` state transformations.
 
 ---
@@ -167,6 +182,16 @@ Instantiate `QC-71`, `QC-559` and `QC-4401`, evolve the pair qubits under the di
 ```bash
 python3 tri_spectre_qc.py
 python3 tri_spectre_qc.py --tests-only
+```
+
+### 4. Stage 2 and Stage 4: ground-state entanglement
+Exact diagonalisation of the pair Hamiltonian, checked against the matrix-free `State` Trotter evolution, and the entanglement-geometry measurements (these need `scipy`; the figures need `matplotlib`; both are in `pyproject.toml`):
+
+```bash
+python3 pair_hamiltonian.py --tests-only      # 6 checks
+python3 pair_hamiltonian.py 10                # tau scan on 10 central pairs
+python3 entanglement_geometry.py --tests-only # 6 checks
+python3 entanglement_geometry.py 12 14 16     # mutual information and area/volume fits
 ```
 
 ### Example Python Usage
