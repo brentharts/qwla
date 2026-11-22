@@ -542,6 +542,17 @@ def test_bit_at_b_changes_area_by_h_and_keeps_the_pair():
         assert abs(A.area() - (base + h * z)) < 1e-9 and abs(B.area() - (base - h * z)) < 1e-9
 
 
+def test_swapped_class_is_the_mystic_with_the_closed_form_density_and_areas():
+    # Cross-check with `pyCICY.theories.spectre` (brentharts/CICY), which derives these in exact Q(sqrt15), Q(sqrt3):
+    # the Mystic fraction of all tiles is (5 - sqrt15)/10 and A(1, sqrt3) = 8 sqrt3, A(sqrt3, 1) = 10 sqrt3.
+    r3, r15 = math.sqrt(3.0), math.sqrt(15.0)
+    for gen, total, swapped in ((2, 71, 8), (3, 559, 63), (4, 4401, 496)):
+        assert abs(swapped / total - (5 - r15) / 10) < 4e-5 / 10 ** (gen - 2) + 1e-7, (gen, swapped / total)
+    assert abs(swapped / total - (5 - r15) / 10) < 1e-8
+    assert abs(tile_area_ab(1.0, r3) - 8 * r3) < 1e-12 and abs(tile_area_ab(r3, 1.0) - 10 * r3) < 1e-12
+    assert abs(tile_area_ab(r3, 1.0) - tile_area_ab(1.0, r3) - r3 * (r3 ** 2 - 1.0)) < 1e-12      # mystic asymmetry sqrt3 (b^2 - a^2)
+
+
 def run_tests(verbose: bool = True) -> int:
     tests = [(n, f) for n, f in sorted(globals().items()) if n.startswith("test_") and callable(f)]
     failed = 0

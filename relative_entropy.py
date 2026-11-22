@@ -182,6 +182,138 @@ def test_flow_ground_states_are_second_order_and_monotone():
     assert 1.9 < first < 2.1                                                     # the area change is first order
 
 
+
+# ---- area observables of the pair qubits against the relative entropy ----------------------
+#
+# The Nariai relation compares two quantities that are both quadratic in the amplitude of an
+# excitation. The model's own area observables are: the bump tile of a pair, A0 + h Z_i (linear in
+# the bit, exactly: `quantumspectremodel.set_pair_bit`); its partner, A0 - h Z_i; their sum, which is
+# the neutral ledger and is constant for every state; and the squared deviation of the region's bump
+# area, Q_A = (h sum_{i in A} Z_i)^2, which is the only one that is quadratic in the state amplitude.
+# `rotate_region` makes a family of excitations |psi(alpha)> = exp(-i alpha sum_i c_i Y_i)|psi_0> (a
+# local unitary on the region, so S(rho_A) is unchanged and S_rel = Delta<K_A> exactly).
+
+def rotate_region(psi: np.ndarray, n: int, region: Sequence[int], alpha: float, c: Sequence[float]) -> np.ndarray:
+    """Apply exp(-i alpha c_q Y_q) (a real rotation) to each qubit q of `region`."""
+    out = psi.copy()
+    for q, cq in zip(region, c):
+        t = out.reshape([2] * n)
+        t0, t1 = np.take(t, 0, axis=q), np.take(t, 1, axis=q)
+        co, si = math.cos(alpha * cq), math.sin(alpha * cq)
+        out = np.stack([co * t0 + si * t1, -si * t0 + co * t1], axis=q).reshape(-1)
+    return out
+
+
+def z_table(n: int) -> np.ndarray:
+    idx = np.arange(2 ** n)
+    return np.array([1.0 - 2.0 * ((idx >> (n - 1 - q)) & 1) for q in range(n)])
+
+
+def area_observables(psi0: np.ndarray, psi: np.ndarray, n: int, region: Sequence[int], h: float) -> Dict[str, float]:
+    """Change between two states of the area observables of the pairs in `region` (units of h)."""
+    Z = z_table(n)
+    reg = list(region)
+    p0, p1 = np.abs(psi0) ** 2, np.abs(psi) ** 2
+    dz = (Z[reg] @ p1) - (Z[reg] @ p0)
+    q0, q1 = (h * Z[reg].sum(axis=0)) ** 2 @ p0, (h * Z[reg].sum(axis=0)) ** 2 @ p1
+    return {"dA_bump": float(h * dz.sum()), "dA_partner": float(-h * dz.sum()), "dA_pair_total": 0.0, "dQ": float(q1 - q0)}
+
+
+def modular_hamiltonian(rho: np.ndarray, floor: float = 1e-13) -> np.ndarray:
+    w, U = np.linalg.eigh(rho)
+    return (U[:, w > floor] * (-np.log(w[w > floor]))) @ U[:, w > floor].conj().T
+
+
+def region_hamiltonian(K: np.ndarray, J: float, region: Sequence[int]) -> np.ndarray:
+    """-J sum X + sum K_pq Z_p Z_q restricted to the qubits of `region` (the operator H_A)."""
+    m = len(region)
+    X, Z, I = np.array([[0, 1], [1, 0.0]]), np.diag([1.0, -1.0]), np.eye(2)
+
+    def op(d):
+        M = np.array([[1.0]])
+        for q in range(m):
+            M = np.kron(M, d.get(q, I))
+        return M
+    H = -J * sum(op({q: X}) for q in range(m))
+    for p in range(m):
+        for q in range(p + 1, m):
+            H = H + K[region[p], region[q]] * op({p: Z, q: Z})
+    return H
+
+
+def modular_fit(KA: np.ndarray, HA: np.ndarray) -> Dict[str, float]:
+    """K_A = beta H_A + const: the best beta and the relative residual (0 would be Bisognano-Wichmann-like)."""
+    d = KA.shape[0]
+    Kc, Hc = KA - np.trace(KA) / d * np.eye(d), HA - np.trace(HA) / d * np.eye(d)
+    beta = float(np.real(np.trace(Kc @ Hc) / np.trace(Hc @ Hc)))
+    return {"beta_eff": beta, "residual": float(np.linalg.norm(Kc - beta * Hc) / np.linalg.norm(Kc))}
+
+
+def geometry_area_change(generation: int, n: int, flow_tau: float, z_before: np.ndarray, z_after: np.ndarray,
+                         region: Sequence[int]) -> Dict[str, float]:
+    """
+    The same area changes read from the actual tiles: set each pair's bit to <Z> (the displacement of
+    P8 is z h, `set_pair_bit`) in the patch built at b(flow_tau) and add up tile areas.
+    """
+    from quantumspectremodel import assign_qubits_to_patch, build_substitution_tier, pair_qubit_tiles, set_pair_bit
+    fp = ph.flow_parameters(flow_tau)
+    patch = build_substitution_tier(generation, b=fp.b)
+    assign_qubits_to_patch(patch, max_qubits=n)
+    tiles = pair_qubit_tiles(patch)
+
+    def areas(z):
+        a = b = 0.0
+        for q in region:
+            A, B = tiles[q]
+            set_pair_bit(A, B, float(z[q]), fp.h)
+            a, b = a + A.area(), b + B.area()
+        return a, b
+    a0, b0 = areas(z_before)
+    a1, b1 = areas(z_after)
+    return {"dA_bump": a1 - a0, "dA_partner": b1 - b0, "dA_pair_total": (a1 + b1) - (a0 + b0)}
+
+
+def test_local_unitary_first_law_and_quadratic_scaling():
+    n, flow = 8, 0.05
+    psi0 = flow_ground_state(3, n, flow)
+    h = ph.flow_parameters(flow).h
+    region, c = (0, 1, 2), [0.8, 1.3, -0.6]
+    rows = []
+    for a in (0.04, 0.02):
+        ps = rotate_region(psi0, n, region, a, c)
+        r1, r0 = reduced_density(ps, n, region), reduced_density(psi0, n, region)
+        t = first_law_terms(r1, r0)
+        assert abs(t["delta_S"]) < 1e-10 and abs(t["residual"]) < 1e-9          # unitary inside A: S_rel = Delta<K_A>
+        rows.append((t["S_rel"], area_observables(psi0, ps, n, region, h)))
+    assert 3.8 < rows[0][0] / rows[1][0] < 4.2                                      # S_rel ~ alpha^2
+    assert 1.9 < rows[0][1]["dA_bump"] / rows[1][1]["dA_bump"] < 2.1                # the bump-tile area ~ alpha
+    assert 3.8 < rows[0][1]["dQ"] / rows[1][1]["dQ"] < 4.2                          # the squared deviation ~ alpha^2
+
+
+def test_tile_geometry_reproduces_the_area_observables_and_the_neutral_ledger():
+    n, flow = 6, 0.05
+    psi0 = flow_ground_state(3, n, flow)
+    fp = ph.flow_parameters(flow)
+    ps = rotate_region(psi0, n, (0, 1, 2), 0.05, [1.0, 0.7, -1.1])
+    Z = z_table(n)
+    z0, z1 = Z @ (np.abs(psi0) ** 2), Z @ (np.abs(ps) ** 2)
+    geo = geometry_area_change(3, n, flow, z0, z1, (0, 1, 2))
+    mod = area_observables(psi0, ps, n, (0, 1, 2), fp.h)
+    assert abs(geo["dA_bump"] - mod["dA_bump"]) < 1e-9 and abs(geo["dA_partner"] + mod["dA_bump"]) < 1e-9
+    assert abs(geo["dA_pair_total"]) < 1e-9 and abs(mod["dA_bump"]) > 1e-3        # neutral in total, not in the parts
+
+
+def test_modular_hamiltonian_is_not_the_region_hamiltonian():
+    n, flow = 8, 0.05
+    psi0 = flow_ground_state(3, n, flow)
+    fp = ph.flow_parameters(flow)
+    K = ph.flow_couplings(3, n, flow)
+    for region in ((0, 1), (0, 1, 2, 3)):
+        KA = modular_hamiltonian(reduced_density(psi0, n, region))
+        fit = modular_fit(KA, region_hamiltonian(K, fp.J, region))
+        assert fit["beta_eff"] > 0 and 0.05 < fit["residual"] < 0.9, fit            # positive weight, not proportional
+
+
 def run_tests(verbose: bool = True) -> int:
     tests = [(n, f) for n, f in sorted(globals().items()) if n.startswith("test_") and callable(f)]
     failed = 0
