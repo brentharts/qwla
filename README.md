@@ -72,7 +72,8 @@ This project connects a matrix-free, functional quantum state simulator (`State`
 | **`state.py`** | Matrix-free functional quantum state simulator (the QWLA `State`). | `State` (`x`, `z`, `s`, `t`, `phase`, `rz`, `h`, `cx`, `cz`, `ccx`, `expectation_z`, safe `measure`). |
 | **`spectre_exact.py`** | Exact integer (`Z[zeta_12]`) Spectre substitution, vendored from `brentharts/spectre`. | `build()`, `outline()`. |
 | **`quantumspectremodel.py`** | Exact patches as `Tile` objects, bump-and-dent pairs, pair qubits and the bit-to-geometry map. | `SubstitutionPatch`, `build_substitution_tier()`, `find_pairs()`, `assign_qubits_to_patch()`, `pair_couplings()`, `set_pair_bit()`. |
-| **`make_figures.py`** | Redraws the figures in `figures/`. | `fig_tiers`, `fig_bit`, `fig_dynamics`, `fig_couplings`, `fig_counts`. |
+| **`make_figures.py`** | Redraws the 2D figures in `figures/`. | `fig_tiers`, `fig_bit`, `fig_dynamics`, `fig_couplings`, `fig_counts`. |
+| **`make_figures_3d.py`** | Redraws the 3D figures in `figures/`. | `fig_stack`, `fig_spacetime`, `fig_relief`, `fig_lift`. |
 | **`tri_spectre_qc.py`** | Coupled three-tier network: pair-qubit Hamiltonian, Trotter evolution, bridges, geometry feedback. | `SpectreQuantumComputer`, `TriSpectreNetwork`, `trotter_step()`, `exact_expectation_z()`, `step_coupled_cycle()`. |
 
 ---
@@ -100,6 +101,17 @@ Checked by running the code: `spectremodel.py` (11 tests), `quantumspectremodel.
 | ![dynamics](figures/fig_dynamics.png) | **`fig_dynamics.png`** Trotter evolution against exact diagonalisation on four pairs, the default weak-coupling scale, and the area feedback. |
 | ![couplings](figures/fig_couplings.png) | **`fig_couplings.png`** Dipole couplings `W_pq` of 120 central pairs of generation 4: both signs, falling roughly as `r^-3` (fitted slope about -2.85). |
 | ![counts](figures/fig_pair_counts.png) | **`fig_pair_counts.png`** Tiles and pairs per generation (1 to 34649; 6 to 7012) and `P_k/N_k` rising toward `rho_0 = (5 - sqrt(15))/5 = 0.2254`. |
+
+### 3D figures
+
+`python3 make_figures_3d.py` (about 2 minutes) draws four more into `figures/`.
+
+| Figure | Shows |
+| :--- | :--- |
+| ![stack](figures/fig3d_tier_stack.png) | **`fig3d_tier_stack.png`** The three tiers as stacked planes (each scaled to the same width, so sizes are not to scale) with the CX and CZ bridges of `entangle_across_computers` drawn between the anchor pair qubits. |
+| ![spacetime](figures/fig3d_spacetime.png) | **`fig3d_spacetime.png`** Time as the vertical axis: a worldline per pair qubit over the generation-2 patch, coloured by `<Z_p>`, with the two tiles of one pair outlined at five times. The `P8` displacement is small at this `h`, so the outlines change little. |
+| ![relief](figures/fig3d_area_relief.png) | **`fig3d_area_relief.png`** The bit as relief: each tile of a pair is lifted or lowered by its area change `A - A0` at three times; tiles in no pair stay at 0. |
+| ![lift](figures/fig3d_lift.png) | **`fig3d_lift.png`** The generation-3 patch as points of the lift lattice `Z[zeta_12] = Z^4` (left: coordinates `p, q, r`, colour `s`; right: plane position against `s`), with the 82 flat vertices marked. It shows how the 2D tiling sits inside the four-dimensional lattice; it does not draw the windows. |
 
 **A caution from the dynamics figure.** The geometric couplings are small: `|W| <= 0.06` for the central pairs of generation 2, so with `J = 1` and `kappa = (a h)^2 = 0.09` they are about 1% of the tunnelling and the four pairs oscillate identically. The default network therefore behaves like independent qubits. The left and right panels use `J = 0.05`, `kappa = 1` (both are definitions of the model) to let the couplings act; whether a physical choice makes them comparable is an open modelling question (Roadmap, Stage 2).
 
