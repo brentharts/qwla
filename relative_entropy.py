@@ -381,6 +381,97 @@ def test_thermal_reference_first_law_global_exact_regional_only_when_hot():
     assert cold["regional_ratio"] < 0.9 and cold["residual"] > 0.2 and cold["beta_eff"] < 0.9 * 5.0
 
 
+
+# ---- the structure of the modular Hamiltonian in the cold (ground-state) regime -----------------
+#
+# `thermal_first_law` shows K_A = beta H_A when the state is hot. In the ground state K_A is still
+# mostly one- and two-body (X and ZZ, the terms of H_A) but with position dependent weights; the
+# Bisognano-Wichmann picture would make the weight of X_i a local inverse temperature that grows with
+# the depth of qubit i inside the region. `local_beta_profile` measures that.
+
+_PAULI = [np.eye(2), np.array([[0, 1], [1, 0.0]]), np.array([[0, -1j], [1j, 0]]), np.diag([1.0, -1.0])]   # I, X, Y, Z
+
+
+def pauli_coefficients(M: np.ndarray, m: int) -> Dict[Tuple[int, ...], float]:
+    """Coefficients c_s = Tr(P_s M)/2^m of a Hermitian M on m qubits in the Pauli basis (0=I, 1=X, 2=Y, 3=Z)."""
+    import itertools
+    out: Dict[Tuple[int, ...], float] = {}
+    for s in itertools.product(range(4), repeat=m):
+        P = np.array([[1.0]])
+        for k in s:
+            P = np.kron(P, _PAULI[k])
+        out[s] = float(np.real(np.trace(P.conj().T @ M)) / 2 ** m)
+    return out
+
+
+def pauli_weight_fractions(c: Dict[Tuple[int, ...], float]) -> Dict[int, float]:
+    """Share of the squared norm of the traceless part carried by strings of each weight (non-identity sites)."""
+    tot = sum(v * v for k, v in c.items() if any(k))
+    out: Dict[int, float] = {}
+    for k, v in c.items():
+        if any(k):
+            w = sum(1 for x in k if x)
+            out[w] = out.get(w, 0.0) + v * v / tot
+    return dict(sorted(out.items()))
+
+
+def local_beta_profile(psi: np.ndarray, n: int, regions: Sequence[Sequence[int]], mids: np.ndarray, J: float) -> np.ndarray:
+    """
+    Rows (depth, beta_loc, region size): beta_loc = c_X / (-J) for each qubit of each region, where c_X is the
+    coefficient of X_i in K_A = -ln rho_A, and depth is the distance from the pair's position to the nearest pair outside.
+    """
+    rows = []
+    for reg in regions:
+        reg = list(reg)
+        m = len(reg)
+        c = pauli_coefficients(modular_hamiltonian(reduced_density(psi, n, reg)), m)
+        outside = [q for q in range(n) if q not in reg]
+        for i, q in enumerate(reg):
+            key = tuple(1 if j == i else 0 for j in range(m))
+            rows.append((min(float(np.linalg.norm(mids[q] - mids[o])) for o in outside), c[key] / (-J), m))
+    return np.array(rows)
+
+
+def test_pauli_expansion_reconstructs_and_hot_beta_loc_equals_beta():
+    rng = np.random.default_rng(3)
+    A = rng.normal(size=(8, 8)) + 1j * rng.normal(size=(8, 8))
+    M = A + A.conj().T
+    c = pauli_coefficients(M, 3)
+    import itertools
+    R = sum(v * np.kron(np.kron(_PAULI[s[0]], _PAULI[s[1]]), _PAULI[s[2]]) for s, v in c.items())
+    assert np.allclose(R, M, atol=1e-12)
+    # a hot Gibbs state of the region itself has K_A = beta H_A, so c_X / (-J) = beta exactly
+    fp = ph.flow_parameters(0.05)
+    K = ph.flow_couplings(3, 4, 0.05)
+    H = region_hamiltonian(K, fp.J, (0, 1, 2, 3))
+    w, U = np.linalg.eigh(H)
+    for beta in (0.05, 0.3):
+        p = np.exp(-beta * w)
+        rho = (U * (p / p.sum())) @ U.T
+        cc = pauli_coefficients(modular_hamiltonian(rho), 4)
+        assert all(abs(cc[tuple(1 if j == i else 0 for j in range(4))] / (-fp.J) - beta) < 1e-9 for i in range(4))
+
+
+def test_ground_state_modular_hamiltonian_depth_profile():
+    from scipy.stats import spearmanr
+    from entanglement_geometry import build_cluster, compact_regions
+    n = 12
+    _, _, mids, _ = build_cluster(3, n)
+    psi = flow_ground_state(3, n, 0.05)
+    fp = ph.flow_parameters(0.05)
+    regs = [r for r in compact_regions(mids, 5) if len(r) in (4, 5)]
+    prof = local_beta_profile(psi, n, regs, mids, fp.J)
+    assert len(prof) > 60
+    rho_s = spearmanr(prof[:, 0], prof[:, 1])[0]
+    assert rho_s > 0.4, rho_s                                                        # deeper qubits: larger local beta
+    rng = np.random.default_rng(0)
+    null = [spearmanr(rng.permutation(prof[:, 0]), prof[:, 1])[0] for _ in range(100)]
+    assert rho_s > 4 * np.std(null)
+    KA = modular_hamiltonian(reduced_density(psi, n, regs[0]))
+    fr = pauli_weight_fractions(pauli_coefficients(KA, len(regs[0])))
+    assert fr[1] + fr[2] > 0.7, fr                                                    # mostly one- and two-body
+
+
 def run_tests(verbose: bool = True) -> int:
     tests = [(n, f) for n, f in sorted(globals().items()) if n.startswith("test_") and callable(f)]
     failed = 0
