@@ -85,7 +85,7 @@ This project connects a matrix-free, functional quantum state simulator (`State`
 
 ## Status
 
-Checked by running the code: `spectremodel.py` (11 tests), `quantumspectremodel.py` (12 tests), `tri_spectre_qc.py` (10 tests), `pair_hamiltonian.py` (10 tests) and `entanglement_geometry.py` (6 tests) `qmc_pairs.py` (4 tests) and `relative_entropy.py` (8 tests) all pass with `--tests-only`. What the code does now:
+Checked by running the code: `spectremodel.py` (11 tests), `quantumspectremodel.py` (12 tests), `tri_spectre_qc.py` (10 tests), `pair_hamiltonian.py` (10 tests) and `entanglement_geometry.py` (6 tests) `qmc_pairs.py` (4 tests) and `relative_entropy.py` (9 tests) all pass with `--tests-only`. What the code does now:
 
 * **Exact patches.** Tiles are placed by the exact integer substitution of `spectre_exact.py` (vendored from `brentharts/spectre`), so patches are edge-matched Spectre tilings. An earlier version placed children by sector offsets and counted a Mystic as one tile, which is why it reported 8, 63 and 496 tiles for the sequence 9, 71, 559; a Mystic is two tiles.
 * **Qubits on pairs.** One qubit per bump-and-dent pair (two tiles whose flat 14th vertices meet alone), not per vertex: a tile can carry the bit only with a partner, and a qubit per vertex of a 559-tile patch is far beyond a state simulator. The 9-tile patch has no pair (pair counts 0, 0, 6, 82, 804 at generations 0 to 4), so the default tiers are generations 2, 3, 4 (71, 559, 4401 tiles); the number of qubits per tier is a budget, with the pairs nearest the centre first.
@@ -195,7 +195,7 @@ python3 pair_hamiltonian.py --tests-only      # 10 checks
 python3 pair_hamiltonian.py 10                # tau scan on 10 central pairs
 python3 qmc_pairs.py                          # 4 checks (sampler against exact diagonalisation, about 10 s)
 python3 qmc_stage4.py run 3 82 0.05 25 1 20000   # gen, pairs, flow, beta, seed, sweeps; slow, see the roadmap for the status
-python3 relative_entropy.py --tests-only      # 8 checks
+python3 relative_entropy.py --tests-only      # 9 checks
 python3 relative_entropy.py 8 10 12 14       # S_rel of regions: boundary vs volume fits
 python3 entanglement_geometry.py --tests-only # 6 checks
 python3 entanglement_geometry.py 12 14 16     # mutual information and area/volume fits

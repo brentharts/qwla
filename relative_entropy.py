@@ -314,6 +314,73 @@ def test_modular_hamiltonian_is_not_the_region_hamiltonian():
         assert fit["beta_eff"] > 0 and 0.05 < fit["residual"] < 0.9, fit            # positive weight, not proportional
 
 
+
+# ---- a thermal reference: where does the Nariai first law hold? ---------------------------------
+#
+# With a Gibbs reference sigma = e^{-beta H}/Z and a unitary excitation, Delta S = 0 and the first law
+# is exact for the whole system: S_rel = beta Delta<H>. The Nariai relation is that statement for a
+# region (K_A = beta H_A, Bisognano-Wichmann). `thermal_first_law` measures how far it holds in the
+# model as the temperature falls.
+
+def gibbs_state(K: np.ndarray, J: float, beta: float) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Dense Gibbs state of H = -J sum X + sum K ZZ; returns (sigma, H, eigenvalues). Small n only."""
+    H = ph.build_hamiltonian(K, J, 1.0).toarray()
+    w, U = np.linalg.eigh(H)
+    p = np.exp(-beta * (w - w[0]))
+    p /= p.sum()
+    return (U * p) @ U.T, H, w
+
+
+def reduce_mixed(rho: np.ndarray, n: int, region: Sequence[int]) -> np.ndarray:
+    reg = list(region)
+    rest = [q for q in range(n) if q not in reg]
+    t = rho.reshape([2] * (2 * n)).transpose(reg + rest + [n + q for q in reg] + [n + q for q in rest])
+    t = t.reshape(2 ** len(reg), 2 ** len(rest), 2 ** len(reg), 2 ** len(rest))
+    return np.einsum("aibi->ab", t)
+
+
+def rotation_matrix(n: int, region: Sequence[int], alpha: float, c: Sequence[float]) -> np.ndarray:
+    M = np.eye(2 ** n)
+    for q, cq in zip(region, c):
+        R = np.array([[math.cos(alpha * cq), math.sin(alpha * cq)], [-math.sin(alpha * cq), math.cos(alpha * cq)]])
+        M = np.kron(np.kron(np.eye(2 ** q), R), np.eye(2 ** (n - q - 1))) @ M
+    return M
+
+
+def thermal_first_law(generation: int, n: int, flow_tau: float, beta: float, region: Sequence[int],
+                      alpha: float = 0.03, c: Optional[Sequence[float]] = None) -> Dict[str, float]:
+    """
+    Global S_rel / (beta Delta E) (exactly 1), regional S_rel / (beta Delta E_A), and the fit
+    K_A = beta_eff H_A + const of the reference's reduced state, for a local unitary on `region`.
+    """
+    fp = ph.flow_parameters(flow_tau)
+    K = ph.flow_couplings(generation, n, flow_tau)
+    c = list(c) if c is not None else [1.0, 0.7, -0.6, 1.2][: len(region)]
+    sigma, H, _ = gibbs_state(K, fp.J, beta)
+    V = rotation_matrix(n, region, alpha, c)
+    rho = V @ sigma @ V.T
+    HA = region_hamiltonian(K, fp.J, region)
+    sA, rA = reduce_mixed(sigma, n, region), reduce_mixed(rho, n, region)
+    S_glob = relative_entropy(rho, sigma, floor=1e-14)
+    dE = float(np.trace((rho - sigma) @ H))
+    S_A, dEA = relative_entropy(rA, sA, floor=1e-14), float(np.trace((rA - sA) @ HA))
+    fit = modular_fit(modular_hamiltonian(sA), HA)
+    return {"beta": beta, "global_ratio": S_glob / (beta * dE) if math.isfinite(S_glob) else math.nan,
+            "regional_ratio": S_A / (beta * dEA) if dEA else math.nan, "S_A": S_A, "dE_A": dEA, **fit}
+
+
+def test_thermal_reference_first_law_global_exact_regional_only_when_hot():
+    kw = dict(generation=3, n=6, flow_tau=0.05, region=(0, 1, 2))
+    hot = thermal_first_law(beta=0.2, **kw)
+    mid = thermal_first_law(beta=1.0, **kw)
+    cold = thermal_first_law(beta=5.0, **kw)
+    assert all(abs(t["global_ratio"] - 1.0) < 1e-6 for t in (hot, mid, cold))      # Delta S = 0: exact, any beta
+    assert abs(hot["regional_ratio"] - 1.0) < 0.05 and hot["residual"] < 0.05       # K_A ~ beta H_A when hot
+    assert abs(hot["beta_eff"] - 0.2) < 0.02
+    assert abs(mid["regional_ratio"] - 1.0) > 0.05                                  # and it degrades as it cools
+    assert cold["regional_ratio"] < 0.9 and cold["residual"] > 0.2 and cold["beta_eff"] < 0.9 * 5.0
+
+
 def run_tests(verbose: bool = True) -> int:
     tests = [(n, f) for n, f in sorted(globals().items()) if n.startswith("test_") and callable(f)]
     failed = 0
