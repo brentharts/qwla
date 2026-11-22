@@ -1,93 +1,80 @@
 """
-Step 2: Substitution hierarchy (9, 71, 559 tiles) and vertex-to-qubit mapping
-built on top of spectremodel.Tile.
+Exact Spectre substitution patches as `spectremodel.Tile` objects, with bump-and-dent
+pairs and one qubit per pair.
+
+What changed from the first version (see ROADMAP_QUANTUM_GRAVITY.md, Stages 0 and 1):
+
+* The patches are the exact edge-matched Spectre tilings of `spectre_exact.py`
+  (integer arithmetic on Z[zeta_12]), not tiles placed by sector offsets.
+* A Mystic is two tiles. The old code counted it as one object, which is why it
+  reported 8, 63, 496 "tiles" for the sequence 9, 71, 559.
+* Qubits sit on bump-and-dent pairs (two tiles whose flat 14th vertices meet alone),
+  because on a Spectre tiling a tile can carry the bit only together with a partner.
+  The 9-tile patch has no pair, so the default tiers are generations 2, 3, 4
+  (71, 559, 4401 tiles; 6, 82, 804 pairs).
+* The bit acts on the geometry exactly: displacing the flat vertex P8 by +-h along
+  the normal of the chord P7-P9 changes the area by +-a*h, and the two tiles of a
+  pair move oppositely, so the area of the pair is conserved (the "area ledger").
+
+Run `python3 quantumspectremodel.py --tests-only` for the checks.
 """
 
 import math
-import numpy as np
+import sys
+from collections import defaultdict
 from dataclasses import dataclass, field
-from typing import Dict, Iterable, List, Optional, Tuple
-from spectremodel import N_EDGES, Tile, edge_vectors
+from typing import Dict, List, Optional, Sequence, Tuple
 
+import numpy as np
 
-def _rot2d(vec: np.ndarray, angle_rad: float) -> np.ndarray:
-    c, s = math.cos(angle_rad), math.sin(angle_rad)
-    return np.array([c * vec[0] - s * vec[1], s * vec[0] + c * vec[1]], dtype=float)
+import spectre_exact as se
+from spectremodel import Tile
+
+FLAT_EXACT = 10   # index of the flat vertex in the exact outline
+FLAT_MODEL = 8    # the same vertex, P8, in spectremodel.Tile
+SHIFT = FLAT_EXACT - FLAT_MODEL  # model vertex i is exact vertex (i + 2) % 14
+
+_SPECIES = {"Single": "Delta", "Mystic": "Gamma"}
+_KIND = {"p": "Single", "g1": "Mystic", "g2": "Mystic"}
 
 
 @dataclass
 class SubstitutionPatch:
-    """Collection of Spectre tiles at a given substitution generation k."""
+    """The tiles of a Spectre patch at substitution generation k, with pairs and qubits."""
 
     generation: int
     tiles: List[Tile]
+    species: str = "Delta"
+    pairs: List[Tuple[int, int]] = field(default_factory=list)       # (tile A, tile B), A < B
+    pair_order: List[int] = field(default_factory=list)              # indices into pairs, centre first
     node_to_vertices: Dict[int, List[Tuple[int, int]]] = field(default_factory=dict)
     vertex_to_node: Dict[Tuple[int, int], int] = field(default_factory=dict)
     node_to_qubit: Dict[int, int] = field(default_factory=dict)
+    pair_to_qubit: Dict[int, int] = field(default_factory=dict)     # pair index -> qubit
 
     @property
     def n_tiles(self) -> int:
         return len(self.tiles)
 
     @property
+    def n_pairs(self) -> int:
+        return len(self.pairs)
+
+    @property
     def n_qubits(self) -> int:
-        return len(self.node_to_qubit)
+        return len(self.node_to_qubit) + len(self.pair_to_qubit)
 
 
-def _apply_rigid_transform(
-    tile: Tile, offset: np.ndarray, angle_rad: float, generation: int, kind: str, parent_id: int
-) -> Tile:
-    """Return a copy of `tile` rotated and translated in 2D with metadata stored in `.data`."""
-    out = tile.copy()
-    for v in out.vertices:
-        v.position = _rot2d(np.asarray(v.position, dtype=float), angle_rad) + offset
-    out.data["kind"] = kind
-    out.data["generation"] = generation
-    out.data["parent_id"] = parent_id
-    return out
+def _xy(v) -> Tuple[float, float]:
+    z = se.to_c(v)
+    return (z.real, z.imag)
 
 
-def expand_single_tile(
-    base_tile: Tile,
-    kind: str,
-    generation: int,
-    parent_id: int = 0,
-    step_scale: Optional[float] = None,
-) -> List[Tile]:
-    """
-    Expand one tile according to the Spectre substitution rules:
-      - Single -> 1 Mystic + 7 Singles (9 tiles)
-      - Mystic -> 1 Mystic + 6 Singles (8 tiles)
-
-    Places child tiles around local edge/sector offsets so spatial adjacency
-    and shared vertex clustering can be inspected on the patch.
-    """
-    if kind not in ("Single", "Mystic"):
-        raise ValueError(f"Unknown tile kind: {kind!r}")
-
-    child_specs: List[str] = ["Mystic"] + (["Single"] * (7 if kind == "Single" else 6))
-    ev = edge_vectors(base_tile.a, base_tile.b)
-    # Characteristic span of the tile used to space child offsets cleanly
-    span = step_scale if step_scale is not None else float(np.linalg.norm(ev[:4].sum(axis=0)) + 1e-6)
-
-    children: List[Tile] = []
-    for idx, child_kind in enumerate(child_specs):
-        sector_angle = (idx * math.pi) / 3.0
-        direction = np.array([math.cos(sector_angle), math.sin(sector_angle)], dtype=float)
-        # Mystic sits at the anchor; Singles fan out around 60-degree sectors
-        radius = 0.0 if idx == 0 else span * (0.85 + 0.15 * (idx % 2))
-        offset = radius * direction
-        child = _apply_rigid_transform(
-            base_tile,
-            offset=offset,
-            angle_rad=sector_angle if idx > 0 else 0.0,
-            generation=generation,
-            kind=child_kind,
-            parent_id=parent_id,
-        )
-        child.data["tile_index"] = idx
-        children.append(child)
-    return children
+def _centroid(pts: np.ndarray) -> np.ndarray:
+    x, y = pts[:, 0], pts[:, 1]
+    x1, y1 = np.roll(x, -1), np.roll(y, -1)
+    cr = x * y1 - x1 * y
+    return np.array([((x + x1) * cr).sum(), ((y + y1) * cr).sum()]) / (3.0 * cr.sum())
 
 
 def build_substitution_tier(
@@ -98,155 +85,286 @@ def build_substitution_tier(
     start_kind: str = "Single",
 ) -> SubstitutionPatch:
     """
-    Build the substitution patch at generation k starting from 1 tile:
-      - k=0 -> 1 tile
-      - k=1 -> 9 tiles (from Single) or 8 tiles (from Mystic)
-      - k=2 -> 71 tiles (from Single)
-      - k=3 -> 559 tiles (from Single)
+    Exact patch at generation k. `start_kind` "Single" gives 1, 9, 71, 559, 4401 tiles
+    and "Mystic" gives 2, 8, 62, 488, 3842. Only a = b = 1 is the Spectre; the tile is
+    placed by the exact transforms, so other a, b are refused.
     """
     if target_generation < 0:
         raise ValueError("target_generation must be >= 0")
+    if start_kind not in _SPECIES:
+        raise ValueError(f"Unknown tile kind: {start_kind!r}")
+    if not (math.isclose(a, 1.0) and math.isclose(b, 1.0)):
+        raise ValueError("exact patches are Spectres: use a = b = 1")
 
-    seed = Tile(a=a, b=b, curve_strength=curve_strength)
-    seed.data["kind"] = start_kind
-    seed.data["generation"] = 0
-    seed.data["tile_index"] = 0
+    species = _SPECIES[start_kind]
+    leaves = se.build(target_generation)[target_generation][0][species]
+    tiles: List[Tile] = []
+    for idx, (T, kind) in enumerate(leaves):
+        outline = se.outline(T)
+        t = Tile(a=1.0, b=1.0, curve_strength=curve_strength)
+        keys = []
+        for i, v in enumerate(t.vertices):
+            ev = outline[(i + SHIFT) % 14]
+            v.position = _xy(ev)
+            keys.append(tuple(int(x) for x in ev))
+        t.data.update(
+            kind=_KIND[kind], leaf=kind, generation=target_generation,
+            tile_index=idx, exact_vertices=keys,
+        )
+        t.data["p8_base"] = np.array(t.vertices[FLAT_MODEL].position, dtype=float)
+        tiles.append(t)
 
-    current_tiles = [seed]
-    for gen in range(1, target_generation + 1):
-        next_tiles: List[Tile] = []
-        for parent_idx, ptile in enumerate(current_tiles):
-            pkind = ptile.data.get("kind", "Single")
-            expanded = expand_single_tile(
-                ptile,
-                kind=pkind,
-                generation=gen,
-                parent_id=parent_idx,
-            )
-            next_tiles.extend(expanded)
-        for t_idx, t in enumerate(next_tiles):
-            t.data["tile_index"] = t_idx
-        current_tiles = next_tiles
-
-    patch = SubstitutionPatch(generation=target_generation, tiles=current_tiles)
+    patch = SubstitutionPatch(generation=target_generation, tiles=tiles, species=species)
     cluster_shared_vertices(patch)
+    find_pairs(patch)
     return patch
 
 
-def cluster_shared_vertices(patch: SubstitutionPatch, tol: float = 1e-6) -> None:
-    """
-    Group vertices across all tiles in `patch` whose 2D positions lie within `tol`
-    into shared topological node IDs.
-    """
+def cluster_shared_vertices(patch: SubstitutionPatch) -> None:
+    """Group the vertices of all tiles by their exact Z^4 coordinates (no tolerance)."""
     patch.node_to_vertices.clear()
     patch.vertex_to_node.clear()
-
-    # Quantize coordinates into grid buckets for fast neighbor lookup
-    inv = 1.0 / tol
-    buckets: Dict[Tuple[int, int], List[int]] = {}
-    node_centers: List[np.ndarray] = []
-
+    ids: Dict[Tuple[int, ...], int] = {}
     for t_idx, tile in enumerate(patch.tiles):
-        for v_idx, v in enumerate(tile.vertices):
-            pos = np.asarray(v.position, dtype=float)
-            bx, by = int(round(pos[0] * inv)), int(round(pos[1] * inv))
+        for v_idx, key in enumerate(tile.data["exact_vertices"]):
+            nid = ids.setdefault(key, len(ids))
+            patch.node_to_vertices.setdefault(nid, []).append((t_idx, v_idx))
+            patch.vertex_to_node[(t_idx, v_idx)] = nid
+            tile.vertices[v_idx].data["node_id"] = nid
 
-            matched_node: Optional[int] = None
-            for dx in (-1, 0, 1):
-                for dy in (-1, 0, 1):
-                    for cand_node in buckets.get((bx + dx, by + dy), ()):
-                        if np.linalg.norm(pos - node_centers[cand_node]) <= tol:
-                            matched_node = cand_node
-                            break
-                    if matched_node is not None:
-                        break
-                if matched_node is not None:
-                    break
 
-            if matched_node is None:
-                matched_node = len(node_centers)
-                node_centers.append(pos.copy())
-                patch.node_to_vertices[matched_node] = []
-                buckets.setdefault((bx, by), []).append(matched_node)
+def tile_centroid(tile: Tile) -> np.ndarray:
+    """Centroid of the straight outline (the Bezier edges are point symmetric about their chords)."""
+    return _centroid(np.array([np.asarray(v.position, float) for v in tile.vertices]))
 
-            key = (t_idx, v_idx)
-            patch.vertex_to_node[key] = matched_node
-            patch.node_to_vertices[matched_node].append(key)
-            v.data["node_id"] = matched_node
+
+def find_pairs(patch: SubstitutionPatch) -> List[Tuple[int, int]]:
+    """
+    Bump-and-dent pairs: two tiles whose flat vertices P8 coincide and meet no other
+    vertex. Fills `patch.pairs` and `patch.pair_order` (nearest the patch centre first).
+    """
+    at: Dict[Tuple[int, ...], List[Tuple[int, int]]] = defaultdict(list)
+    for t_idx, tile in enumerate(patch.tiles):
+        for v_idx, key in enumerate(tile.data["exact_vertices"]):
+            at[key].append((t_idx, v_idx))
+    pairs = []
+    for key, lst in at.items():
+        if len(lst) == 2 and all(v == FLAT_MODEL for _, v in lst):
+            i, j = sorted(t for t, _ in lst)
+            pairs.append((i, j))
+    pairs.sort()
+    patch.pairs = pairs
+    if pairs:
+        cents = np.array([tile_centroid(t) for t in patch.tiles])
+        mids = np.array([0.5 * (cents[i] + cents[j]) for i, j in pairs])
+        order = np.argsort(np.linalg.norm(mids - cents.mean(axis=0), axis=1), kind="stable")
+        patch.pair_order = [int(k) for k in order]
+    else:
+        patch.pair_order = []
+    return pairs
 
 
 def assign_qubits_to_patch(
     patch: SubstitutionPatch,
-    mode: str = "boundary_and_hubs",
+    mode: str = "pairs",
     max_qubits: Optional[int] = 10,
 ) -> Dict[int, int]:
     """
-    Assign local qubit indices (0 .. n_qubits - 1) to selected topological nodes
-    in `patch`, writing `vertex.data["qubit"]` (or `None` if unmapped) on every
-    `Vertex` in the patch.
+    Write `vertex.data["qubit"]` (or remove it) on every Vertex of the patch.
 
     Modes:
-      - "unique_nodes": map every shared node in the patch (warning: large for k >= 2).
-      - "boundary_and_hubs": prioritize shared/boundary nodes and tile-0 anchor
-        vertices up to `max_qubits` so `State` simulations remain tractable.
+      - "pairs" (default): one qubit per bump-and-dent pair, the pairs nearest the patch
+        centre first. Both tiles of a pair get the same qubit on their flat vertex P8 and
+        `tile.data["pair_qubit"]`, `tile.data["pair_role"]` ("A" is the bump when <Z> = +1).
+      - "nodes": one qubit per shared vertex of the tiling, the most shared first (the old
+        behaviour; physically unmotivated, kept for comparison).
+    Returns the map from pair index (mode "pairs") or node id (mode "nodes") to qubit.
     """
     for tile in patch.tiles:
         for v in tile.vertices:
             v.data.pop("qubit", None)
+        tile.data.pop("pair_qubit", None)
+        tile.data.pop("pair_role", None)
+    patch.node_to_qubit = {}
+    patch.pair_to_qubit = {}
 
-    all_nodes = sorted(patch.node_to_vertices.keys())
-    if mode == "unique_nodes":
-        selected_nodes = all_nodes if max_qubits is None else all_nodes[:max_qubits]
-    elif mode == "boundary_and_hubs":
-        # Rank nodes by how many tile vertices share them, then by tile/vertex order
-        shared_first = sorted(
-            all_nodes,
-            key=lambda nid: (-len(patch.node_to_vertices[nid]), nid),
-        )
-        selected_nodes = shared_first if max_qubits is None else shared_first[:max_qubits]
-    else:
-        raise ValueError(f"Unknown qubit assignment mode: {mode!r}")
+    if mode == "pairs":
+        chosen = patch.pair_order if max_qubits is None else patch.pair_order[:max_qubits]
+        for q, p in enumerate(chosen):
+            patch.pair_to_qubit[p] = q
+            for role, t_idx in zip("AB", patch.pairs[p]):
+                tile = patch.tiles[t_idx]
+                tile.vertices[FLAT_MODEL].data["qubit"] = q
+                tile.data["pair_qubit"] = q
+                tile.data["pair_role"] = role
+        return dict(patch.pair_to_qubit)
 
-    node_to_q = {nid: q_idx for q_idx, nid in enumerate(selected_nodes)}
-    patch.node_to_qubit = node_to_q
+    if mode == "nodes":
+        nodes = sorted(patch.node_to_vertices, key=lambda n: (-len(patch.node_to_vertices[n]), n))
+        nodes = nodes if max_qubits is None else nodes[:max_qubits]
+        patch.node_to_qubit = {nid: q for q, nid in enumerate(nodes)}
+        for nid, q in patch.node_to_qubit.items():
+            for t_idx, v_idx in patch.node_to_vertices[nid]:
+                patch.tiles[t_idx].vertices[v_idx].data["qubit"] = q
+        return dict(patch.node_to_qubit)
+    raise ValueError(f"Unknown qubit assignment mode: {mode!r}")
 
-    for nid, q_idx in node_to_q.items():
-        for t_idx, v_idx in patch.node_to_vertices[nid]:
-            patch.tiles[t_idx].vertices[v_idx].data["qubit"] = q_idx
 
-    return node_to_q
+def pair_qubit_tiles(patch: SubstitutionPatch) -> Dict[int, Tuple[Tile, Tile]]:
+    """qubit -> (tile A, tile B) for the pair qubits of `patch`."""
+    return {q: tuple(patch.tiles[t] for t in patch.pairs[p]) for p, q in patch.pair_to_qubit.items()}
+
+
+def pair_couplings(patch: SubstitutionPatch) -> np.ndarray:
+    """
+    Dipole coupling matrix W between the pair qubits (indexed by qubit). The bit is read
+    as a charge +-1 at the centroid of each tile, with opposite charges in a pair, so
+    W_pq = 1/r_AA' - 1/r_AB' - 1/r_BA' + 1/r_BB' (the Coulomb energy of two dipoles,
+    in units of (a*h)^2). It has both signs and falls as r^-3.
+    """
+    n = len(patch.pair_to_qubit)
+    cents = {q: (tile_centroid(A), tile_centroid(B)) for q, (A, B) in pair_qubit_tiles(patch).items()}
+    W = np.zeros((n, n))
+    for p in range(n):
+        for q in range(p + 1, n):
+            Ap, Bp = cents[p]
+            Aq, Bq = cents[q]
+            inv = lambda X, Y: 1.0 / np.linalg.norm(X - Y)
+            W[p, q] = W[q, p] = inv(Ap, Aq) - inv(Ap, Bq) - inv(Bp, Aq) + inv(Bp, Bq)
+    return W
+
+
+# ---- the bit acts on the geometry -------------------------------------------------------
+
+def bump_direction(tile: Tile) -> np.ndarray:
+    """Unit normal of the chord P7-P9 pointing out of the tile (the convex side of P8)."""
+    p7 = np.asarray(tile.vertices[7].position, float)
+    p9 = np.asarray(tile.vertices[9].position, float)
+    chord = p9 - p7
+    n = np.array([-chord[1], chord[0]])
+    n /= np.linalg.norm(n)
+    if np.dot(n, np.asarray(tile.data["p8_base"], float) - tile_centroid(tile)) < 0:
+        n = -n
+    return n
+
+
+def set_pair_bit(tile_a: Tile, tile_b: Tile, z: float, h: float) -> None:
+    """
+    Set the expectation z = <tau^z> in [-1, 1] of a pair on the geometry: P8 of tile A moves
+    out by z*h and P8 of tile B moves in by z*h (tile B's outward normal reversed). The area of
+    A becomes A0 + a*h*z and that of B A0 - a*h*z, so the sum is conserved.
+    """
+    if not -1.0 - 1e-12 <= z <= 1.0 + 1e-12:
+        raise ValueError("z must lie in [-1, 1]")
+    for tile, sign in ((tile_a, +1.0), (tile_b, -1.0)):
+        base = np.asarray(tile.data["p8_base"], float)
+        tile.vertices[FLAT_MODEL].position = base + sign * z * h * bump_direction(tile)
 
 
 def build_three_tier_hierarchy(
     a: float = 1.0,
     b: float = 1.0,
     curve_strength: float = 0.5,
-    qubits_per_tier: Tuple[int, int, int] = (6, 8, 10),
-    mode: str = "boundary_and_hubs",
+    qubits_per_tier: Tuple[int, int, int] = (4, 4, 4),
+    generations: Tuple[int, int, int] = (2, 3, 4),
+    mode: str = "pairs",
 ) -> Tuple[SubstitutionPatch, SubstitutionPatch, SubstitutionPatch]:
-    """
-    Construct the three Spectre substitution tiers with 9, 71, and 559 tiles
-    (generations k = 1, 2, 3 starting from a Single tile) and attach qubit
-    mappings to their vertices.
-    """
+    """Three exact tiers (default generations 2, 3, 4: 71, 559, 4401 tiles) with qubits attached."""
     tiers = []
-    for gen, q_budget in zip((1, 2, 3), qubits_per_tier):
-        patch = build_substitution_tier(
-            target_generation=gen,
-            a=a,
-            b=b,
-            curve_strength=curve_strength,
-            start_kind="Single",
-        )
-        assign_qubits_to_patch(patch, mode=mode, max_qubits=q_budget)
+    for gen, budget in zip(generations, qubits_per_tier):
+        patch = build_substitution_tier(gen, a=a, b=b, curve_strength=curve_strength)
+        assign_qubits_to_patch(patch, mode=mode, max_qubits=budget)
         tiers.append(patch)
     return tiers[0], tiers[1], tiers[2]
 
 
+# ---- checks -----------------------------------------------------------------------------
+
+A0 = 3.0 * math.sqrt(3.0) + 3.0   # area of the Spectre, a = b = 1
+
+
+def test_tile_counts_are_9_71_559():
+    singles = [len(build_substitution_tier(k).tiles) for k in range(0, 5)]
+    mystics = [len(build_substitution_tier(k, start_kind="Mystic").tiles) for k in range(0, 5)]
+    assert singles == [1, 9, 71, 559, 4401], singles
+    assert mystics == [2, 8, 62, 488, 3842], mystics
+
+
+def test_tiles_are_the_exact_spectre():
+    patch = build_substitution_tier(2)
+    for t in patch.tiles:
+        assert abs(t.area() - A0) < 1e-9
+        pts = np.array([np.asarray(v.position, float) for v in t.vertices])
+        edges = np.linalg.norm(np.roll(pts, -1, axis=0) - pts, axis=1)
+        assert np.allclose(edges, 1.0), edges
+
+
+def test_patch_is_edge_matched_with_no_overlap():
+    frac = {}
+    for k in (2, 3):
+        patch = build_substitution_tier(k)
+        seen = defaultdict(int)
+        for t in patch.tiles:
+            keys = t.data["exact_vertices"]
+            for e in range(14):
+                seen[(keys[e], keys[(e + 1) % 14])] += 1
+        assert max(seen.values()) == 1, "an edge is used twice in the same direction (overlap)"
+        matched = sum(1 for (u, v) in seen if (v, u) in seen)
+        frac[k] = matched / len(seen)
+    # unmatched edges are the patch boundary, whose share falls as the patch grows
+    assert frac[3] > frac[2] > 0.8 and frac[3] > 0.9, frac
+
+
+def test_pair_counts():
+    counts = [len(build_substitution_tier(k).pairs) for k in range(0, 5)]
+    assert counts == [0, 0, 6, 82, 804], counts
+
+
+def test_pair_qubit_assignment():
+    patch = build_substitution_tier(3)
+    assign_qubits_to_patch(patch, max_qubits=5)
+    assert patch.n_qubits == 5
+    for q, (A, B) in pair_qubit_tiles(patch).items():
+        assert A.vertices[FLAT_MODEL].data["qubit"] == q == B.vertices[FLAT_MODEL].data["qubit"]
+        assert {A.data["pair_role"], B.data["pair_role"]} == {"A", "B"}
+    W = pair_couplings(patch)
+    assert W.shape == (5, 5) and np.allclose(W, W.T) and np.allclose(np.diag(W), 0.0)
+    assert (W > 0).any() and (W < 0).any(), "dipole couplings have both signs"
+
+
+def test_bit_changes_area_by_a_h_and_conserves_the_pair():
+    patch = build_substitution_tier(2)
+    assign_qubits_to_patch(patch, max_qubits=6)
+    A, B = next(iter(pair_qubit_tiles(patch).values()))
+    h = 0.3
+    for z in (1.0, 0.4, -0.7, -1.0):
+        set_pair_bit(A, B, z, h)
+        assert abs(A.area() - (A0 + h * z)) < 1e-9, (z, A.area())
+        assert abs(B.area() - (A0 - h * z)) < 1e-9
+        assert abs(A.area() + B.area() - 2 * A0) < 1e-9
+    set_pair_bit(A, B, 0.0, h)
+    assert abs(A.area() - A0) < 1e-9
+
+
+def run_tests(verbose: bool = True) -> int:
+    tests = [(n, f) for n, f in sorted(globals().items()) if n.startswith("test_") and callable(f)]
+    failed = 0
+    for name, fn in tests:
+        try:
+            fn()
+            if verbose:
+                print(f"  {name:<62} PASS")
+        except Exception as exc:  # noqa: BLE001
+            failed += 1
+            print(f"  {name:<62} FAIL: {exc!r}")
+    print(f"{len(tests)} test(s), {failed} failed")
+    return failed
+
+
 if __name__ == "__main__":
-    p9, p71, p559 = build_three_tier_hierarchy(qubits_per_tier=(6, 7, 8))
-    for p in (p9, p71, p559):
-        print(
-            f"k={p.generation}: tiles={p.n_tiles}, topological_nodes={len(p.node_to_vertices)}, "
-            f"mapped_qubits={p.n_qubits}"
-        )
+    if "--tests-only" in sys.argv:
+        sys.exit(1 if run_tests() else 0)
+    p_lo, p_mid, p_hi = build_three_tier_hierarchy()
+    for p in (p_lo, p_mid, p_hi):
+        print(f"k={p.generation}: tiles={p.n_tiles}, pairs={p.n_pairs}, "
+              f"topological_nodes={len(p.node_to_vertices)}, mapped_qubits={p.n_qubits}")

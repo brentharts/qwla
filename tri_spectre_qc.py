@@ -1,148 +1,132 @@
 """
-Step 3: Three coupled quantum computers over the 9-, 71-, and 559-tile
-Spectre substitution hierarchy, with inter-tier entanglement and geometry feedback.
+Three coupled quantum computers over exact Spectre substitution tiers, with the pair-qubit
+Hamiltonian, inter-tier bridges and geometry feedback.
+
+Model (all terms are definitions of this toy, see ROADMAP_QUANTUM_GRAVITY.md, Stage 2):
+
+  H_tier = -J sum_p X_p + kappa sum_{p<q} W_pq Z_p Z_q ,   kappa = (a h)^2 ,
+
+with one qubit p per bump-and-dent pair, W the dipole coupling of the two pairs from the exact
+tile centroids (`pair_couplings`), Z_p = <tau^z> the bump bit (+1: tile A is the bump), and X_p
+the tunnelling between the two positions. Evolution is first-order Trotter with the functional
+`State`. Geometry -> quantum: the centroids set W. Quantum -> geometry: <Z_p> displaces the flat
+vertex P8 of both tiles of pair p (`set_pair_bit`), changing their areas by +-a h <Z_p>.
+
+Note on the earlier version: it put every qubit in a Hadamard state, after which <Z> = 0 for
+every later RZ/CZ, so the feedback could never act, and it projected the joint state onto
+invented marginal amplitudes. Here one joint `State` is kept and read directly.
 """
 import math
-from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple
+import sys
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Sequence, Tuple
+
+import numpy as np
 from bitarray import frozenbitarray as bitarray
 from functional import seq
 
 from quantumspectremodel import (
+    A0,
     SubstitutionPatch,
     assign_qubits_to_patch,
     build_substitution_tier,
+    pair_couplings,
+    pair_qubit_tiles,
+    set_pair_bit,
 )
-from state import State, flip
+from state import State
 
 
 def _tensor_product_states(states: List[State]) -> State:
-    """
-    Form a joint `State` over concatenated qubit registers [s_0, s_1, ...].
-    Local index for state `m` at offset `off` is `off + j`.
-    """
-    total_qubits = sum(s.n_qubits for s in states)
-    joint = State(n_qubits=total_qubits)
-
-    # materialize each state's basis dictionary
+    """Joint `State` over the concatenated registers [s_0, s_1, ...]."""
+    total = sum(s.n_qubits for s in states)
+    joint = State(n_qubits=total)
     dicts = [dict(s.state.to_list()) for s in states]
     pairs = []
-
-    # Iterate over all basis combinations across the sub-registers
-    # For modest total_qubits (e.g., <= 14), functional seq over range(2**total_qubits) stays pure
-    for idx in range(1 << total_qubits):
-        bits = format(idx, f"0{total_qubits}b")
-        amp = 1+0j
-        pos = 0
+    for idx in range(1 << total):
+        bits = format(idx, f"0{total}b")
+        amp, pos = 1 + 0j, 0
         for s, d in zip(states, dicts):
-            sub_key = bitarray(bits[pos : pos + s.n_qubits])
-            amp *= d.get(sub_key, 0.0)
+            amp *= d.get(bitarray(bits[pos: pos + s.n_qubits]), 0.0)
             pos += s.n_qubits
             if amp == 0j:
                 break
         pairs.append((bitarray(bits), amp))
-
     joint.state = seq(pairs)
     return joint
 
 
-def _project_marginal_state(joint: State, offset: int, width: int) -> State:
-    """
-    Compute the diagonal/marginal state amplitudes over slice [offset : offset + width]
-    from a joint `State` by summing probabilities on matching sub-bitstrings and
-    preserving relative phase from the dominant/coherent branch.
-    """
-    sub = State(n_qubits=width)
-    # Group amplitudes by sub-bitstring
-    grouped: Dict[bitarray, complex] = {}
-    prob_acc: Dict[bitarray, float] = {}
+def trotter_step(state: State, W: np.ndarray, offset: int, J: float, kappa: float, dt: float) -> None:
+    """One first-order step of exp(-i dt H) for H = -J sum X + kappa sum W_pq Z_p Z_q on qubits offset+p."""
+    n = W.shape[0]
+    for p in range(n):
+        for q in range(p + 1, n):
+            if W[p, q] != 0.0:
+                a, b = offset + p, offset + q
+                state.cx(a, b)
+                state.rz(b, 2.0 * dt * kappa * W[p, q])   # exp(-i dt kappa W Z Z)
+                state.cx(a, b)
+    for p in range(n):
+        j = offset + p
+        state.h(j)
+        state.rz(j, -2.0 * dt * J)                          # exp(+i dt J X)
+        state.h(j)
 
-    for b, a in joint.state.to_list():
-        key = bitarray(b.to01()[offset : offset + width])
-        prob_acc[key] = prob_acc.get(key, 0.0) + (abs(a) ** 2)
-        grouped[key] = grouped.get(key, 0j) + a
 
-    # Normalize each sub-basis amplitude to match its marginal probability magnitude
-    new_pairs = []
-    for i in range(1 << width):
-        key = bitarray(format(i, f"0{width}b"))
-        p = prob_acc.get(key, 0.0)
-        amp_sum = grouped.get(key, 0j)
-        if p <= 1e-18:
-            new_pairs.append((key, 0j))
-        elif abs(amp_sum) > 1e-18:
-            new_pairs.append((key, (amp_sum / abs(amp_sum)) * math.sqrt(p)))
-        else:
-            new_pairs.append((key, complex(math.sqrt(p), 0.0)))
+def exact_expectation_z(W: np.ndarray, J: float, kappa: float, t: float) -> np.ndarray:
+    """<Z_p>(t) from the all-up state under H, by dense diagonalisation (n <= 12)."""
+    n = W.shape[0]
+    X = np.array([[0, 1], [1, 0]], complex)
+    Z = np.diag([1.0, -1.0]).astype(complex)
+    I = np.eye(2, dtype=complex)
 
-    sub.state = seq(new_pairs)
-    return sub
+    def op(single, p):
+        mats = [I] * n
+        mats[p] = single
+        out = mats[0]
+        for m in mats[1:]:
+            out = np.kron(out, m)
+        return out
+
+    H = sum(-J * op(X, p) for p in range(n))
+    for p in range(n):
+        for q in range(p + 1, n):
+            H = H + kappa * W[p, q] * op(Z, p) @ op(Z, q)
+    w, v = np.linalg.eigh(H)
+    psi0 = np.zeros(2 ** n, complex)
+    psi0[0] = 1.0   # |00..0>, every <Z> = +1
+    psi = v @ (np.exp(-1j * w * t) * (v.conj().T @ psi0))
+    return np.array([float(np.real(psi.conj() @ op(Z, p) @ psi)) for p in range(n)])
 
 
 @dataclass
 class SpectreQuantumComputer:
-    """A quantum computer backed by a Spectre substitution patch and functional State."""
+    """One tier: an exact patch, its pair qubits and the couplings between them."""
 
     name: str
     patch: SubstitutionPatch
-    state: State = field(init=False)
+    offset: int = 0
 
     def __post_init__(self):
-        n_q = max(1, self.patch.n_qubits)
-        self.state = State(n_qubits=n_q, n_bits=n_q)
+        self.W = pair_couplings(self.patch)
 
-    def qubit_for_vertex(self, tile_idx: int, vertex_idx: int) -> Optional[int]:
-        return self.patch.tiles[tile_idx].vertices[vertex_idx].data.get("qubit")
+    @property
+    def n_qubits(self) -> int:
+        return self.W.shape[0]
 
-    def apply_geometry_circuit(self, twist_scale: float = 1.0) -> "SpectreQuantumComputer":
-        """
-        Apply Hadamards to mapped vertex qubits and rotate around Z using
-        each vertex's current geometric twist.
-        """
-        visited_qubits = set()
-        for tile in self.patch.tiles:
-            for v in tile.vertices:
-                q = v.data.get("qubit")
-                if q is not None and q not in visited_qubits:
-                    visited_qubits.add(q)
-                    self.state.h(q)
-                    angle = twist_scale * float(v.twist)
-                    if abs(angle) > 1e-15:
-                        self.state.rz(q, angle)
+    def sync_geometry(self, state: State, h: float) -> None:
+        """Quantum -> geometry: <Z_p> moves P8 of both tiles of pair p."""
+        for q, (A, B) in pair_qubit_tiles(self.patch).items():
+            set_pair_bit(A, B, state.expectation_z(self.offset + q), h)
 
-        # Entangle consecutive mapped qubits within this tier's ring
-        ordered_q = sorted(visited_qubits)
-        for idx in range(len(ordered_q) - 1):
-            self.state.cz(ordered_q[idx], ordered_q[idx + 1])
-        return self
-
-    def sync_geometry_from_state(
-        self, twist_gain: float = 0.25, modulate_curve_strength: bool = False
-    ) -> None:
-        """
-        Map <Z_q> expectation values back onto vertex twists (and optionally
-        tile curve_strength) so geometry responds to the quantum state.
-        """
-        q_to_exp: Dict[int, float] = {}
-        for q in range(self.state.n_qubits):
-            q_to_exp[q] = self.state.expectation_z(q)
-
-        for tile in self.patch.tiles:
-            tile_z_vals = []
-            for v in tile.vertices:
-                q = v.data.get("qubit")
-                if q is not None and q in q_to_exp:
-                    z_val = q_to_exp[q]
-                    v.twist = twist_gain * z_val
-                    tile_z_vals.append(z_val)
-            if modulate_curve_strength and tile_z_vals:
-                mean_z = sum(tile_z_vals) / len(tile_z_vals)
-                tile.curve_strength = max(-0.9, min(1.5, 0.5 + 0.2 * mean_z))
+    def pair_area_sums(self) -> List[float]:
+        return [A.area() + B.area() for A, B in pair_qubit_tiles(self.patch).values()]
 
 
 class TriSpectreNetwork:
     """
-    Three coupled quantum computers built from 9-, 71-, and 559-tile Spectre patches.
+    Three tiers (default generations 2, 3, 4 = 71, 559, 4401 tiles; the 9-tile patch has no pair)
+    sharing one joint `State`, coupled by CX/CZ bridges between anchor pairs.
     """
 
     def __init__(
@@ -151,90 +135,130 @@ class TriSpectreNetwork:
         b: float = 1.0,
         curve_strength: float = 0.5,
         qubits_per_tier: Tuple[int, int, int] = (4, 4, 4),
+        generations: Tuple[int, int, int] = (2, 3, 4),
+        J: float = 1.0,
+        h: float = 0.3,
     ):
-        self.patches: List[SubstitutionPatch] = []
-        for gen, q_budget in zip((1, 2, 3), qubits_per_tier):
-            p = build_substitution_tier(
-                target_generation=gen,
-                a=a,
-                b=b,
-                curve_strength=curve_strength,
-                start_kind="Single",
-            )
-            assign_qubits_to_patch(p, mode="boundary_and_hubs", max_qubits=q_budget)
-            self.patches.append(p)
+        self.J, self.h = J, h
+        self.kappa = (1.0 * h) ** 2          # (a h)^2 with a = 1
+        self.computers: List[SpectreQuantumComputer] = []
+        offset = 0
+        for gen, budget in zip(generations, qubits_per_tier):
+            patch = build_substitution_tier(gen, a=a, b=b, curve_strength=curve_strength)
+            assign_qubits_to_patch(patch, mode="pairs", max_qubits=budget)
+            qc = SpectreQuantumComputer(f"QC-{patch.n_tiles} ({patch.n_tiles} tiles)", patch, offset)
+            self.computers.append(qc)
+            offset += qc.n_qubits
+        self.n_qubits = offset
+        self.state = State(n_qubits=self.n_qubits, n_bits=self.n_qubits)   # |00..0>: every bump on tile A
+        self.patches = [qc.patch for qc in self.computers]
 
-        self.qc_9 = SpectreQuantumComputer("QC-9 (9 tiles)", self.patches[0])
-        self.qc_71 = SpectreQuantumComputer("QC-71 (71 tiles)", self.patches[1])
-        self.qc_559 = SpectreQuantumComputer("QC-559 (559 tiles)", self.patches[2])
-        self.computers = (self.qc_9, self.qc_71, self.qc_559)
+    def run_local_dynamics(self, dt: float = 0.1, steps: int = 1) -> None:
+        for _ in range(steps):
+            for qc in self.computers:
+                trotter_step(self.state, qc.W, qc.offset, self.J, self.kappa, dt)
 
-    def run_local_circuits(self, twist_scale: float = 1.0) -> None:
-        for qc in self.computers:
-            qc.apply_geometry_circuit(twist_scale=twist_scale)
-
-    def entangle_across_computers(self, links: Optional[List[Tuple[int, int, int]]] = None) -> State:
-        """
-        Couple `qc_9`, `qc_71`, and `qc_559` in a joint state and apply inter-computer
-        CNOT/CZ bridges across `(q_in_9, q_in_71, q_in_559)` anchor triples, then
-        update each computer's local state from the entangled joint state.
-        """
+    def entangle_across_computers(self, links: Optional[List[Tuple[int, int, int]]] = None) -> None:
+        """CX/CZ bridges across anchor qubits (i_lo, i_mid, i_hi): a coupling chosen for this toy."""
         if links is None:
             links = [(0, 0, 0), (1, 1, 1)]
+        lo, mid, hi = self.computers
+        for i0, i1, i2 in links:
+            g0 = lo.offset + i0 % lo.n_qubits
+            g1 = mid.offset + i1 % mid.n_qubits
+            g2 = hi.offset + i2 % hi.n_qubits
+            self.state.cx(g0, g1)
+            self.state.cx(g1, g2)
+            self.state.cz(g0, g2)
 
-        off_9 = 0
-        off_71 = self.qc_9.state.n_qubits
-        off_559 = off_71 + self.qc_71.state.n_qubits
-
-        joint = _tensor_product_states([self.qc_9.state, self.qc_71.state, self.qc_559.state])
-
-        for i9, i71, i559 in links:
-            g9 = off_9 + (i9 % self.qc_9.state.n_qubits)
-            g71 = off_71 + (i71 % self.qc_71.state.n_qubits)
-            g559 = off_559 + (i559 % self.qc_559.state.n_qubits)
-
-            # Chain entanglement across the 9-, 71-, and 559-tile computers
-            joint.cx(g9, g71)
-            joint.cx(g71, g559)
-            joint.cz(g9, g559)
-
-        self.qc_9.state = _project_marginal_state(joint, off_9, self.qc_9.state.n_qubits)
-        self.qc_71.state = _project_marginal_state(joint, off_71, self.qc_71.state.n_qubits)
-        self.qc_559.state = _project_marginal_state(joint, off_559, self.qc_559.state.n_qubits)
-        return joint
-
-    def step_coupled_cycle(self, twist_gain: float = 0.25) -> None:
-        """One full cycle: local geometry circuits -> cross-computer entanglement -> geometry feedback."""
-        self.run_local_circuits(twist_scale=1.0)
-        self.entangle_across_computers()
+    def sync_geometry(self) -> None:
         for qc in self.computers:
-            qc.sync_geometry_from_state(twist_gain=twist_gain, modulate_curve_strength=True)
+            qc.sync_geometry(self.state, self.h)
+
+    def step_coupled_cycle(self, dt: float = 0.3, steps: int = 3, bridges: bool = True) -> None:
+        """Local pair-qubit dynamics, then (optionally) the cross-tier bridges, then geometry feedback."""
+        self.run_local_dynamics(dt=dt / steps, steps=steps)
+        if bridges:
+            self.entangle_across_computers()
+        self.sync_geometry()
 
     def summary(self) -> List[Dict[str, object]]:
         rows = []
         for qc in self.computers:
-            sample_tile = qc.patch.tiles[0]
-            rows.append(
-                {
-                    "computer": qc.name,
-                    "tiles": qc.patch.n_tiles,
-                    "qubits": qc.state.n_qubits,
-                    "exp_z0": round(qc.state.expectation_z(0), 4),
-                    "tile0_area": round(sample_tile.area(), 4),
-                    "tile0_k": round(sample_tile.curve_strength, 4),
-                }
-            )
+            zs = [self.state.expectation_z(qc.offset + q) for q in range(qc.n_qubits)]
+            areas = [t.area() for A, B in pair_qubit_tiles(qc.patch).values() for t in (A, B)]
+            rows.append({
+                "computer": qc.name,
+                "tiles": qc.patch.n_tiles,
+                "pairs": qc.patch.n_pairs,
+                "qubits": qc.n_qubits,
+                "mean_z": round(float(np.mean(zs)), 4),
+                "area_min": round(min(areas), 4),
+                "area_max": round(max(areas), 4),
+                "pair_area_sum_err": round(max(abs(s - 2 * A0) for s in qc.pair_area_sums()), 12),
+            })
         return rows
 
 
+# ---- checks -----------------------------------------------------------------------------
+
+def test_trotter_matches_exact_evolution():
+    patch = build_substitution_tier(2)
+    assign_qubits_to_patch(patch, max_qubits=4)
+    W = pair_couplings(patch)
+    J, kappa, t, steps = 1.0, 1.0, 0.6, 60
+    st = State(n_qubits=4)
+    for _ in range(steps):
+        trotter_step(st, W, 0, J, kappa, t / steps)
+    got = np.array([st.expectation_z(p) for p in range(4)])
+    ref = exact_expectation_z(W, J, kappa, t)
+    assert np.allclose(got, ref, atol=2e-2), (got, ref)
+    assert np.abs(ref - 1.0).max() > 0.05, "the check is trivial if <Z> never moves"
+
+
+def test_feedback_changes_area_and_keeps_the_ledger():
+    net = TriSpectreNetwork(qubits_per_tier=(3, 3, 3))
+    for _ in range(2):
+        net.step_coupled_cycle(dt=0.6, steps=3)
+    rows = net.summary()
+    assert all(r["mean_z"] < 0.999 for r in rows), rows
+    assert all(r["area_max"] > A0 + 1e-3 and r["area_min"] < A0 - 1e-3 for r in rows), rows
+    assert all(r["pair_area_sum_err"] < 1e-9 for r in rows), rows
+
+
+def test_all_tiles_outside_pairs_are_untouched():
+    net = TriSpectreNetwork(qubits_per_tier=(3, 3, 3))
+    net.step_coupled_cycle(dt=0.6, steps=3)
+    for qc in net.computers:
+        in_pair = {t for p in qc.patch.pair_to_qubit for t in qc.patch.pairs[p]}
+        for i, t in enumerate(qc.patch.tiles):
+            if i not in in_pair:
+                assert abs(t.area() - A0) < 1e-9
+
+
+def run_tests(verbose: bool = True) -> int:
+    tests = [(n, f) for n, f in sorted(globals().items()) if n.startswith("test_") and callable(f)]
+    failed = 0
+    for name, fn in tests:
+        try:
+            fn()
+            if verbose:
+                print(f"  {name:<62} PASS")
+        except Exception as exc:  # noqa: BLE001
+            failed += 1
+            print(f"  {name:<62} FAIL: {exc!r}")
+    print(f"{len(tests)} test(s), {failed} failed")
+    return failed
+
+
 if __name__ == "__main__":
+    if "--tests-only" in sys.argv:
+        sys.exit(1 if run_tests() else 0)
     net = TriSpectreNetwork(qubits_per_tier=(4, 4, 4))
     print("Before coupled cycle:")
     for r in net.summary():
         print(" ", r)
-
-    net.step_coupled_cycle(twist_gain=0.3)
-
+    net.step_coupled_cycle(dt=0.6, steps=3)
     print("\nAfter coupled cycle:")
     for r in net.summary():
         print(" ", r)

@@ -9,19 +9,19 @@ This project connects a matrix-free, functional quantum state simulator (`State`
 ## Why This Project Is Unique & Interesting
 
 1. **Aperiodic Quasi-Crystal Topology Instead of Rigid Square Grids**
-   Most quantum computing architectures assume periodic 2D lattices (such as square heavy-hex or surface-code grids). Here, qubits live on the vertices of **Einstein Spectre monotiles**—14-sided chiral tiles that tile the plane aperiodically without translational symmetry. This creates non-repeating local neighborhoods and hierarchical scale self-similarity across generations.
+   Most quantum computing architectures assume periodic 2D lattices (such as square heavy-hex or surface-code grids). Here, qubits live on the **bump-and-dent pairs** of **Einstein Spectre monotiles**—14-sided chiral tiles that tile the plane aperiodically without translational symmetry. This creates non-repeating local neighborhoods and hierarchical scale self-similarity across generations.
 
-2. **Substitution Recurrence as Multi-Scale Quantum Hardware ($9 \to 71 \to 559$)**
+2. **Substitution Recurrence as Multi-Scale Quantum Hardware ($71 \to 559 \to 4401$ tiles)**
    Under the Spectre substitution system, single Spectres and 2-tile clusters (*Mystics*) inflate according to:
    * $\text{Mystic} \mapsto 1\,\text{Mystic} + 6\,\text{Singles}$ ($8$ tiles)
    * $\text{Single} \mapsto 1\,\text{Mystic} + 7\,\text{Singles}$ ($9$ tiles)
    
    Both sequences obey the exact linear recurrence:
    $$N_k = 8N_{k-1} - N_{k-2}$$
-   Starting from a single Spectre ($N_0 = 1$), generations $k = 1, 2, 3$ produce **9**, **71**, and **559** tiles. Instead of treating scale as an abstract parameter, the system instantiates three distinct quantum computers (`QC-9`, `QC-71`, and `QC-559`) corresponding to these exact substitution tiers and entangles them across scales.
+   Starting from a single Spectre ($N_0 = 1$), generations $k = 1, \dots, 4$ produce $9$, $71$, $559$ and $4401$ tiles. The 9-tile patch has no bump-and-dent pair, so the system instantiates three quantum computers (`QC-71`, `QC-559`, `QC-4401`, with $6$, $82$ and $804$ pairs) from these exact substitution tiers and entangles them across scales.
 
 3. **Bidirectional Geometry $\leftrightarrow$ Quantum Feedback Loop**
-   In `spectremodel.py`, every tile is a live cubic Bezier object with 14 vertices and 28 control handles whose `twist` angles and `curve_strength` dynamically alter the tile's outline and exact enclosed area. 
+   In `spectremodel.py`, every tile is a live cubic Bezier object with 14 vertices and 28 control handles; moving the flat vertex $P_8$ changes the exact enclosed area by $\pm a h$ (the curve strength never does).
    * **Geometry $\to$ Quantum:** Vertex twists and curvature drive local parameterized $R_Z(\theta)$ phase rotations and entangling gates on the mapped qubits.
    * **Quantum $\to$ Geometry:** Local Pauli-$Z$ expectation values $\langle Z_q \rangle$ feed back into vertex twists and `curve_strength`, physically deforming the Bezier boundaries of the monotiles and shifting their exact areas (`tile.area()`) in real time.
 
@@ -37,21 +37,21 @@ This project connects a matrix-free, functional quantum state simulator (`State`
 |                        TriSpectreNetwork (Step 3)                       |
 |                                                                         |
 |   +---------------+       +----------------+       +----------------+   |
-|   |     QC-9      | <===> |     QC-71      | <===> |     QC-559     |   |
-|   |  (k=1, 9 tiles|  CX/  | (k=2, 71 tiles |  CX/  | (k=3, 559 tiles|   |
-|   |   & State)    |  CZ   |   & State)     |  CZ   |   & State)     |   |
+|   |     QC-71     | <===> |     QC-559     | <===> |    QC-4401     |   |
+|   | (k=2, 6 pairs |  CX/  | (k=3, 82 pairs |  CX/  | (k=4, 804 pairs|   |
+|   |  one State)   |  CZ   |  one State)    |  CZ   |  one State)    |   |
 |   +-------+-------+       +-------+--------+       +-------+--------+   |
 |           |                       |                        |            |
 |           +-----------+-----------+------------------------+            |
 |                       |  Bidirectional Coupling:                        |
-|                       |  * Vertex/Handle Twists -> RZ(theta) Gates      |
-|                       |  * <Z_q> Expectations -> Twist & Curve Updates  |
+|                       |  * Tile centroids -> dipole couplings W_pq      |
+|                       |  * <Z_p> -> P8 displacement, area +-a h <Z_p>   |
 |                       v                                                 |
 |   +-----------------------------------------------------------------+   |
-|   |             Substitution Hierarchy & Node Mapper (Step 2)       |   |
-|   |  * Expands Single/Mystic rules (N_k = 8 N_{k-1} - N_{k-2})      |   |
-|   |  * Clusters coincident boundary vertices into topological nodes |   |
-|   |  * Writes qubit indices into `vertex.data["qubit"]`             |   |
+|   |             Exact Substitution & Pair Mapper (Step 2)           |   |
+|   |  * Exact Z[zeta_12] patches (N_k = 8 N_{k-1} - N_{k-2})         |   |
+|   |  * Finds bump-and-dent pairs (6, 82, 804 at k = 2, 3, 4)        |   |
+|   |  * One qubit per pair in `vertex.data["qubit"]`                 |   |
 |   +-----------------------------------------------------------------+   |
 |                       |                                                 |
 |                       v                                                 |
@@ -69,9 +69,21 @@ This project connects a matrix-free, functional quantum state simulator (`State`
 | File / Module | Role | Key Components |
 | :--- | :--- | :--- |
 | **`spectremodel.py`** | Editable geometric model of the curved 14-vertex Spectre monotile. | `Tile`, `Vertex`, `BezHandle`, `outline()`, `area()`, live `twist` and `curve_strength`. |
-| **`step1_state.py`** | Matrix-free functional quantum state simulator. | `State` (`x`, `z`, `s`, `t`, `phase`, `rz`, `h`, `cx`, `cz`, `ccx`, `expectation_z`, safe `measure`). |
-| **`spectre_network.py`** | Substitution patch generator and topological vertex-to-qubit mapper. | `SubstitutionPatch`, `expand_single_tile()`, `build_substitution_tier()`, `cluster_shared_vertices()`, `assign_qubits_to_patch()`. |
-| **`tri_spectre_qc.py`** | Coupled three-computer quantum network and geometry feedback engine. | `SpectreQuantumComputer`, `TriSpectreNetwork`, `_tensor_product_states()`, `entangle_across_computers()`, `step_coupled_cycle()`. |
+| **`state.py`** | Matrix-free functional quantum state simulator (the QWLA `State`). | `State` (`x`, `z`, `s`, `t`, `phase`, `rz`, `h`, `cx`, `cz`, `ccx`, `expectation_z`, safe `measure`). |
+| **`spectre_exact.py`** | Exact integer (`Z[zeta_12]`) Spectre substitution, vendored from `brentharts/spectre`. | `build()`, `outline()`. |
+| **`quantumspectremodel.py`** | Exact patches as `Tile` objects, bump-and-dent pairs, pair qubits and the bit-to-geometry map. | `SubstitutionPatch`, `build_substitution_tier()`, `find_pairs()`, `assign_qubits_to_patch()`, `pair_couplings()`, `set_pair_bit()`. |
+| **`tri_spectre_qc.py`** | Coupled three-tier network: pair-qubit Hamiltonian, Trotter evolution, bridges, geometry feedback. | `SpectreQuantumComputer`, `TriSpectreNetwork`, `trotter_step()`, `exact_expectation_z()`, `step_coupled_cycle()`. |
+
+---
+
+## Status
+
+Checked by running the code: `spectremodel.py` (11 tests), `quantumspectremodel.py` (6 tests) and `tri_spectre_qc.py` (3 tests) all pass with `--tests-only`. What the code does now:
+
+* **Exact patches.** Tiles are placed by the exact integer substitution of `spectre_exact.py` (vendored from `brentharts/spectre`), so patches are edge-matched Spectre tilings. An earlier version placed children by sector offsets and counted a Mystic as one tile, which is why it reported 8, 63 and 496 tiles for the sequence 9, 71, 559; a Mystic is two tiles.
+* **Qubits on pairs.** One qubit per bump-and-dent pair (two tiles whose flat 14th vertices meet alone), not per vertex: a tile can carry the bit only with a partner, and a qubit per vertex of a 559-tile patch is far beyond a state simulator. The 9-tile patch has no pair (pair counts 0, 0, 6, 82, 804 at generations 0 to 4), so the default tiers are generations 2, 3, 4 (71, 559, 4401 tiles); the number of qubits per tier is a budget, with the pairs nearest the centre first.
+* **Dynamics and feedback.** The tiers evolve under `H = -J sum X + kappa sum W_pq Z_p Z_q` (dipole couplings `W` from the exact tile centroids), by Trotter steps checked against dense diagonalisation. `<Z_p>` then moves the flat vertex of both tiles of pair `p` by `+-h<Z_p>`, which changes their areas by `+-a h <Z_p>` exactly and keeps the area of the pair fixed. The old feedback could never act (a Hadamard on every qubit makes `<Z>` zero for all later RZ and CZ gates) and it fed `<Z>` into `curve_strength`, which cannot change the area at all: the area of a point-symmetric Bezier tile is independent of `k`.
+* **Still a toy.** The couplings, the tunnelling `J`, the cross-tier bridges and the Trotter schedule are definitions of this model, not derivations; see [ROADMAP_QUANTUM_GRAVITY.md](ROADMAP_QUANTUM_GRAVITY.md).
 
 ---
 
@@ -80,10 +92,10 @@ This project connects a matrix-free, functional quantum state simulator (`State`
 | Iteration ($k$) | Starting from 1 Single Spectre | Starting from 1 Mystic (2 tiles) | Role in `TriSpectreNetwork` |
 | :---: | :---: | :---: | :--- |
 | $k = 0$ | $1$ | $2$ | Seed monotile |
-| $k = 1$ | **$9$** | $8$ | **`QC-9`** (Tier 1 quantum computer) |
-| $k = 2$ | **$71$** | $62$ | **`QC-71`** (Tier 2 quantum computer) |
-| $k = 3$ | **$559$** | $488$ | **`QC-559`** (Tier 3 quantum computer) |
-| $k = 4$ | $4{,}401$ | $3{,}842$ | — |
+| $k = 1$ | $9$ | $8$ | no pair, so no tier |
+| $k = 2$ | **$71$** | $62$ | **`QC-71`** (6 pairs) |
+| $k = 3$ | **$559$** | $488$ | **`QC-559`** (82 pairs) |
+| $k = 4$ | **$4{,}401$** | $3{,}842$ | **`QC-4401`** (804 pairs) |
 | $k = 5$ | $34{,}649$ | $30{,}248$ | — |
 | $k = 6$ | $272{,}791$ | $238{,}142$ | — |
 
@@ -94,11 +106,11 @@ This project connects a matrix-free, functional quantum state simulator (`State`
 Install the Python dependencies required by the simulator and geometry engine:
 
 ```bash
-pip install numpy bitarray pyfunctional matplotlib
+pip install numpy bitarray pyfunctional
 ```
 
 * `numpy` & `matplotlib` (optional, for CLI plotting): Used by `spectremodel.py` for Bezier evaluation, Gauss-Legendre exact area quadrature, and rendering.
-* `bitarray` & `pyfunctional`: Used by `step1_state.py` for immutable `frozenbitarray` basis keys and functional `seq` state transformations.
+* `bitarray` & `pyfunctional`: Used by `state.py` for immutable `frozenbitarray` basis keys and functional `seq` state transformations.
 
 ---
 
@@ -111,18 +123,20 @@ Verify that the editable Bezier tile model passes all geometric, twist, and exac
 python3 spectremodel.py --tests-only
 ```
 
-### 2. Inspect the Three Substitution Tiers (9, 71, 559 Tiles)
-Generate the $k = 1, 2, 3$ patches, cluster shared boundary vertices into topological nodes, and bind qubit indices to `vertex.data["qubit"]`:
+### 2. Inspect the Three Exact Tiers (71, 559, 4401 Tiles)
+Generate the generation 2, 3, 4 patches, find their bump-and-dent pairs (6, 82, 804) and bind pair-qubit indices to `vertex.data["qubit"]` and `tile.data["pair_qubit"]`; `--tests-only` checks tile counts, edge matching, pair counts and the area ledger:
 
 ```bash
 python3 quantumspectremodel.py
+python3 quantumspectremodel.py --tests-only
 ```
 
 ### 3. Run a Coupled Three-Computer Quantum-Geometry Cycle
-Instantiate `QC-9`, `QC-71`, and `QC-559`, apply geometry-driven local circuits, entangle anchor qubits across all three computers, and feed $\langle Z_q \rangle$ expectations back into tile twists and areas:
+Instantiate `QC-71`, `QC-559` and `QC-4401`, evolve the pair qubits under the dipolar transverse-field Hamiltonian, bridge anchor qubits across the tiers, and feed $\langle Z_p \rangle$ back into the areas of the two tiles of each pair (about 30 s; `--tests-only` checks the Trotter evolution against exact diagonalisation and the area ledger):
 
 ```bash
 python3 tri_spectre_qc.py
+python3 tri_spectre_qc.py --tests-only
 ```
 
 ### Example Python Usage
@@ -130,17 +144,18 @@ python3 tri_spectre_qc.py
 ```python
 from tri_spectre_qc import TriSpectreNetwork
 
-# Initialize the three coupled quantum computers (9, 71, and 559 tiles)
+# Initialize the three coupled quantum computers (71, 559 and 4401 tiles)
 network = TriSpectreNetwork(
     a=1.0,
     b=1.0,
     curve_strength=0.5,
     qubits_per_tier=(4, 4, 4),
+    generations=(2, 3, 4),
 )
 
 # Run 3 coupled quantum-geometry feedback cycles
 for step in range(3):
-    network.step_coupled_cycle(twist_gain=0.25)
+    network.step_coupled_cycle(dt=0.6, steps=3)
     print(f"=== Cycle {step + 1} ===")
     for row in network.summary():
         print(row)
@@ -148,13 +163,13 @@ for step in range(3):
 
 ---
 
-See also [SPECTRE_PHASON_FLIPS.md](SPECTRE_PHASON_FLIPS.md) for how phason flips of the tiling change the neighbour structure this network is built on.
+See also [ROADMAP_QUANTUM_GRAVITY.md](ROADMAP_QUANTUM_GRAVITY.md) for the ordered plan and its stopping rules, and [SPECTRE_PHASON_FLIPS.md](SPECTRE_PHASON_FLIPS.md) for how phason flips of the tiling change the neighbour structure this network is built on.
 
 ## Future Directions & Extensions
 
-* **Exact Hat/Spectre Substitution Gluing:** Upgrade `expand_single_tile()` from sector-offset placement to exact edge-matching substitution rules so shared boundaries match to machine precision across all 559 tiles.
-* **Handle-Level Couplings:** Map `BezHandle.twist` (`out_handle` and `in_handle`) to asymmetric two-qubit interaction strengths ($J_{ij}$) along shared monotile edges.
-* **Interactive Visualization:** Render `QC-9`, `QC-71`, and `QC-559` side-by-side with `matplotlib`, coloring vertices by $\langle Z_q \rangle$ and animating the Bezier boundary deformations across cycles.
+* **Spectre to Hat deformation:** vary `a`, `b` and the corner angle along the Spectre-Hat flow (exact patches currently require `a = b = 1`), and let the flow set `h` and `J`.
+* **Flips as dynamics:** re-assign qubits when a phason flip changes the pair structure (Roadmap, Stage 3).
+* **Interactive Visualization:** Render `QC-71`, `QC-559` and `QC-4401` side-by-side with `matplotlib`, coloring pairs by $\langle Z_p \rangle$ and animating the Bezier boundary deformations across cycles.
 
 # QWLA: Quantum computing without the linear algebra
 
