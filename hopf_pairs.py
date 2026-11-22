@@ -19,9 +19,11 @@ PART 1. The quaternionic Hopf map S^7 -> S^4 on a pure two-qubit state.
 PART 2. Tier-to-tier entanglement without hand-chosen bridges.
    `TriSpectreNetwork.entangle_across_computers` joins the tiers with CX/CZ gates chosen for the toy. Here the
    tiers are joined by the same dipole law as everything else: the pairs of all tiers are put in one plane and
-   W_pq = 1/r_AA' - 1/r_AB' - 1/r_BA' + 1/r_BB' is evaluated between pairs of different tiers. The tiers do NOT
-   nest at one scale in the exact patches (checked: a generation-k patch is not a translated, rotated subset of
-   generation k+1), so the common frame is a MODEL CHOICE, with two options and a random-offset control.
+   W_pq = 1/r_AA' - 1/r_AB' - 1/r_BA' + 1/r_BB' is evaluated between pairs of different tiers. 
+   CORRECTION (see nested_tiers.py): the exact patches DO nest - patch(k) is the slot-1 child of patch(k+1) and
+   every pair of patch(k) is a pair of patch(k+1) - so this overlay is NOT needed; it is kept as the superseded
+   first attempt and as a control. An earlier version of this docstring said the tiers do not nest; that came from
+   a test that allowed only translations and rotations by multiples of 30 degrees.
 """
 from __future__ import annotations
 
@@ -323,6 +325,20 @@ def test_hopf_pair_picture_is_exact_for_two_pairs_and_improves_with_heat_for_man
         _, psi = ph.ground_state(W, fp.J, fp.kappa)
         Dm.append(float(np.mean(strongest_partner_leaks(W, psi))))
     assert Dm[0] > 0.3 and Dm[1] < 0.15, Dm
+
+
+def test_two_hopf_fibres_are_clifford_parallel_with_invariant_equal_to_the_state_overlap():
+    rng = np.random.default_rng(3)
+
+    def plane(psi):
+        return np.stack([np.concatenate([psi.real, psi.imag]), np.concatenate([(1j * psi).real, (1j * psi).imag])], 1)
+
+    for _ in range(10):
+        a = rng.normal(size=2) + 1j * rng.normal(size=2)
+        b = rng.normal(size=2) + 1j * rng.normal(size=2)
+        a, b = a / np.linalg.norm(a), b / np.linalg.norm(b)
+        sv = np.linalg.svd(plane(a).T @ plane(b), compute_uv=False)
+        assert abs(sv[0] - sv[1]) < 1e-12 and abs(sv[0] - abs(np.vdot(a, b))) < 1e-12
 
 
 def run_tests(verbose: bool = True) -> int:

@@ -149,11 +149,27 @@ Li and Boyle, *The Penrose tiling is a quantum error-correcting code* (arXiv:231
 - 12 pairs: D 0.82 at flow 0.05, 0.11 at flow 0.2.
 - So the picture applies only on the hot side of the flow, where the entanglement is mostly pairwise. In the cold cat regime nearly all of it is shared with the rest.
 
-**Counted, negative / model-dependent.** The exact patches of different generations do not nest at one scale, so there is no natural common frame for cross-tier dipole couplings. Using the same dipole law between overlaid tiers (4 pairs per tier, generations 2, 3, 4):
+**SUPERSEDED by Stage 4i.** The statement below that the exact patches do not nest was WRONG (my test allowed only translations and 30-degree rotations and missed the slot transform); the overlay is kept only as a control. **Counted, model-dependent (overlay, superseded).** Using the same dipole law between overlaid tiers (4 pairs per tier, generations 2, 3, 4):
 - The ground state at flow ≤ 0.13 is the parity cat, and every tier pair has mutual information ln 2 = 0.693. That is GHZ-type parity correlation, not tier entanglement. With the doublet resolved into one classical pattern, tier mutual information is ≤ 0.0013 nats at flow 0.05.
 - Real tier entanglement appears at flow 0.3 and 0.6. With the centred overlay it is 0.94, 0.56, 0.49 nats for (1,2), (2,3), (1,3) at flow 0.3. With the inflation-scaled overlay it is 0.05, 0.54, 0.03. The "nearest tier is most entangled" ordering therefore depends on the overlay choice and is not robust.
 - Exact quench from |0…0⟩ with no bridges: tier mutual information 0.003–0.03 nats up to t = 16.
 - The hand-chosen CX/CZ bridges give 0.21, 0.42, 0.26 nats after 3 cycles. Without bridges the network state is an exact product (0.000).
 - Random offsets of the tiers at SD 3 and 10 give entanglement in every sample, so it does not need the Spectre geometry; the overlay (dipoles landing on top of each other, cross couplings up to 55× the intra-tier ones) drives it.
 
-**Verdict.** Bridge-free tier entanglement exists only as a consequence of how the tiers are overlaid; the model does not currently derive that overlay. Deriving the tier-to-tier coupling from the substitution rule (a tile of tier k+1 containing its tier-k children) is the open item.
+**Verdict (superseded).** See Stage 4i: the tiers nest exactly, so no overlay is needed.
+
+
+### Stage 4i — the tiers nest exactly; tier-to-tier is region-to-region (`nested_tiers.py`, 3 tests); correction of Stage 4h
+
+**Correction.** Stage 4h said the exact patches of different generations "do not nest at one scale". That was wrong. My test looked for a translation and a rotation by a multiple of 30° and missed the substitution's slot transform.
+
+**Exact** (found reading the `ray` fork, whose horned-sphere ring tree is a recursive parent–child object): `spectre_exact.build` makes the level-k patch of species S the union, over eight slots, of the level-(k−1) patches of the child species `SUPER_RULES[S][idx]`, each moved by `Ts[idx]`. For the single-tile species (Delta), slot 1 is Delta again, so as sets of exact leaf tiles patch(k) = Ts[1]·patch(k−1) for k = 2, 3, 4: 9 ⊂ 71 ⊂ 559 ⊂ 4401 tiles, verified by exact key comparison. Every pair of patch(k) is also a pair of patch(k+1): 6 ⊂ 82 ⊂ 804. The Mystic species (Gamma, slot 7) nests the same way (8 ⊂ 62 ⊂ 488 ⊂ 3842). So the three tiers of `TriSpectreNetwork` are nested regions of one tiling, not three systems.
+
+**Counted** (one cluster of 16 pair qubits: the 6 pairs of tier 2, then the 5 nearest pairs new in tier 3, then the 5 nearest new in tier 4; the dipole matrix W is the real one of patch(4); no overlay, no bridges; symmetry-broken ground state to remove the ln 2 of the parity cat; flow times 0.13 and 0.2):
+- Mutual information I(tier 2 : tier 3) = 0.47, 0.56 nats; I(tier 3 : tier 4) = 0.03, 0.08; I(tier 2 : tier 4) = 0.35, 0.35. The entanglement across the nesting boundaries is not zero, and it is not ordered "previous and next only": tiers 2 and 4 are more entangled than 3 and 4.
+- Against the same pairs assigned to the shells at random (12 shuffles), the nested shells are not more entangled: I(tier 2 : tier 3) is 0.47 against 0.50 at flow 0.13 and 0.56 against 0.55 at 0.2; for shells (6, 10) it is 0.62 and 0.71 against 1.16 ± 0.36 and 1.12 ± 0.24; for (6, 6, 4) 0.50 and 0.59 against 0.61 ± 0.17 and 0.70 ± 0.15. Compact shells have a small boundary, so what the nesting adds is geometry, as in the area-versus-volume tests of Stage 4e.
+- At flow time 0.05 the mutual information is at most 0.014 nats; at 0.3 and 0.6 tiers 2:3 give 0.38 and 0.26.
+
+**Verdict.** "Each iteration entangled with the previous and next" has a real, exact setting: the nesting 6 ⊂ 82 ⊂ 804. In it the entanglement between iterations is ordinary region entanglement of one tiling, set by proximity, and the hierarchy by itself gives no more of it than a random grouping. One cluster size and two shell layouts; whether the hierarchy matters at scale needs the 82- and 804-pair states, which Stage 4 could not reach.
+
+**Ray fork, Möbius dictionary (not implemented as code).** The Möbius invariants of a pair of Hopf fibres over Bloch points a, b are s1 = s2 = |cos(θ_ab/2)| = |⟨a|b⟩|: the fibre pair is a "Hopf clasp" exactly when the states are orthogonal, which is the horned-sphere clasp at κ = 1 + 1/√2 (s1 = 0). The two bit values of a pair qubit, the poles of the Bloch sphere, are such a pair. All fibres of one Hopf fibration link pairwise once, whatever the state, so the linking graph carries no information about entanglement; the invariants carry the overlap, which the Bloch-vector tools already give. The ground state is real, so the Bloch vectors of a pair qubit lie in the xz great circle, and the fibres on the Clifford torus. Nothing new for the model came from this beyond the nesting above.
