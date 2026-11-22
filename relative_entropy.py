@@ -581,6 +581,18 @@ def test_depth_profile_holds_below_half_the_system_and_reverses_above_it_at_12_a
     assert 2.0 < ZZ[mz, 4].mean() < 7.0                                             # ZZ weight is of the same order as X
 
 
+def test_local_first_law_is_controlled_by_abs_beta_not_by_the_sign_of_the_temperature():
+    kw = dict(generation=3, n=6, flow_tau=0.05, region=(0, 1, 2))
+    for b in (0.2, 0.5, 1.0):
+        pos, neg = thermal_first_law(beta=b, **kw), thermal_first_law(beta=-b, **kw)
+        assert abs(neg["global_ratio"] - 1.0) < 1e-6                                   # exact for either sign
+        assert abs(neg["residual"] - pos["residual"]) < 0.25 * pos["residual"] + 0.01  # same locality for +b and -b
+        assert abs(neg["beta_eff"] + pos["beta_eff"]) < 0.25 * b                       # beta_eff follows beta
+        assert (pos["regional_ratio"] - 1.0) * (neg["regional_ratio"] - 1.0) < 0.0    # deviation is odd in beta: analytic through 0
+    cold_neg, cold_pos = thermal_first_law(beta=-5.0, **kw), thermal_first_law(beta=5.0, **kw)
+    assert cold_neg["residual"] > 0.2 and cold_pos["residual"] > 0.2                  # both fail when |beta| is large
+
+
 def run_tests(verbose: bool = True) -> int:
     tests = [(n, f) for n, f in sorted(globals().items()) if n.startswith("test_") and callable(f)]
     failed = 0

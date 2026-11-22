@@ -127,3 +127,14 @@ Pass: a source that gives a `1/r` potential or a Gauss-law flux with the right s
 ## 6. Reading
 
 Li and Boyle, *The Penrose tiling is a quantum error-correcting code* (arXiv:2311.13040); Batle and Bednorz, *Quantum error-correcting codes from aperiodic monotiles: the Hat and the Spectre* (arXiv:2607.15326); Smith, Myers, Kaplan and Goodman-Strauss, *A chiral aperiodic monotile* (arXiv:2305.17743); Lloyd, *The Universe as Quantum Computer* (arXiv:1312.4455); Comisso and Asenjo on gravitational reconnection in tetrad form, cited in `quantgravedit.tex`.
+
+### Stage 4g — negative temperature (β < 0) and the thermal first law
+
+**Counted** (`relative_entropy.thermal_first_law`, region (0,1,2) of 6 pairs, flow 0.05; test `test_local_first_law_is_controlled_by_abs_beta_not_by_the_sign_of_the_temperature`):
+- The global first law S_rel = βΔ⟨H⟩ holds exactly for either sign of β (ratio 1.0000 for β from −5 to 5).
+- The regional law K_A ≈ β_eff·H_A has the same locality residual for +β and −β (0.008, 0.032, 0.084 at |β| = 0.05, 0.2, 0.5; 0.370 and 0.346 at |β| = 20) and a regional ratio that deviates from 1 with opposite sign.
+- So the law is controlled by |β|, not by the sign of the temperature: it holds when the state is *hot* (small |β|), whether that heat is positive or negative.
+
+**Not found**: negative temperature does not rescue the first law at large |β|. At β = −5 the regional ratio is 0.59 and the residual 0.33. The "first law holds only when hot" idea is supported; "negative kelvin" adds nothing here, because H is bounded, so −H is a mirror model.
+
+**Side check, null**: the Berry curvature of the two-pair ground state over (J, chiral coupling) is zero to 1e-15, as it must be for a real Hamiltonian. Any Hopf-type phase fibre over parameter space would need a complex Hamiltonian, which this model does not have.
