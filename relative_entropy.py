@@ -472,6 +472,115 @@ def test_ground_state_modular_hamiltonian_depth_profile():
     assert fr[1] + fr[2] > 0.7, fr                                                    # mostly one- and two-body
 
 
+
+# ---- depth profiles of the X and ZZ weights, and the size of the region -------------------------
+#
+# `xz_coefficient` reads single coefficients of K_A without expanding the whole Pauli basis, so regions
+# up to half of 16 pairs are affordable. Depth of a pair inside a region is measured three ways:
+# Euclidean distance to the nearest pair outside, Delaunay hops to the outside, and the ledger depth
+# (the tile area of the region's pairs that are no deeper than it, a monotone radial rank in units of
+# 2 A(1, b)).
+
+def xz_coefficient(KA: np.ndarray, m: int, xs: Sequence[int] = (), zs: Sequence[int] = ()) -> float:
+    """Tr(P K_A) / 2^m for P = prod_{i in xs} X_i prod_{j in zs} Z_j (qubit 0 is the most significant bit)."""
+    d = 2 ** m
+    b = np.arange(d)
+    flip = 0
+    for i in xs:
+        flip |= 1 << (m - 1 - i)
+    sign = np.ones(d)
+    for j in zs:
+        sign = sign * (1 - 2 * ((b >> (m - 1 - j)) & 1))
+    return float(np.real(np.sum(sign * KA[b, b ^ flip])) / d)
+
+
+def hops_to_outside(links: np.ndarray, region: Sequence[int]) -> Dict[int, int]:
+    """Graph distance in the Delaunay links from each pair of `region` to the nearest pair outside it."""
+    from collections import deque
+    n = links.shape[0]
+    inside = set(int(r) for r in region)
+    dist = {o: 0 for o in range(n) if o not in inside}
+    queue = deque(dist)
+    while queue:
+        u = queue.popleft()
+        for v in np.nonzero(links[u])[0]:
+            if int(v) not in dist:
+                dist[int(v)] = dist[u] + 1
+                queue.append(int(v))
+    return {int(r): dist.get(int(r), 10 ** 6) for r in region}
+
+
+def weight_profiles(generation: int, n: int, flow_tau: float, sizes: Sequence[int], zz_min: float = 0.25):
+    """
+    Local weights of K_A against depth for every compact region of the given sizes.
+    Returns (X, ZZ): X rows (m, euclid, hops, ledger, beta_loc = c_X/(-J)); ZZ rows (m, euclid, hops, ledger,
+    beta_zz = c_ZZ/K_pq, K_pq) for Delaunay-linked pairs with |K_pq| > zz_min max|K|; depth of a link is that of
+    its two ends (mean of the Euclidean distances and hops, the ledger of the deeper end's complement).
+    """
+    from entanglement_geometry import build_cluster, compact_regions, delaunay_links
+    from quantumspectremodel import tile_area_ab
+    fp = ph.flow_parameters(flow_tau)
+    K = ph.flow_couplings(generation, n, flow_tau)
+    psi = flow_ground_state(generation, n, flow_tau)
+    _, _, mids, _ = build_cluster(generation, n)
+    links = delaunay_links(mids)
+    A_pair = 2.0 * tile_area_ab(1.0, fp.b)
+    kmax = float(np.abs(K).max())
+    X, ZZ = [], []
+    for reg in compact_regions(mids, max(sizes)):
+        m = len(reg)
+        if m not in sizes:
+            continue
+        KA = modular_hamiltonian(reduced_density(psi, n, reg))
+        hop = hops_to_outside(links, reg)
+        outside = [q for q in range(n) if q not in reg]
+        dE = {q: min(float(np.linalg.norm(mids[q] - mids[o])) for o in outside) for q in reg}
+        for i, q in enumerate(reg):
+            led = A_pair * sum(1 for r in reg if dE[r] <= dE[q])
+            X.append((m, dE[q], hop[q], led, xz_coefficient(KA, m, xs=(i,)) / (-fp.J)))
+        for i in range(m):
+            for j in range(i + 1, m):
+                p, q = reg[i], reg[j]
+                if links[p, q] and abs(K[p, q]) > zz_min * kmax:
+                    led = A_pair * sum(1 for r in reg if dE[r] <= max(dE[p], dE[q]))
+                    ZZ.append((m, 0.5 * (dE[p] + dE[q]), 0.5 * (hop[p] + hop[q]), led,
+                               xz_coefficient(KA, m, zs=(i, j)) / K[p, q], K[p, q]))
+    return np.array(X), np.array(ZZ)
+
+
+def test_xz_coefficient_matches_the_full_pauli_expansion():
+    rng = np.random.default_rng(5)
+    A = rng.normal(size=(16, 16)) + 1j * rng.normal(size=(16, 16))
+    M = A + A.conj().T
+    c = pauli_coefficients(M, 4)
+    for xs, zs in (((1,), ()), ((), (0, 2)), ((0,), (3,)), ((0, 2), (1,)), ((), ())):
+        key = tuple(1 if (i in xs and i not in zs) else 3 if (i in zs and i not in xs) else 0 for i in range(4))
+        if set(xs) & set(zs):
+            continue                                            # X and Z on one site is Y: not an X/Z string
+        assert abs(xz_coefficient(M, 4, xs, zs) - c[key]) < 1e-12, (xs, zs)
+
+
+def test_hops_to_outside_on_a_path():
+    links = np.zeros((6, 6), bool)
+    for i in range(5):
+        links[i, i + 1] = links[i + 1, i] = True
+    assert hops_to_outside(links, [1, 2, 3, 4]) == {1: 1, 2: 2, 3: 2, 4: 1}
+
+
+def test_depth_profile_holds_below_half_the_system_and_reverses_above_it_at_12_and_16():
+    from scipy.stats import spearmanr
+    for n, below, above in ((12, (4, 5), 7), (16, (4, 5), 8)):
+        X, ZZ = weight_profiles(3, n, 0.05, list(below) + [above])
+        for m in below:
+            mk = X[:, 0] == m
+            assert X[mk, 4].mean() > 1.5, (n, m)                                   # positive local inverse temperature
+            assert spearmanr(X[mk, 1], X[mk, 4])[0] > 0.5, (n, m)                  # growing with depth
+        mk = X[:, 0] == above
+        assert X[mk, 4].mean() < 0 and spearmanr(X[mk, 1], X[mk, 4])[0] < -0.5, (n, above)   # reversed beyond half
+    mz = ZZ[:, 0] == 4                                                              # (n = 16 here; m = 6 of 16 is the crossover)
+    assert 2.0 < ZZ[mz, 4].mean() < 7.0                                             # ZZ weight is of the same order as X
+
+
 def run_tests(verbose: bool = True) -> int:
     tests = [(n, f) for n, f in sorted(globals().items()) if n.startswith("test_") and callable(f)]
     failed = 0
