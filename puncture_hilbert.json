@@ -1,0 +1,99 @@
+{
+ "invariant_algebra_dim_pair": 2,
+ "dimension_table": [
+  {
+   "pairs": 1,
+   "qubit_dim": 2,
+   "singlet_dim": 1,
+   "fits": false
+  },
+  {
+   "pairs": 2,
+   "qubit_dim": 4,
+   "singlet_dim": 2,
+   "fits": false
+  },
+  {
+   "pairs": 3,
+   "qubit_dim": 8,
+   "singlet_dim": 5,
+   "fits": false
+  },
+  {
+   "pairs": 4,
+   "qubit_dim": 16,
+   "singlet_dim": 14,
+   "fits": false
+  },
+  {
+   "pairs": 5,
+   "qubit_dim": 32,
+   "singlet_dim": 42,
+   "fits": true
+  },
+  {
+   "pairs": 6,
+   "qubit_dim": 64,
+   "singlet_dim": 132,
+   "fits": true
+  },
+  {
+   "pairs": 7,
+   "qubit_dim": 128,
+   "singlet_dim": 429,
+   "fits": true
+  },
+  {
+   "pairs": 8,
+   "qubit_dim": 256,
+   "singlet_dim": 1430,
+   "fits": true
+  },
+  {
+   "pairs": 9,
+   "qubit_dim": 512,
+   "singlet_dim": 4862,
+   "fits": true
+  },
+  {
+   "pairs": 10,
+   "qubit_dim": 1024,
+   "singlet_dim": 16796,
+   "fits": true
+  }
+ ],
+ "n4": {
+  "n": 4,
+  "dim": 2,
+  "catalan": 2,
+  "chars": [
+   1.9999999999999998,
+   1.9999999999999998,
+   -0.9999999999999998,
+   -0.9999999999999999
+  ],
+  "irreps": {
+   "1": 0.0,
+   "1'": 1.0,
+   "1''": 1.0,
+   "3": 0.0
+  }
+ },
+ "n12": {
+  "n": 12,
+  "dim": 132,
+  "catalan": 132,
+  "chars": [
+   132.0,
+   20.0,
+   6.000000000000002,
+   6.0
+  ],
+  "irreps": {
+   "1": 20.0,
+   "1'": 14.0,
+   "1''": 14.0,
+   "3": 28.0
+  }
+ }
+}

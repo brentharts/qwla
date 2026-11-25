@@ -116,6 +116,40 @@ Pass: a fixed point or a clean scaling of the couplings with level. Fail: coupli
 The earlier models found no monopole source, no horizon and the wrong sign for light bending. Either add an ingredient that can supply a source (a field on the lift lattice, a four-dimensional complex whose moves are Pachner moves, or a rule that gives the bit an energy), or state that the substrate is an error-correcting code and a toy Hamiltonian rather than a gravity model.
 Pass: a source that gives a `1/r` potential or a Gauss-law flux with the right sign, tested on a patch. Otherwise record the negative.
 
+### Stage 7: the cone-point ledger, a 2+1 reading (**Exact** for the bookkeeping; **Counted** for the Spectre sample)
+Source: the ballgen paper (`paper/trionda.tex`, angle ledger of the flat hat model and of folded Spectre patches). A closed surface of flat tiles is flat except at cone points, a vertex whose tile corners add to `a` degrees has deficit `360 - a`, and the discrete Gauss-Bonnet theorem makes the deficits of a sphere add to 720 degrees. In 2+1 gravity this is the statement that point particles on a closed universe have total mass fixed by topology (Deser-Jackiw-'t Hooft); here it is a dictionary, not a derivation. `cone_ledger.py` (5 checks) computes it for three substrates:
+- *Tetrahedron* (the flat model of the Trionda): 4 cone points of deficit 180 degrees, cone angle 180, i.e. the flat **pillowcase** `S^2(2,2,2,2)`; Thurston moduli dimension `n - 3 = 1`.
+- *Hat Trick* (flat hats on the 92-tile geodesic sphere): the kite angles are flat everywhere except at the corners of the 12 pentagonal holes; each hole is capped by a cone point of deficit 60 degrees (cone angle 300): `12 x 60 = 720`, moduli dimension 9.
+- *Closed folds of random Spectre patches* (exact DP of `spectre/dp.py`, 237 balls from patches of 4 to 21 tiles, seed 5, 80 draws per size): the ledger is 720 in all 237 and no hole remains, as the paper's proposition requires; deficits are multiples of 30 degrees and in this sample only 90, 120, 180, 240 or 270 degrees occur as non-zero deficits (never 30, 60, 150 or 210 degrees). The most common multiset is `{90 x 4, 120 x 3}` (100 of 237); the number of cone points is 4 to 8 (moduli dimension 1 to 5); no fold gives the pillowcase `{180 x 4}`. These are statements about the sample, not a classification; whether 30 and 60 degree cones are impossible for a Spectre fold is open.
+Thurston's theorem (*Shapes of polyhedra*, 1998): flat cone-metrics on the sphere with `n` cone points of given positive curvatures form a complex-hyperbolic cone-manifold of complex dimension `n - 3`; used only as the dimension count in `moduli_dim`.
+Pass: ledger 720 on every closed fold and a cone-point multiset for each. **Done.** Not done: the 2+1 dynamics (the roadmap's R5 asks for a source with a `1/r` potential; in 2+1 gravity there is no Newtonian force, so Stage 6's test cannot be passed in this setting).
+
+### Stage 9a: the sphere as a phase space (**Exact** matrix identities; **Counted** convergence)
+`spin_sphere.py` (5 checks). The Trionda flow `v = p x grad(xyz)` is the Hamiltonian flow of `xyz` on the sphere with its area form. Spin-`j` quantisation (2j + 1 states, `hbar_eff = 1/j`) gives `H3 = sym(Jx Jy Jz)`:
+- `H3` commutes with the 12 rotations of `T` and not with a quarter-turn about `z` or with an icosahedral fifth-turn; `H6 = sum_a (a.J)^6` over the six 5-fold axes commutes with the 60 rotations of `I`. The first invariant multipoles are `l = 3` for `T` and `l = 6` for `I`, the same numbers as the seam-harmonic selection rules of the paper.
+- Ehrenfest: the coherent-state expectation `<J>(t)/j` follows the classical Trionda flow (quantum time = classical time / `j^2`); the maximum error over classical time up to 1.2 is 0.085, 0.047, 0.024, 0.012 at `j` = 10, 20, 40, 80, halving as `j` doubles.
+- Counting: the number of `T`-invariant states is within 1.5 of `(2j + 1)/12` and of `I`-invariant states of `(2j + 1)/60`; a region of area `A` holds about `(2j + 1) A / 4 pi` states, so each Trionda panel holds about `(2j + 1)/4`.
+This is an area-to-state-counting dictionary, nothing more. **Not done:** the 12-puncture (Hat Trick) or 4-puncture (pillowcase) Hilbert space of flat `SU(2)` connections; whether the pair-qubit space embeds in it (expected to fail; a failure closes the idea, as in the decision table).
+
+### Stage 8: do local moves change the cone data? (**Counted**, sample)
+`cone_moves.py` (4 checks). The wada-coudene flip data carry no fold and the engine's placement files are not in this workspace, so the flip relation itself was not used. What was measured is the nearest thing the fold code allows: one-tile moves on closed Spectre folds (random disc patches of 5 to 19 tiles, seed 5, 40 draws per size). A move adds a frontier tile, removes a tile, or swaps one for the other, and counts only if the result is again a closed fold. 660 before/after pairs came out (add 199 of 528 tried, remove 314, swap 147).
+- The ledger stays 720 degrees in all 660 pairs, as it must.
+- The number of positive cone points changed in 355 pairs (54%) and the cone multiset changed in 414 (63%). The change in the count ran from -3 to +2. Swaps, which keep the tile number, changed the cone count in 81 of 147 (55%).
+- Thurston's moduli dimension `n - 3` changed by the same amount, since `n` is at least 4 here.
+- Reading: a boundary move can move the fold to a different moduli space. An interior planar flip leaves the patch boundary alone and so, by the cone-points-on-boundary-corners reading, leaves the cone data alone; that was **not** tested, and needs the engine's closed clusters (radius about 26).
+- Verdict for kill row 7: tripped for boundary moves, undecided for interior flips. Thurston's moduli space is used per frozen patch, as the row says.
+
+### Stage 9b: do the pair qubits fit a puncture Hilbert space? (**Exact** for the counts, **Negative** for the embedding)
+`puncture_hilbert.py` (6 checks). The gauge-invariant space of a sphere with `n` spin-1/2 punctures is the singlet space of `(C^2)^n`, of dimension the Catalan number `C_{n/2}`; I built it exactly and let the tetrahedral group `T = A4` permute the punctures.
+- *Dimension.* `p` pair qubits have dimension `2^p`; `2p` punctures have `C_p`. By counting, the qubits fit only for `p >= 5` (`p` = 2, 3, 4: 4 > 2, 8 > 5, 16 > 14; `p` = 5, 6: 32 < 42, 64 < 132). Counting is necessary, not an embedding, and no map was built.
+- *Symmetry.* 4 punctures at a tetrahedron's vertices: 2-dimensional, `1' + 1''` of `A4` (one qubit, the `Z3` phases). 12 punctures at the Hat Trick's pentagons (icosahedron vertices, `T` acting freely): 132-dimensional, `20 * 1 + 14 * 1' + 14 * 1'' + 28 * 3` (20 + 14 + 14 + 84 = 132); 20 `T`-invariant states.
+- *Structure (the failing part).* The operators on one pair that commute with SU(2) are spanned by the singlet and triplet projectors: a 2-dimensional commutative algebra. A gauge-invariant pair carries a classical bit, not a qubit with non-commuting `X` and `Z`. The singlet space also has no tensor factorisation over pairs, so `-J X_p` and `W Z_p Z_q` have no gauge-invariant local form. Pair qubits therefore do not embed as local qubits; they would need operators spanning several punctures.
+- Verdict for kill row 9: tripped for local pair qubits. The spin-`j` dictionary of Stage 9a stays; the qubit network stays a code and a toy. Not done: flat connections at level `k` (the Verlinde count is smaller than `C_p`), spins other than 1/2, a non-local embedding.
+
+### Stage 10a: the hat beyond `GP(f, 0)` (**Exact** for what is exhausted)
+`gp_hat_scan.py` (4 checks; needs the `hexasphere` repository for `HatBall` and its Algorithm X). The Goldberg-Coxeter spheres `GP(m, n)`, `T = m^2 + m n + n^2`, are built from the Eisenstein lattice (counts `10T + 2` vertices, `20T` triangles, degrees 5 and 6, every edge in two faces); the kite split makes `60 (T - 1)` kites, so hats need odd `T`. For every odd `T` up to 39, both hands of every chiral pair, and the symmetry groups `I`, `T`, `C5`, `C3`, `C2`, `C1` (hat hand fixed) and `C1` with both hands: **no hat tiling with 12 pentagon holes exists except on `GP(3,0)` = `GP(0,3)`** (`T = 9`, the Hat Trick: 2 tilings with `I`, 2 with `T`, 16 with `C5` or `C3`, 64 with `C2`, at least 1000 with `C1`). All searches other than the `GP(3,0)` `C1` ones ended exhausted with zero tilings (`T = 3` has no hat placement at all; every kite is covered by some placement for `T >= 7`). This extends the earlier `GP(f,0)` scan to the chiral classes. It is not a proof for larger `T`, for other hole patterns, or for tilings with holes of another kind.
+Consequence for Stage 5: a hat (aperiodic) structure does not continue to larger closed spheres by Goldberg-Coxeter subdivision, so the scale ladder on a closed curved space cannot be the planar inflation; the hat sphere is a single isolated size.
+
 ## 3. Decisions and kill criteria
 
 | After stage | If this happens | Then |
@@ -125,6 +159,9 @@ Pass: a source that gives a `1/r` potential or a Gauss-law flux with the right s
 | 4 | Entropy has a volume law and no relation to the contact graph | Drop the emergent-geometry claim; keep the code-theoretic reading (`SPECTRE_QEC_CODES.md`) |
 | 5 | Couplings do not close under inflation | The scale ladder is kinematic only |
 | 6 | No source is found | Say so; publish the substrate and the negatives |
+| 7 | A flip changes the number of cone points | Thurston's moduli space does not apply along the flow; use it only per frozen patch |
+| 9 | The pair-qubit space does not embed in a puncture Hilbert space | The qubit network stays a code and a toy; keep the spin-`j` dictionary only |
+| 10 | Couplings do not close under a sphere ladder (no hat size beyond `GP(3,0)`) | Scale ladder is planar only |
 
 ## 4. How the documents here fit together
 
