@@ -228,6 +228,21 @@ With the 12 geometry sites first and the 30 slots after them, the bond after sit
 - *Odd part (14 mirror pairs of chiral classes).* `(E(b) - E(s.b))/2` is between 4e-8 and 1.8e-7. Its sign is that of `chi4` in all 10 pairs where `chi4` is non-zero, and it is +-(6 to 7)e-8 in the 4 pairs where `chi4` = 0. A fit gives `lambda = 1.06e-7` with residual 7e-8: the odd part is `lambda chi4` plus terms of the same size from the other mirror-odd functions of Stage 9d. So the coupling of the hat's hand has a physical origin in the elasticity of rigid hats, and it is small: `lambda / g_el = 1.5e-6`.
 - Not done: other elastic models (bending of the seams, curved panels), a kinetic term that would give `Gamma`, and the same for Spectre folds.
 
+
+### Stage 9k: entanglement of the level-2 ground state is close to a boundary law (`null_cone_level2.py`; Exact)
+
+- At level 2 the ground state is the Gaussian state with covariance `<i gamma_p gamma_q> = a_pq / sqrt5`: correlations are `1/sqrt5` on icosahedron edges and exactly zero beyond nearest neighbours (because `a^2 = -5`). **Exact.**
+- Entropy of a region over all 2047 regions: `S = 0.068 (edges cut) + 0.028 (punctures) - 0.012`, R^2 = 0.995, against 0.495 for the number of punctures alone; the cut alone gives R^2 = 0.982. Regions of even size only: 0.068 and 0.025, R^2 = 0.995. **Exact** numbers; the fit is a description.
+- With `NULL_CONE_CONNECTIONS.md` 3C and 3C2: the per-edge coefficient is 0.068, 0.077, 0.092 at level 2, spin 1/2 and spin 1. It is **not** fixed by symmetry, and varies by about a third. The per-puncture term is 0.028, 0.234, 0.352, so level 2 is the case closest to an area law.
+- A region with an odd number of Majoranas is given `(1/2) ln 2` for its unpaired mode; Stage 9l shows this is `ln d` of the charge-1/2 sector.
+
+### Stage 9l: anyonic entropy at levels 3 and up; the volume term grows smoothly with the level (`anyon_entropy.py`; Exact numerics, 75 regions)
+
+- Entropy of a disc at level k: `S = sum_c p_c [ -ln p_c + S(rho_c) + ln d_c ]` over the total charge c of the disc (**Known** formula, used from memory, tested at both ends). Regions: arcs along the Hamiltonian cycle, 75 distinct bipartitions from two cycles. Other sets need a choice of disc. **Not done.**
+- Tests: level 2 equals the Majorana formula of Stage 9k; the classical limit equals the ordinary spin entropy; an arc equals its complement at every level. **Exact.**
+- Fit on the arcs, per puncture: 0.025, 0.042, 0.057, 0.068, 0.078, 0.103, 0.137, 0.183, 0.216 at k = 2, 3, 4, 5, 6, 10, 20, 50, classical; per cut edge: 0.069, 0.099, 0.114, 0.122, 0.126, 0.131, 0.128, 0.119, 0.113; R^2 from 0.998 to 0.992. The volume term grows smoothly and slowly with the level; the edge term peaks near k = 10.
+- These arc-only coefficients are not comparable with the all-region fits of Stage 9k (classical: 0.113 and 0.216 on arcs, 0.077 and 0.234 on all regions).
+
 ### Stage 10a: the hat beyond `GP(f, 0)` (**Exact** for what is exhausted)
 `gp_hat_scan.py` (4 checks; needs the `hexasphere` repository for `HatBall` and its Algorithm X). The Goldberg-Coxeter spheres `GP(m, n)`, `T = m^2 + m n + n^2`, are built from the Eisenstein lattice (counts `10T + 2` vertices, `20T` triangles, degrees 5 and 6, every edge in two faces); the kite split makes `60 (T - 1)` kites, so hats need odd `T`. For every odd `T` up to 39, both hands of every chiral pair, and the symmetry groups `I`, `T`, `C5`, `C3`, `C2`, `C1` (hat hand fixed) and `C1` with both hands: **no hat tiling with 12 pentagon holes exists except on `GP(3,0)` = `GP(0,3)`** (`T = 9`, the Hat Trick: 2 tilings with `I`, 2 with `T`, 16 with `C5` or `C3`, 64 with `C2`, at least 1000 with `C1`). All searches other than the `GP(3,0)` `C1` ones ended exhausted with zero tilings (`T = 3` has no hat placement at all; every kite is covered by some placement for `T >= 7`). This extends the earlier `GP(f,0)` scan to the chiral classes. It is not a proof for larger `T`, for other hole patterns, or for tilings with holes of another kind.
 Consequence for Stage 5: a hat (aperiodic) structure does not continue to larger closed spheres by Goldberg-Coxeter subdivision, so the scale ladder on a closed curved space cannot be the planar inflation; the hat sphere is a single isolated size.

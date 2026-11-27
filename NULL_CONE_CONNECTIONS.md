@@ -70,6 +70,33 @@ So the corner state has an area-law-like structure in the puncture graph: more l
 
 So the pattern holds at the second spin: entropy tracks the boundary of the region and the coefficient per cut edge changes only modestly (0.077 to 0.092). This is two data points, so I cannot say whether the per-edge coefficient is fixed by symmetry or just varies slowly. The per-puncture coefficient grows more (0.23 to 0.35), as expected if it counts internal dimension. Whether the per-edge term is the analogue of the paper's area term is still the Hypothesis of 3C.
 
+### C3. Level 2: the entropy is close to a pure boundary law (Exact)
+
+`null_cone_level2.py` (about 8 seconds) does the same count for the level-2 model of Stage 9c, the free Majorana model with one Majorana per cone point and signed adjacency a, a^2 = -5.
+
+- **Correlations stop at nearest neighbours (Exact).** Because a^2 = -5, the matrix a/sqrt5 is a complex structure, and the ground state is the Gaussian state with covariance <i gamma_p gamma_q> = a_pq / sqrt5. The two-point function is 1/sqrt5 on the 30 edges and exactly zero between cone points that are not neighbours.
+- **Entropy of a region (Exact).** From the covariance restricted to the region, over all 2047 regions: S = 0.068 (edges cut) + 0.028 (punctures in R) - 0.012 with R^2 = 0.995, against R^2 = 0.495 for the number of punctures alone. The cut alone, S = 0.075 (edges cut), already has R^2 = 0.982. At a fixed region size the correlation of S with the number of edges cut is 0.996 to 1.000. One cone point has S = (1/2) ln 2; two that are not neighbours have ln 2 exactly, two neighbours 0.590. The largest entropy of a half is 1.52 nats, below ln 32 = 3.47.
+- **A convention.** A region with an odd number of Majoranas has no Hilbert space of its own (its algebra has a centre). I used the usual Gaussian formula, which gives such a region (1/2) ln 2 for the unpaired mode, the logarithm of the quantum dimension sqrt2 of one Ising anyon. Restricted to the 1023 regions of even size the fit is 0.068 per cut edge, 0.025 per puncture, R^2 = 0.995, so the conclusion does not rest on the convention.
+
+Set beside 3C and 3C2, the three ground states give 0.068 (level 2), 0.077 (spin 1/2, level infinity) and 0.092 (spin 1) per cut edge, and 0.028, 0.234 and 0.352 per puncture. So the per-edge coefficient is not fixed by symmetry: it varies by about a third over the three cases. What changes most is the volume term, which nearly vanishes at level 2, where the state is a free state with nearest-neighbour correlations only. Of the three, the level-2 state is the one whose entropy has the form of an area law. Levels 3 and up are in 3C4.
+
+### C4. Levels 3 and up: the volume term grows smoothly with the level (Exact numerics on 75 regions)
+
+`anyon_entropy.py` (about 100 seconds) computes the entropy of a region at any level. Above level 2 the state space is not a tensor product, so the entropy is the anyonic one: the operators of a disc A form a Temperley-Lieb algebra, the space splits by the total charge c of A, and S(A) = sum_c p_c [ -ln p_c + S(rho_c) + ln d_c ] with d_c the quantum dimension (**Known**, the entropy defined with the quantum trace; I used the formula from memory and did not re-read a source, and it is tested at both ends below).
+
+- **Regions.** A set of punctures needs a disc, and discs differ by braids. The unambiguous ones are neighbourhoods of arcs of consecutive punctures along the Hamiltonian cycle that orders them. Two cycles give 75 distinct bipartitions (57 arise from both, and agree to 1e-10). Sets that are not such arcs are not treated.
+- **Tests (Exact).** At level 2 the result equals the Majorana formula of 3C3 on every arc, including (1/2) ln 2 for an odd arc, which here is not a convention but ln d of the charge-1/2 sector. In the classical limit it equals the ordinary entropy of the spins, computed independently in the 4096-dimensional space. An arc and its complement, computed separately, agree at every level. One puncture has S = ln d_k exactly.
+- **Result.** Fit S = a (edges cut) + b (punctures) + c on the 75 arcs:
+
+      level        2      3      4      5      6      8      10     20     50     classical
+      per edge     0.069  0.099  0.114  0.122  0.126  0.130  0.131  0.128  0.119  0.113
+      per puncture 0.025  0.042  0.057  0.068  0.078  0.092  0.103  0.137  0.183  0.216
+      R^2          0.998  0.997  0.997  0.996  0.996  0.995  0.995  0.993  0.992  0.992
+      largest half 1.35   1.96   2.29   2.48   2.60   2.74   2.82   2.93   3.01   3.05
+
+  The per-puncture term grows smoothly and monotonically from level 2 to the classical limit, and slowly: it is still 0.18 at level 50 against 0.22. The per-edge term rises to about 0.13 near level 10 and then falls back a little. So the near-area law of level 2 is the end of a smooth family, not a special feature of free fermions, and the volume term is controlled by the level.
+- **Caveat.** These coefficients are for arcs only and are not comparable with those of 3C, 3C2 and 3C3, which use all 2047 regions (classical: 0.113 and 0.216 on arcs, 0.077 and 0.234 on all regions). On arcs the number of cut edges and the size are strongly tied, so the split between the two terms is less well determined than the trend with the level.
+
 ### D. The ground state is not a coherent polyhedron (Exact numerics; negative)
 
 The standard classical picture of 12 equal-area faces with normals along the dodecahedron has a quantum counterpart, the coherent intertwiner: a product of spin-1/2 coherent states along the 12 normals, projected to the singlets (**Known**, Livine and Speziale). I computed its fidelity with the exact ground state: |<gs|coherent>|^2 / |P coherent|^2 = 6.5e-5, against 0.0076 for the uniform average over the 132 singlets. It is essentially orthogonal. Over 200 random sets of 12 directions the mean is 0.0074 and the maximum 0.114, and over all 4096 sign patterns of the dodecahedron normals the best is 0.036. So at spin-1/2 the Heisenberg ground state is not close to the regular-dodecahedron geometry, nor to any single coherent state tried. That is expected for spin-1/2, where nothing is semiclassical, and it says that the puncture model reaches the paper's semiclassical regime (Section 6) only for large spins or large level. **Spin 1** (`null_cone_spin1_fidelity.py`, spin-1 coherent states as the symmetric square of the spin-1/2 ones): the fidelity of the dodecahedron state with the spin-1 singlet ground state is 1.1e-4, against a uniform baseline of 1/4213 = 2.4e-4 and a random-direction mean of 4.4e-4 (30 draws, maximum 6.7e-3); the best of 256 sampled sign patterns (one in sixteen of the 4096) is 1.4e-3. So the dodecahedron is again at or below chance and nowhere near the ground state. Doubling the spin has not moved the ground state toward the classical geometry; I expect that this needs spins much larger than 1, or a Hamiltonian that favours it, and I have not tested that. **Not done:** spins above 1, and all 4096 sign patterns at spin 1.
@@ -90,7 +117,7 @@ The paper's closed amplitudes are traces on H_D (finite because dim H_D is finit
 
 ## 4. What I would do next
 
-In order of cost: (1) the entropy fit at level 2 (spin 1 is done, section 3C2); (2) fidelity of the coherent dodecahedron above spin 1 (3D); (3) a ground state or a thermal state on the mixed-spin sectors of 3C2, as the model of H_D = direct sum of area sectors (3A); (4) read the paper's sections 5.1 to 5.3 in full to see whether the area spectrum can be pinned to a puncture picture at all, since everything in 3A and 3E depends on that.
+In order of cost: (1) regions that are not arcs at levels 3 and up, which need a choice of disc (arcs are done, section 3C4); (2) fidelity of the coherent dodecahedron above spin 1 (3D); (3) a ground state or a thermal state on the mixed-spin sectors of 3C2, as the model of H_D = direct sum of area sectors (3A); (4) read the paper's sections 5.1 to 5.3 in full to see whether the area spectrum can be pinned to a puncture picture at all, since everything in 3A and 3E depends on that.
 
 ## 5. What this note does not show
 
@@ -103,4 +130,6 @@ In order of cost: (1) the entropy fit at level 2 (spin 1 is done, section 3C2); 
 
     python3 null_cone_checks.py --tests        # Gauss-Bonnet sum, Catalan constant, coherent fidelity, entropy table (about 10 s)
     python3 null_cone_spin1_fidelity.py        # spin-1 coherent fidelity (about 15 min)
+    python3 null_cone_level2.py --tests        # level-2 Majorana ground state: covariance and entropy fit (about 8 s)
+    python3 anyon_entropy.py --tests           # anyonic entropy of arcs at levels 2 to 50 and classical (about 100 s)
     python3 null_cone_spin1.py                 # spin-1 sectors and entropy fit (about 6 min; --tests runs only the counting tests)
