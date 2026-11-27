@@ -226,6 +226,11 @@ With the 12 geometry sites first and the 30 slots after them, the bond after sit
 `gp_hat_scan.py` (4 checks; needs the `hexasphere` repository for `HatBall` and its Algorithm X). The Goldberg-Coxeter spheres `GP(m, n)`, `T = m^2 + m n + n^2`, are built from the Eisenstein lattice (counts `10T + 2` vertices, `20T` triangles, degrees 5 and 6, every edge in two faces); the kite split makes `60 (T - 1)` kites, so hats need odd `T`. For every odd `T` up to 39, both hands of every chiral pair, and the symmetry groups `I`, `T`, `C5`, `C3`, `C2`, `C1` (hat hand fixed) and `C1` with both hands: **no hat tiling with 12 pentagon holes exists except on `GP(3,0)` = `GP(0,3)`** (`T = 9`, the Hat Trick: 2 tilings with `I`, 2 with `T`, 16 with `C5` or `C3`, 64 with `C2`, at least 1000 with `C1`). All searches other than the `GP(3,0)` `C1` ones ended exhausted with zero tilings (`T = 3` has no hat placement at all; every kite is covered by some placement for `T >= 7`). This extends the earlier `GP(f,0)` scan to the chiral classes. It is not a proof for larger `T`, for other hole patterns, or for tilings with holes of another kind.
 Consequence for Stage 5: a hat (aperiodic) structure does not continue to larger closed spheres by Goldberg-Coxeter subdivision, so the scale ladder on a closed curved space cannot be the planar inflation; the hat sphere is a single isolated size.
 
+### Stage 9i: the cone points as Bloch points, horned trees on them, and `chi4` in the geometry (2026-11-27; `hopf_sites.py`, `hat_seam_chirality.py`; notes `HOPF_SITES.md`, `HAT_HORNED_TREES.md`, `HAT_SEAM_CHIRALITY.md`)
+- *Moebius dictionary on the 12 cone points (Exact).* Read as coherent spin-1/2 states in the direction of the cone point (a definition), the 66 pairs have overlaps 0.8507 (30 edges), 0.5257 (30 second neighbours) and 0 (6 antipodal pairs, which partition the 12 points): six Hopf clasps in the sense of Stage 4i. The exact Heisenberg ground state (-6.18789, unique, singlet) has `<S_i.S_j>` = -0.2063, +0.0841, -0.1391 on the three classes (sum rule -4.5 holds); the antipodal value is -0.139 where an antiferromagnetic product state would give +0.25.
+- *Horned trees on the cone points (Counted, from the `ray` fork).* With children on an antipodal pair siblings never link; with children on an adjacent pair they link from `shrink` about 0.6, and with thin tubes the clasp holds to depth 2 with clear tubes (9 of 144 runs). Parent and child link through the hat loops but not the pentagon loops. The tiers' similarity dimension is exactly 2 (`lambda^2 = 4 + sqrt 15`, linear factor `lambda`); the trees' is fractional. No quantum quantity comes out.
+- *`chi4` in the geometry (Counted; negative with a coarse measure).* The mirror distance of the seam network (0.99 degrees for the standard tiling, about 2.3 for random patterns) follows the number of flipped rings (Spearman 0.3) and not `|chi4|` (0.04 to 0.05, p about 0.4 on 300 patterns). Not done: a local measure around each pentagon.
+
 ## 3. Decisions and kill criteria
 
 | After stage | If this happens | Then |
@@ -247,6 +252,10 @@ Consequence for Stage 5: a hat (aperiodic) structure does not continue to larger
 | `SPECTRE_QUANTUM_UNIVERSE.md` | The motivation: aperiodic quantum cellular automaton (Lloyd) |
 | `SPECTRE_QEC_CODES.md` | Erasure-correcting codes and gauge sectors (Li-Boyle, Batle-Bednorz) |
 | `SPECTRE_PHASON_FLIPS.md` | What a tiling rearrangement does, with the measured numbers |
+| `HAT_TIME.md` | The Hat Trick ball: ring bits, quantisation levels, two kinds of handedness |
+| `HOPF_SITES.md` | The 12 cone points as Bloch points: overlaps, the 6 Hopf clasps, ground-state correlations by pair class |
+| `HAT_HORNED_TREES.md` | Horned-sphere trees hung on the 12 cone points (from the `ray` fork): which placements clasp |
+| `HAT_SEAM_CHIRALITY.md` | Whether the mirror asymmetry of the drawn seams follows `chi4` (it does not, with a coarse measure) |
 | this file | The ordered plan and its stopping rules |
 
 ## 5. Open items inherited from the papers
