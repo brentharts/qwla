@@ -1,0 +1,119 @@
+[
+ {
+  "Gamma": 0.2,
+  "g": 0.0,
+  "J": 1.0,
+  "kappa": 0.3,
+  "mpo_bond": 415,
+  "sweeps": [
+   {
+    "chi": 32,
+    "E": -32.88404716308738,
+    "chi_used": 32,
+    "seconds": 56.1
+   },
+   {
+    "chi": 64,
+    "E": -32.94241274889759,
+    "chi_used": 64,
+    "seconds": 314.9
+   },
+   {
+    "chi": 128,
+    "E": -32.96218812564436,
+    "chi_used": 128,
+    "seconds": 1815.3
+   }
+  ],
+  "E": -32.96218812564436,
+  "E_change_last_two_chi": -0.019775376746771656,
+  "mean_rotors_in_0": 11.987050584752655,
+  "mean_pairs": 29.935298832582877,
+  "P_all0": 0.9871386749352024,
+  "mean_tau_x_of_slots": 0.9081128096013301,
+  "max_bond_entropy_bits": 1.4444393985090154,
+  "S_geometry_matter_bits": 0.001361204756076456,
+  "earlier_bounds_CI2_dressed": [
+   -32.12,
+   -32.7677
+  ]
+ },
+ {
+  "Gamma": 1.0,
+  "g": 0.0,
+  "J": 1.0,
+  "kappa": 0.3,
+  "mpo_bond": 415,
+  "sweeps": [
+   {
+    "chi": 32,
+    "E": -34.76867040598062,
+    "chi_used": 32,
+    "seconds": 56.1
+   },
+   {
+    "chi": 64,
+    "E": -34.821066297584885,
+    "chi_used": 64,
+    "seconds": 318.5
+   },
+   {
+    "chi": 128,
+    "E": -34.84132253283507,
+    "chi_used": 128,
+    "seconds": 1827.5
+   }
+  ],
+  "E": -34.84132253283507,
+  "E_change_last_two_chi": -0.02025623525018716,
+  "mean_rotors_in_0": 11.672046428308002,
+  "mean_pairs": 28.38901058498933,
+  "P_all0": 0.7221704197344634,
+  "mean_tau_x_of_slots": 0.915214484227534,
+  "max_bond_entropy_bits": 1.3486131480072006,
+  "S_geometry_matter_bits": 0.028834497070259025,
+  "earlier_bounds_CI2_dressed": [
+   -34.14,
+   -34.4655
+  ]
+ },
+ {
+  "Gamma": 3.0,
+  "g": 0.0,
+  "J": 1.0,
+  "kappa": 0.3,
+  "mpo_bond": 415,
+  "sweeps": [
+   {
+    "chi": 32,
+    "E": -49.11652503253472,
+    "chi_used": 32,
+    "seconds": 58.4
+   },
+   {
+    "chi": 64,
+    "E": -49.140720726146476,
+    "chi_used": 64,
+    "seconds": 341.5
+   },
+   {
+    "chi": 128,
+    "E": -49.15054292929444,
+    "chi_used": 128,
+    "seconds": 1973.5
+   }
+  ],
+  "E": -49.15054292929444,
+  "E_change_last_two_chi": -0.009822203147962227,
+  "mean_rotors_in_0": 9.536777986983214,
+  "mean_pairs": 19.10964679248877,
+  "P_all0": 0.08215318313702867,
+  "mean_tau_x_of_slots": 0.9511082611794767,
+  "max_bond_entropy_bits": 0.8336052504817585,
+  "S_geometry_matter_bits": 0.06304154904200267,
+  "earlier_bounds_CI2_dressed": [
+   -48.95,
+   -47.9022
+  ]
+ }
+]

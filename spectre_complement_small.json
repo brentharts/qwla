@@ -1,0 +1,280 @@
+{
+ "outlines": 3666,
+ "closing": 13,
+ "counts": {
+  "self (double)": 7,
+  "edge kinds also match": 1,
+  "two different patches": 6
+ },
+ "surfaces": [
+  {
+   "tiles_PQ": [
+    1,
+    1
+   ],
+   "double": true,
+   "kinds_match": true,
+   "cones": 5,
+   "deficits": [
+    120,
+    120,
+    120,
+    180,
+    180
+   ],
+   "pairs": 1,
+   "seam_pairs": 1,
+   "tiles": 2
+  },
+  {
+   "tiles_PQ": [
+    3,
+    3
+   ],
+   "double": false,
+   "kinds_match": false,
+   "cones": 6,
+   "deficits": [
+    90,
+    90,
+    120,
+    120,
+    120,
+    180
+   ],
+   "pairs": 1,
+   "seam_pairs": 1,
+   "tiles": 6
+  },
+  {
+   "tiles_PQ": [
+    3,
+    3
+   ],
+   "double": true,
+   "kinds_match": false,
+   "cones": 7,
+   "deficits": [
+    90,
+    90,
+    90,
+    90,
+    120,
+    120,
+    120
+   ],
+   "pairs": 2,
+   "seam_pairs": 2,
+   "tiles": 6
+  },
+  {
+   "tiles_PQ": [
+    3,
+    3
+   ],
+   "double": true,
+   "kinds_match": false,
+   "cones": 7,
+   "deficits": [
+    90,
+    90,
+    90,
+    90,
+    120,
+    120,
+    120
+   ],
+   "pairs": 1,
+   "seam_pairs": 1,
+   "tiles": 6
+  },
+  {
+   "tiles_PQ": [
+    3,
+    3
+   ],
+   "double": false,
+   "kinds_match": false,
+   "cones": 6,
+   "deficits": [
+    90,
+    90,
+    120,
+    120,
+    120,
+    180
+   ],
+   "pairs": 1,
+   "seam_pairs": 1,
+   "tiles": 6
+  },
+  {
+   "tiles_PQ": [
+    4,
+    4
+   ],
+   "double": true,
+   "kinds_match": false,
+   "cones": 7,
+   "deficits": [
+    90,
+    90,
+    90,
+    90,
+    120,
+    120,
+    120
+   ],
+   "pairs": 1,
+   "seam_pairs": 1,
+   "tiles": 8
+  },
+  {
+   "tiles_PQ": [
+    4,
+    4
+   ],
+   "double": true,
+   "kinds_match": false,
+   "cones": 7,
+   "deficits": [
+    90,
+    90,
+    90,
+    90,
+    120,
+    120,
+    120
+   ],
+   "pairs": 2,
+   "seam_pairs": 0,
+   "tiles": 8
+  },
+  {
+   "tiles_PQ": [
+    3,
+    4
+   ],
+   "double": false,
+   "kinds_match": false,
+   "cones": 7,
+   "deficits": [
+    90,
+    90,
+    90,
+    90,
+    120,
+    120,
+    120
+   ],
+   "pairs": 1,
+   "seam_pairs": 0,
+   "tiles": 7
+  },
+  {
+   "tiles_PQ": [
+    3,
+    4
+   ],
+   "double": false,
+   "kinds_match": false,
+   "cones": 7,
+   "deficits": [
+    90,
+    90,
+    90,
+    90,
+    120,
+    120,
+    120
+   ],
+   "pairs": 1,
+   "seam_pairs": 1,
+   "tiles": 7
+  },
+  {
+   "tiles_PQ": [
+    4,
+    4
+   ],
+   "double": false,
+   "kinds_match": false,
+   "cones": 7,
+   "deficits": [
+    90,
+    90,
+    90,
+    90,
+    120,
+    120,
+    120
+   ],
+   "pairs": 1,
+   "seam_pairs": 0,
+   "tiles": 8
+  },
+  {
+   "tiles_PQ": [
+    5,
+    5
+   ],
+   "double": false,
+   "kinds_match": false,
+   "cones": 7,
+   "deficits": [
+    90,
+    90,
+    90,
+    90,
+    120,
+    120,
+    120
+   ],
+   "pairs": 2,
+   "seam_pairs": 1,
+   "tiles": 10
+  },
+  {
+   "tiles_PQ": [
+    4,
+    4
+   ],
+   "double": true,
+   "kinds_match": false,
+   "cones": 7,
+   "deficits": [
+    90,
+    90,
+    90,
+    90,
+    120,
+    120,
+    120
+   ],
+   "pairs": 1,
+   "seam_pairs": 1,
+   "tiles": 8
+  },
+  {
+   "tiles_PQ": [
+    5,
+    5
+   ],
+   "double": true,
+   "kinds_match": false,
+   "cones": 7,
+   "deficits": [
+    90,
+    90,
+    90,
+    90,
+    120,
+    120,
+    120
+   ],
+   "pairs": 2,
+   "seam_pairs": 2,
+   "tiles": 10
+  }
+ ]
+}

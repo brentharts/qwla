@@ -47,7 +47,9 @@ def exact_geometry(Gamma, g, J):
 
 
 def site_order():
-    """Cone points in breadth-first order from point 0; slot e right after the later of its two cone points."""
+    """Cone points in breadth-first order from point 0; slot e right after the later of its two cone points.
+    With ORDER=geofirst all 12 cone points come first, then the 30 slots in the same order, so that the bond after
+    site 12 is the cut between geometry and matter."""
     adj = {i: [] for i in range(NP_)}
     for i, j in EDGES:
         adj[i].append(j)
@@ -61,6 +63,9 @@ def site_order():
                 seen.add(v)
                 queue.append(v)
     rank = {p: k for k, p in enumerate(order)}
+    if os.environ.get("ORDER") == "geofirst":
+        slots = [("e", e) for p in order for e, (i, j) in enumerate(EDGES) if max(rank[i], rank[j]) == rank[p]]
+        return [("p", p) for p in order] + slots
     sites = []
     for p in order:
         sites.append(("p", p))
@@ -116,8 +121,11 @@ def observables(psi, sites, pos):
     # entanglement entropy between geometry and matter is not a cut of the chain; report the largest bond entropy instead
     S = psi.entanglement_entropy() / np.log(2)
     p_all0 = float(psi.expectation_value_term([("P0", k) for k in sorted(geo)]))
+    cut = None
+    if sorted(geo) == list(range(NP_)):                     # geometry first: bond 11 separates geometry from matter
+        cut = float(S[NP_ - 1])
     return dict(mean_rotors_in_0=n0, mean_pairs=pairs, P_all0=p_all0, mean_tau_x_of_slots=float(np.mean([tx[k] for k in slots])),
-                max_bond_entropy_bits=float(S.max()))
+                max_bond_entropy_bits=float(S.max()), S_geometry_matter_bits=cut)
 
 
 def run(Gamma, g, J=1.0, kappa=0.3, chis=(32, 64, 128), verbose=True):
@@ -170,5 +178,5 @@ if __name__ == "__main__":
         r["earlier_bounds_CI2_dressed"] = OLD_BOUNDS.get((g, Gamma))
         results.append(r)
         print(json.dumps({k: v for k, v in r.items() if k != "sweeps"}), flush=True)
-        json.dump(results, open(os.path.join(HERE, "joint_dmrg.json"), "w"), indent=1)
+        json.dump(results, open(os.path.join(HERE, "joint_dmrg%s.json" % ("_geofirst" if os.environ.get("ORDER") == "geofirst" else "")), "w"), indent=1)
     print("-> joint_dmrg.json")
