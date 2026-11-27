@@ -1,0 +1,137 @@
+{
+ "rotations": 60,
+ "tilings_up_to_rotation": 96,
+ "I_invariant_states": {
+  "all_4096": 96,
+  "singlets_132": 10
+ },
+ "singlet_dim": 132,
+ "tilings_with_6_rings_flipped": 924,
+ "PVP_minus_heisenberg_form": 1.5631940186722204e-13,
+ "V_leaves_singlet_space_relative_norm": 0.011892128173191937,
+ "heisenberg_on_singlets": {
+  "min": -6.187889963997612,
+  "second": -5.654449006095149,
+  "max": 3.5274768626672794,
+  "deg_min": 1,
+  "deg_max": 1
+ },
+ "V_on_singlets": {
+  "min": 71.32417437911089,
+  "max": 74.56262998799922,
+  "classical_range": [
+   50,
+   80
+  ]
+ },
+ "heisenberg_all_states": {
+  "min": -6.1878899639976215,
+  "max": 7.500000000000025
+ },
+ "classical_V_counts": {
+  "V=80 (no two neighbouring rings flipped)": 69,
+  "V=50": 1
+ },
+ "hamiltonian_scan": [
+  {
+   "model": "H = +kappa sum n n - J sum X  (vertices favoured)",
+   "J_over_kappa": 0.0,
+   "E0": 0.0,
+   "gap": 1.0,
+   "deg0": 69,
+   "mean_rings_flipped": 0.0,
+   "mean_V": 80.0,
+   "weight_in_singlets": 0.0
+  },
+  {
+   "model": "H = +kappa sum n n - J sum X  (vertices favoured)",
+   "J_over_kappa": 0.1,
+   "E0": -0.5962411642627455,
+   "gap": 0.17971336865921123,
+   "deg0": 1,
+   "mean_rings_flipped": 1.437651225882192,
+   "mean_V": 79.933509586957,
+   "weight_in_singlets": 3.1163979365348214e-10
+  },
+  {
+   "model": "H = +kappa sum n n - J sum X  (vertices favoured)",
+   "J_over_kappa": 0.3,
+   "E0": -2.0993306375370646,
+   "gap": 0.568608098499499,
+   "deg0": 1,
+   "mean_rings_flipped": 1.9065364573860437,
+   "mean_V": 79.63408743688453,
+   "weight_in_singlets": 2.6969553148807518e-08
+  },
+  {
+   "model": "H = +kappa sum n n - J sum X  (vertices favoured)",
+   "J_over_kappa": 1.0,
+   "E0": -8.709912029447901,
+   "gap": 1.9160545679759933,
+   "deg0": 1,
+   "mean_rings_flipped": 3.0092166238242357,
+   "mean_V": 78.47418384549327,
+   "weight_in_singlets": 6.641421220023286e-08
+  },
+  {
+   "model": "H = +kappa sum n n - J sum X  (vertices favoured)",
+   "J_over_kappa": 3.0,
+   "E0": -30.79056731886919,
+   "gap": 5.759222866124215,
+   "deg0": 1,
+   "mean_rings_flipped": 4.306886064538085,
+   "mean_V": 76.36376777857163,
+   "weight_in_singlets": 2.075084536233051e-09
+  },
+  {
+   "model": "H = -kappa sum n n - J sum X  (vertices disfavoured)",
+   "J_over_kappa": 0.0,
+   "E0": -30.0,
+   "gap": 5.0,
+   "deg0": 1,
+   "mean_rings_flipped": 12.0,
+   "mean_V": 50.0,
+   "weight_in_singlets": 0.0
+  },
+  {
+   "model": "H = -kappa sum n n - J sum X  (vertices disfavoured)",
+   "J_over_kappa": 0.1,
+   "E0": -30.023995732353555,
+   "gap": 4.9990041340857445,
+   "deg0": 1,
+   "mean_rings_flipped": 11.995201376715153,
+   "mean_V": 50.02398719510338,
+   "weight_in_singlets": 6.307779342777781e-24
+  },
+  {
+   "model": "H = -kappa sum n n - J sum X  (vertices disfavoured)",
+   "J_over_kappa": 0.3,
+   "E0": -30.215653692727535,
+   "gap": 4.991334791280853,
+   "deg0": 1,
+   "mean_rings_flipped": 11.956912739558511,
+   "mean_V": 50.21495967943923,
+   "weight_in_singlets": 3.0096471402891274e-18
+  },
+  {
+   "model": "H = -kappa sum n n - J sum X  (vertices disfavoured)",
+   "J_over_kappa": 1.0,
+   "E0": -32.35647817125385,
+   "gap": 4.940669675121455,
+   "deg0": 1,
+   "mean_rings_flipped": 11.535527907107122,
+   "mean_V": 52.267986655267286,
+   "weight_in_singlets": 1.7234266707133763e-12
+  },
+  {
+   "model": "H = -kappa sum n n - J sum X  (vertices disfavoured)",
+   "J_over_kappa": 3.0,
+   "E0": -48.15912408303304,
+   "gap": 6.1055818293721416,
+   "deg0": 1,
+   "mean_rings_flipped": 9.203362635089187,
+   "mean_V": 62.20127571181223,
+   "weight_in_singlets": 4.329024651809441e-10
+  }
+ ]
+}
