@@ -60,9 +60,19 @@ For the exact Heisenberg ground state of the 12 punctures (energy -6.1879, the u
 
 So the corner state has an area-law-like structure in the puncture graph: more links cut, more entropy, on top of a term proportional to the size of the region. The paper's entropy has the same shape, an area term plus a logarithm (S = <A>/4G + log Z). The comparison is only of form: here "area" of a region is the number of punctures or cut links, with no G_N, and the fit constants carry no physical normalisation. **Not done:** repeating this at level k or with other spins, and asking whether the coefficient per cut edge is fixed by symmetry.
 
+### C2. The same checks at spin 1, and sectors of mixed spin (Exact numerics)
+
+`null_cone_spin1.py` (about 6 minutes) repeats section 3A and 3C with spin-1 punctures.
+
+- **Area sectors (Counted).** Fixing which punctures carry spin 1 and which carry spin 1/2 fixes the area sector, as in the paper's decomposition of H_D by area. The singlet space of one such assignment, by number a of spin-1 punctures out of 12, has dimension 132, 207, 352, 628, 1158, 2188, 4213 for a = 0, 2, 4, ..., 12 (odd a gives 0, since the number of half-integer spins must be even). Counting every labelled assignment, the sectors hold 132, 13662, 174240, 580272, 573210, 144408, 4213 states (a = 0, 2, 4, 6, 8, 10, 12), so the space of mixed assignments is far larger than either pure case. The all-spin-1 value 4213 is the Riordan number; the all-spin-1/2 value is the Catalan number 132.
+- **Ground state (Exact).** The Heisenberg ground state of 12 spin-1 punctures on the 30 icosahedron edges, restricted to total spin 0, has energy -18.561 and S_tot^2 = 0 to rounding error.
+- **Entropy fit (Exact).** The same fit as for spin 1/2, S = a (edges cut) + b (punctures in R) + c over all 2047 regions, gives 0.092 per cut edge, 0.352 per puncture, constant 0.828, R^2 = 0.942 against 0.831 for size alone. At spin 1/2 the numbers were 0.077, 0.234, 0.284, R^2 = 0.963 against 0.812. The largest half entropy is 4.64 nats, below ln 4213 = 8.35 and below 6 ln 3 = 6.59.
+
+So the pattern holds at the second spin: entropy tracks the boundary of the region and the coefficient per cut edge changes only modestly (0.077 to 0.092). This is two data points, so I cannot say whether the per-edge coefficient is fixed by symmetry or just varies slowly. The per-puncture coefficient grows more (0.23 to 0.35), as expected if it counts internal dimension. Whether the per-edge term is the analogue of the paper's area term is still the Hypothesis of 3C.
+
 ### D. The ground state is not a coherent polyhedron (Exact numerics; negative)
 
-The standard classical picture of 12 equal-area faces with normals along the dodecahedron has a quantum counterpart, the coherent intertwiner: a product of spin-1/2 coherent states along the 12 normals, projected to the singlets (**Known**, Livine and Speziale). I computed its fidelity with the exact ground state: |<gs|coherent>|^2 / |P coherent|^2 = 6.5e-5, against 0.0076 for the uniform average over the 132 singlets. It is essentially orthogonal. Over 200 random sets of 12 directions the mean is 0.0074 and the maximum 0.114, and over all 4096 sign patterns of the dodecahedron normals the best is 0.036. So at spin-1/2 the Heisenberg ground state is not close to the regular-dodecahedron geometry, nor to any single coherent state tried. That is expected for spin-1/2, where nothing is semiclassical, and it says that the puncture model reaches the paper's semiclassical regime (Section 6) only for large spins or large level. **Not done:** the same fidelity at higher spin.
+The standard classical picture of 12 equal-area faces with normals along the dodecahedron has a quantum counterpart, the coherent intertwiner: a product of spin-1/2 coherent states along the 12 normals, projected to the singlets (**Known**, Livine and Speziale). I computed its fidelity with the exact ground state: |<gs|coherent>|^2 / |P coherent|^2 = 6.5e-5, against 0.0076 for the uniform average over the 132 singlets. It is essentially orthogonal. Over 200 random sets of 12 directions the mean is 0.0074 and the maximum 0.114, and over all 4096 sign patterns of the dodecahedron normals the best is 0.036. So at spin-1/2 the Heisenberg ground state is not close to the regular-dodecahedron geometry, nor to any single coherent state tried. That is expected for spin-1/2, where nothing is semiclassical, and it says that the puncture model reaches the paper's semiclassical regime (Section 6) only for large spins or large level. **Spin 1** (`null_cone_spin1_fidelity.py`, spin-1 coherent states as the symmetric square of the spin-1/2 ones): the fidelity of the dodecahedron state with the spin-1 singlet ground state is 1.1e-4, against a uniform baseline of 1/4213 = 2.4e-4 and a random-direction mean of 4.4e-4 (30 draws, maximum 6.7e-3); the best of 256 sampled sign patterns (one in sixteen of the 4096) is 1.4e-3. So the dodecahedron is again at or below chance and nowhere near the ground state. Doubling the spin has not moved the ground state toward the classical geometry; I expect that this needs spins much larger than 1, or a Hamiltonian that favours it, and I have not tested that. **Not done:** spins above 1, and all 4096 sign patterns at spin 1.
 
 ### E. Boosts, area quantisation and compact angles (Hypothesis; I have not checked how the paper treats it)
 
@@ -80,7 +90,7 @@ The paper's closed amplitudes are traces on H_D (finite because dim H_D is finit
 
 ## 4. What I would do next
 
-In order of cost: (1) repeat the entropy fit at level 2 and for spin-1 punctures (section 3C), which changes only the space and not the method; (2) fidelity of the coherent dodecahedron at higher spin (3D); (3) the sector dimensions of 12 punctures with mixed spins, as the model of H_D = direct sum of area sectors (3A); (4) read the paper's sections 5.1 to 5.3 in full to see whether the area spectrum can be pinned to a puncture picture at all, since everything in 3A and 3E depends on that.
+In order of cost: (1) the entropy fit at level 2 (spin 1 is done, section 3C2); (2) fidelity of the coherent dodecahedron above spin 1 (3D); (3) a ground state or a thermal state on the mixed-spin sectors of 3C2, as the model of H_D = direct sum of area sectors (3A); (4) read the paper's sections 5.1 to 5.3 in full to see whether the area spectrum can be pinned to a puncture picture at all, since everything in 3A and 3E depends on that.
 
 ## 5. What this note does not show
 
@@ -92,3 +102,5 @@ In order of cost: (1) repeat the entropy fit at level 2 and for spin-1 punctures
 ## Reproduce
 
     python3 null_cone_checks.py --tests        # Gauss-Bonnet sum, Catalan constant, coherent fidelity, entropy table (about 10 s)
+    python3 null_cone_spin1_fidelity.py        # spin-1 coherent fidelity (about 15 min)
+    python3 null_cone_spin1.py                 # spin-1 sectors and entropy fit (about 6 min; --tests runs only the counting tests)

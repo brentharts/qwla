@@ -1,0 +1,87 @@
+{
+ "mixed_spin_sectors": {
+  "0": {
+   "dim_one_assignment": 132,
+   "assignments": 1,
+   "total": 132
+  },
+  "1": {
+   "dim_one_assignment": 0,
+   "assignments": 12,
+   "total": 0
+  },
+  "2": {
+   "dim_one_assignment": 207,
+   "assignments": 66,
+   "total": 13662
+  },
+  "3": {
+   "dim_one_assignment": 0,
+   "assignments": 220,
+   "total": 0
+  },
+  "4": {
+   "dim_one_assignment": 352,
+   "assignments": 495,
+   "total": 174240
+  },
+  "5": {
+   "dim_one_assignment": 0,
+   "assignments": 792,
+   "total": 0
+  },
+  "6": {
+   "dim_one_assignment": 628,
+   "assignments": 924,
+   "total": 580272
+  },
+  "7": {
+   "dim_one_assignment": 0,
+   "assignments": 792,
+   "total": 0
+  },
+  "8": {
+   "dim_one_assignment": 1158,
+   "assignments": 495,
+   "total": 573210
+  },
+  "9": {
+   "dim_one_assignment": 0,
+   "assignments": 220,
+   "total": 0
+  },
+  "10": {
+   "dim_one_assignment": 2188,
+   "assignments": 66,
+   "total": 144408
+  },
+  "11": {
+   "dim_one_assignment": 0,
+   "assignments": 12,
+   "total": 0
+  },
+  "12": {
+   "dim_one_assignment": 4213,
+   "assignments": 1,
+   "total": 4213
+  }
+ },
+ "all_spin1_dim": 4213,
+ "all_spinhalf_dim": 132,
+ "ground": {
+  "E": -18.56110642029944,
+  "S_tot_sq": -5.203571837795608e-16,
+  "gap_penalised": 0.1357188141634147
+ },
+ "entropy_fit_spin1": {
+  "per_cut_edge": 0.09150129511297386,
+  "per_puncture": 0.3517966153627959,
+  "const": 0.8281814464479448,
+  "R2_cut_and_size": 0.9424611081197906,
+  "R2_size_only": 0.8307669388649308,
+  "regions": 2047
+ },
+ "max_entropy_half": 4.637048542784747,
+ "ln_dim": 8.345930261979017,
+ "6ln3": 6.591673732008658
+}

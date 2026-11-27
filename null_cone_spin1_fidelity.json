@@ -1,0 +1,8 @@
+{
+ "dodecahedron": 0.00011131127126614594,
+ "random_mean": 0.00044419224322652897,
+ "random_max": 0.006661063834151453,
+ "signs_sampled": 256,
+ "signs_max": 0.0014236060406645856,
+ "uniform_singlet_baseline": 0.00023736055067647758
+}
