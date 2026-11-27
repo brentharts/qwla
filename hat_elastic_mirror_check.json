@@ -1,0 +1,108 @@
+{
+ "note": "mirror pairs of chiral rotation classes re-solved with ftol=xtol=1e-14 from the symmetric start and from a start perturbed by 0.003 (seed 1); odd = (E(b) - E(s.b))/2",
+ "pairs": [
+  {
+   "chi4": 1,
+   "odd_start_default": 1.09e-07,
+   "odd_start_perturbed": 1.09e-07,
+   "max_gradient": 2e-06,
+   "E": 3.8922327143
+  },
+  {
+   "chi4": 0,
+   "odd_start_default": 6.95e-08,
+   "odd_start_perturbed": 6.95e-08,
+   "max_gradient": 2e-06,
+   "E": 3.8908641007
+  },
+  {
+   "chi4": -1,
+   "odd_start_default": -4.02e-08,
+   "odd_start_perturbed": -4.02e-08,
+   "max_gradient": 2e-06,
+   "E": 3.8156732765
+  },
+  {
+   "chi4": -1,
+   "odd_start_default": -4.21e-08,
+   "odd_start_perturbed": -4.21e-08,
+   "max_gradient": 2e-06,
+   "E": 3.7417890816
+  },
+  {
+   "chi4": -1,
+   "odd_start_default": -1.75e-07,
+   "odd_start_perturbed": -1.75e-07,
+   "max_gradient": 3e-06,
+   "E": 3.8143310734
+  },
+  {
+   "chi4": 0,
+   "odd_start_default": -6.48e-08,
+   "odd_start_perturbed": -6.48e-08,
+   "max_gradient": 2e-06,
+   "E": 3.740448061
+  },
+  {
+   "chi4": 1,
+   "odd_start_default": 1.05e-07,
+   "odd_start_perturbed": 1.05e-07,
+   "max_gradient": 2e-06,
+   "E": 3.7391085667
+  },
+  {
+   "chi4": -1,
+   "odd_start_default": -1.06e-07,
+   "odd_start_perturbed": -1.06e-07,
+   "max_gradient": 2e-06,
+   "E": 3.7377652331
+  },
+  {
+   "chi4": 0,
+   "odd_start_default": 6.51e-08,
+   "odd_start_perturbed": 6.51e-08,
+   "max_gradient": 2e-06,
+   "E": 3.737766739
+  },
+  {
+   "chi4": -1,
+   "odd_start_default": -4.27e-08,
+   "odd_start_perturbed": -4.27e-08,
+   "max_gradient": 4e-06,
+   "E": 3.6638767548
+  },
+  {
+   "chi4": -1,
+   "odd_start_default": -1.71e-07,
+   "odd_start_perturbed": -1.71e-07,
+   "max_gradient": 4e-06,
+   "E": 3.7364229712
+  },
+  {
+   "chi4": -1,
+   "odd_start_default": -1.66e-07,
+   "odd_start_perturbed": -1.66e-07,
+   "max_gradient": 3e-06,
+   "E": 3.6625353912
+  },
+  {
+   "chi4": 1,
+   "odd_start_default": 1.03e-07,
+   "odd_start_perturbed": 1.03e-07,
+   "max_gradient": 4e-06,
+   "E": 3.5886414792
+  },
+  {
+   "chi4": 0,
+   "odd_start_default": -5.85e-08,
+   "odd_start_perturbed": -5.85e-08,
+   "max_gradient": 5e-06,
+   "E": 3.5873281479
+  }
+ ],
+ "lambda_fit": 1.06e-07,
+ "residual_after_chi4": 6.95e-08,
+ "sign_agrees_where_chi4_nonzero": 10,
+ "chi4_nonzero": 10,
+ "max_start_disagreement": 0.0
+}
