@@ -1,0 +1,200 @@
+{
+ "summary": {
+  "active": 8,
+  "silent": 3,
+  "motifs_A": 86,
+  "motifs_B": 51,
+  "A_per_B": 1.6862745098039216,
+  "coverage": [
+   634,
+   673
+  ],
+  "turn_by_motifs": {
+   "A>A": {
+    "0": 34
+   },
+   "A>B": {
+    "L": 27,
+    "R": 22
+   },
+   "B>A": {
+    "0": 46
+   }
+  },
+  "turn_at_B_by_supertile": {
+   "Delta": {
+    "R": 21
+   },
+   "Sigma": {
+    "L": 27,
+    "R": 1
+   }
+  },
+  "letters_active": [
+   "slsslssrssrslsslssrslssl",
+   "slsslssrssrslssrssrslsslssrssrslssl",
+   "l",
+   "slsslssl",
+   "ssrssrslsslssrssrsl",
+   "lsslssrsls",
+   "sslssrsls",
+   "ssrssrslsslssrssrslsslssrssrsls"
+  ],
+  "letters_silent": [
+   "sslsrssrsslr",
+   "srssrsslsslr",
+   "lslssl"
+  ]
+ },
+ "ribbons": [
+  {
+   "file": "ribbon_dump_R110_s11.json",
+   "kind": "active",
+   "tiles": 131,
+   "labelled": 118,
+   "in_motifs": 111,
+   "word": "ABAABAABAABABAABAABABAAB",
+   "turns": "L00L00R00R0L00L00R0L00L",
+   "letters": "slsslssrssrslsslssrslssl",
+   "A": 15,
+   "B": 9,
+   "heading_range": [
+    0,
+    3
+   ]
+  },
+  {
+   "file": "ribbon_dump_R110_s11.json",
+   "kind": "active",
+   "tiles": 180,
+   "labelled": 167,
+   "in_motifs": 162,
+   "word": "ABAABAABAABABAABAABABAABAABAABABAAB",
+   "turns": "L00L00R00R0L00R00R0L00L00R00R0L00L",
+   "letters": "slsslssrssrslssrssrslsslssrssrslssl",
+   "A": 22,
+   "B": 13,
+   "heading_range": [
+    -1,
+    2
+   ]
+  },
+  {
+   "file": "ribbon_dump_R110_s11.json",
+   "kind": "silent",
+   "tiles": 164,
+   "turns": "RRLLRRLLRLLRRLLRRLRRLLRRLLRRLRRLLRRLLRLLRRL",
+   "letters": "sslsrssrsslr"
+  },
+  {
+   "file": "ribbon_dump_R110_s11.json",
+   "kind": "active",
+   "tiles": 26,
+   "labelled": 12,
+   "in_motifs": 4,
+   "word": "B",
+   "turns": "",
+   "letters": "l",
+   "A": 0,
+   "B": 1,
+   "heading_range": [
+    0,
+    0
+   ]
+  },
+  {
+   "file": "ribbon_dump_R110_s11.json",
+   "kind": "active",
+   "tiles": 78,
+   "labelled": 40,
+   "in_motifs": 37,
+   "word": "ABAABAAB",
+   "turns": "L00L00R",
+   "letters": "slsslssl",
+   "A": 5,
+   "B": 3,
+   "heading_range": [
+    1,
+    2
+   ]
+  },
+  {
+   "file": "ribbon_dump_R110_s12.json",
+   "kind": "active",
+   "tiles": 105,
+   "labelled": 90,
+   "in_motifs": 88,
+   "word": "AABAABABAABAABAABAB",
+   "turns": "0R00R0L00L00R00R0L",
+   "letters": "ssrssrslsslssrssrsl",
+   "A": 12,
+   "B": 7,
+   "heading_range": [
+    -2,
+    0
+   ]
+  },
+  {
+   "file": "ribbon_dump_R110_s12.json",
+   "kind": "active",
+   "tiles": 62,
+   "labelled": 51,
+   "in_motifs": 46,
+   "word": "BAABAABABA",
+   "turns": "00L00R0L0",
+   "letters": "lsslssrsls",
+   "A": 6,
+   "B": 4,
+   "heading_range": [
+    0,
+    1
+   ]
+  },
+  {
+   "file": "ribbon_dump_R110_s12.json",
+   "kind": "silent",
+   "tiles": 176,
+   "turns": "LLRRLLRRLRRLLRRLLRRLRRLLRRLLRLLRRLLRRLLRLLRRL0L",
+   "letters": "srssrsslsslr"
+  },
+  {
+   "file": "ribbon_dump_R110_s13.json",
+   "kind": "silent",
+   "tiles": 91,
+   "turns": "RLLRRLLRLLRRLLRRLLRLLRR",
+   "letters": "lslssl"
+  },
+  {
+   "file": "ribbon_dump_R110_s13.json",
+   "kind": "active",
+   "tiles": 57,
+   "labelled": 46,
+   "in_motifs": 42,
+   "word": "AABAABABA",
+   "turns": "0L00R0L0",
+   "letters": "sslssrsls",
+   "A": 6,
+   "B": 3,
+   "heading_range": [
+    0,
+    1
+   ]
+  },
+  {
+   "file": "ribbon_dump_R110_s13.json",
+   "kind": "active",
+   "tiles": 157,
+   "labelled": 149,
+   "in_motifs": 144,
+   "word": "AABAABABAABAABAABABAABAABAABABA",
+   "turns": "0R00R0L00L00R00R0L00L00R00R0L0",
+   "letters": "ssrssrslsslssrssrslsslssrssrsls",
+   "A": 20,
+   "B": 11,
+   "heading_range": [
+    -2,
+    0
+   ]
+  }
+ ]
+}

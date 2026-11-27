@@ -210,18 +210,46 @@
   {
    "file": "ribbon_dump_R110_s11.json",
    "tiles": 131,
-   "stacks": 0
+   "stacks": 0,
+   "stack_share": 0.0,
+   "pair_site_share": 0.3511450381679389,
+   "labels": {
+    "Gamma1": 0.22,
+    "Gamma2": 0.22,
+    "Sigma": 0.212,
+    "Xi": 0.136,
+    "Phi": 0.127,
+    "Theta": 0.085
+   }
   },
   {
    "file": "ribbon_dump_R110_s11.json",
    "tiles": 180,
-   "stacks": 0
+   "stacks": 0,
+   "stack_share": 0.0,
+   "pair_site_share": 0.34444444444444444,
+   "labels": {
+    "Gamma1": 0.222,
+    "Sigma": 0.216,
+    "Gamma2": 0.216,
+    "Xi": 0.132,
+    "Phi": 0.132,
+    "Theta": 0.084
+   }
   },
   {
    "file": "ribbon_dump_R110_s11.json",
    "tiles": 164,
    "stacks": 44,
    "stack_share": 0.7317073170731707,
+   "pair_site_share": 0.0,
+   "labels": {
+    "Gamma1": 0.27,
+    "Gamma2": 0.27,
+    "Pi": 0.191,
+    "Sigma": 0.138,
+    "Delta": 0.132
+   },
    "consistency": 1.0,
    "steps": 43,
    "turns": {
@@ -248,13 +276,35 @@
   {
    "file": "ribbon_dump_R110_s11.json",
    "tiles": 26,
-   "stacks": 0
+   "stacks": 0,
+   "stack_share": 0.0,
+   "pair_site_share": 0.34615384615384615,
+   "labels": {
+    "Sigma": 0.25,
+    "Phi": 0.25,
+    "Xi": 0.167,
+    "Gamma1": 0.167,
+    "Theta": 0.083,
+    "Gamma2": 0.083
+   }
   },
   {
    "file": "ribbon_dump_R110_s11.json",
    "tiles": 231,
    "stacks": 44,
    "stack_share": 0.5194805194805194,
+   "pair_site_share": 0.1038961038961039,
+   "labels": {
+    "Gamma1": 0.255,
+    "Gamma2": 0.25,
+    "Sigma": 0.154,
+    "Pi": 0.139,
+    "Delta": 0.101,
+    "Phi": 0.038,
+    "Xi": 0.038,
+    "Theta": 0.019,
+    "Psi": 0.005
+   },
    "consistency": 1.0,
    "steps": 43,
    "turns": {
@@ -281,13 +331,36 @@
   {
    "file": "ribbon_dump_R110_s11.json",
    "tiles": 78,
-   "stacks": 0
+   "stacks": 0,
+   "stack_share": 0.0,
+   "pair_site_share": 0.34615384615384615,
+   "labels": {
+    "Sigma": 0.225,
+    "Gamma1": 0.2,
+    "Gamma2": 0.2,
+    "Phi": 0.15,
+    "Xi": 0.15,
+    "Theta": 0.075
+   }
   },
   {
    "file": "ribbon_dump_R110_s11.json",
    "tiles": 379,
    "stacks": 46,
    "stack_share": 0.31926121372031663,
+   "pair_site_share": 0.20844327176781002,
+   "labels": {
+    "Gamma1": 0.238,
+    "Gamma2": 0.238,
+    "Sigma": 0.175,
+    "Pi": 0.089,
+    "Xi": 0.073,
+    "Phi": 0.069,
+    "Delta": 0.063,
+    "Theta": 0.043,
+    "Lambda": 0.007,
+    "Psi": 0.007
+   },
    "consistency": 0.8444444444444444,
    "steps": 45,
    "turns": {
@@ -321,6 +394,19 @@
    "tiles": 279,
    "stacks": 41,
    "stack_share": 0.3906810035842294,
+   "pair_site_share": 0.17204301075268819,
+   "labels": {
+    "Gamma1": 0.242,
+    "Gamma2": 0.242,
+    "Sigma": 0.171,
+    "Pi": 0.099,
+    "Delta": 0.067,
+    "Xi": 0.063,
+    "Phi": 0.06,
+    "Theta": 0.04,
+    "Lambda": 0.008,
+    "Psi": 0.008
+   },
    "consistency": 0.85,
    "steps": 40,
    "turns": {
@@ -353,18 +439,51 @@
   {
    "file": "ribbon_dump_R110_s12.json",
    "tiles": 105,
-   "stacks": 0
+   "stacks": 0,
+   "stack_share": 0.0,
+   "pair_site_share": 0.34285714285714286,
+   "labels": {
+    "Sigma": 0.222,
+    "Gamma1": 0.222,
+    "Gamma2": 0.211,
+    "Xi": 0.133,
+    "Phi": 0.133,
+    "Theta": 0.078
+   }
   },
   {
    "file": "ribbon_dump_R110_s12.json",
    "tiles": 62,
-   "stacks": 0
+   "stacks": 0,
+   "stack_share": 0.0,
+   "pair_site_share": 0.3387096774193548,
+   "labels": {
+    "Sigma": 0.216,
+    "Gamma1": 0.216,
+    "Gamma2": 0.216,
+    "Xi": 0.137,
+    "Phi": 0.137,
+    "Theta": 0.078
+   }
   },
   {
    "file": "ribbon_dump_R110_s12.json",
    "tiles": 339,
    "stacks": 23,
    "stack_share": 0.17404129793510326,
+   "pair_site_share": 0.28023598820059,
+   "labels": {
+    "Gamma1": 0.228,
+    "Gamma2": 0.221,
+    "Sigma": 0.202,
+    "Phi": 0.111,
+    "Xi": 0.104,
+    "Theta": 0.059,
+    "Pi": 0.046,
+    "Delta": 0.023,
+    "Lambda": 0.003,
+    "Psi": 0.003
+   },
    "consistency": 0.9090909090909091,
    "steps": 22,
    "turns": {
@@ -401,6 +520,19 @@
    "tiles": 388,
    "stacks": 35,
    "stack_share": 0.23195876288659795,
+   "pair_site_share": 0.2551546391752577,
+   "labels": {
+    "Gamma1": 0.224,
+    "Gamma2": 0.221,
+    "Sigma": 0.192,
+    "Phi": 0.102,
+    "Xi": 0.096,
+    "Pi": 0.055,
+    "Theta": 0.049,
+    "Delta": 0.041,
+    "Psi": 0.017,
+    "Lambda": 0.003
+   },
    "consistency": 0.6470588235294118,
    "steps": 34,
    "turns": {
@@ -438,6 +570,18 @@
    "tiles": 393,
    "stacks": 92,
    "stack_share": 0.6310432569974554,
+   "pair_site_share": 0.058524173027989825,
+   "labels": {
+    "Gamma1": 0.261,
+    "Gamma2": 0.25,
+    "Pi": 0.171,
+    "Sigma": 0.143,
+    "Delta": 0.121,
+    "Xi": 0.022,
+    "Phi": 0.02,
+    "Theta": 0.006,
+    "Psi": 0.006
+   },
    "consistency": 0.6813186813186813,
    "steps": 91,
    "turns": {
@@ -473,6 +617,14 @@
    "tiles": 176,
    "stacks": 48,
    "stack_share": 0.7329545454545454,
+   "pair_site_share": 0.0,
+   "labels": {
+    "Gamma1": 0.278,
+    "Gamma2": 0.259,
+    "Pi": 0.196,
+    "Sigma": 0.133,
+    "Delta": 0.133
+   },
    "consistency": 0.9787234042553191,
    "steps": 47,
    "turns": {
@@ -502,6 +654,18 @@
    "tiles": 210,
    "stacks": 48,
    "stack_share": 0.6142857142857143,
+   "pair_site_share": 0.06190476190476191,
+   "labels": {
+    "Gamma1": 0.269,
+    "Gamma2": 0.247,
+    "Pi": 0.17,
+    "Sigma": 0.137,
+    "Delta": 0.121,
+    "Xi": 0.022,
+    "Phi": 0.022,
+    "Psi": 0.005,
+    "Theta": 0.005
+   },
    "consistency": 0.8085106382978723,
    "steps": 47,
    "turns": {
@@ -532,6 +696,19 @@
    "tiles": 453,
    "stacks": 81,
    "stack_share": 0.4746136865342163,
+   "pair_site_share": 0.1456953642384106,
+   "labels": {
+    "Gamma1": 0.241,
+    "Gamma2": 0.236,
+    "Sigma": 0.157,
+    "Pi": 0.12,
+    "Delta": 0.091,
+    "Phi": 0.057,
+    "Xi": 0.052,
+    "Theta": 0.022,
+    "Psi": 0.02,
+    "Lambda": 0.005
+   },
    "consistency": 0.625,
    "steps": 80,
    "turns": {
@@ -570,6 +747,18 @@
    "tiles": 365,
    "stacks": 72,
    "stack_share": 0.536986301369863,
+   "pair_site_share": 0.10136986301369863,
+   "labels": {
+    "Gamma1": 0.25,
+    "Gamma2": 0.247,
+    "Sigma": 0.146,
+    "Pi": 0.143,
+    "Delta": 0.107,
+    "Xi": 0.043,
+    "Phi": 0.043,
+    "Theta": 0.015,
+    "Psi": 0.006
+   },
    "consistency": 0.6901408450704225,
    "steps": 71,
    "turns": {
@@ -605,6 +794,14 @@
    "tiles": 91,
    "stacks": 24,
    "stack_share": 0.7252747252747253,
+   "pair_site_share": 0.0,
+   "labels": {
+    "Gamma1": 0.268,
+    "Gamma2": 0.268,
+    "Pi": 0.195,
+    "Delta": 0.146,
+    "Sigma": 0.122
+   },
    "consistency": 1.0,
    "steps": 23,
    "turns": {
@@ -631,18 +828,51 @@
   {
    "file": "ribbon_dump_R110_s13.json",
    "tiles": 57,
-   "stacks": 0
+   "stacks": 0,
+   "stack_share": 0.0,
+   "pair_site_share": 0.3333333333333333,
+   "labels": {
+    "Sigma": 0.217,
+    "Gamma2": 0.217,
+    "Gamma1": 0.196,
+    "Phi": 0.152,
+    "Xi": 0.152,
+    "Theta": 0.065
+   }
   },
   {
    "file": "ribbon_dump_R110_s13.json",
    "tiles": 157,
-   "stacks": 0
+   "stacks": 0,
+   "stack_share": 0.0,
+   "pair_site_share": 0.3503184713375796,
+   "labels": {
+    "Sigma": 0.215,
+    "Gamma1": 0.215,
+    "Gamma2": 0.215,
+    "Xi": 0.141,
+    "Phi": 0.141,
+    "Theta": 0.074
+   }
   },
   {
    "file": "ribbon_dump_R110_s13.json",
    "tiles": 217,
    "stacks": 17,
    "stack_share": 0.20276497695852536,
+   "pair_site_share": 0.2672811059907834,
+   "labels": {
+    "Gamma1": 0.225,
+    "Gamma2": 0.22,
+    "Sigma": 0.195,
+    "Phi": 0.11,
+    "Xi": 0.105,
+    "Theta": 0.055,
+    "Pi": 0.05,
+    "Delta": 0.025,
+    "Psi": 0.01,
+    "Lambda": 0.005
+   },
    "consistency": 0.5625,
    "steps": 16,
    "turns": {
@@ -676,6 +906,19 @@
    "tiles": 503,
    "stacks": 50,
    "stack_share": 0.25646123260437376,
+   "pair_site_share": 0.24652087475149106,
+   "labels": {
+    "Gamma1": 0.227,
+    "Gamma2": 0.225,
+    "Sigma": 0.189,
+    "Phi": 0.101,
+    "Xi": 0.094,
+    "Pi": 0.06,
+    "Theta": 0.049,
+    "Delta": 0.036,
+    "Psi": 0.011,
+    "Lambda": 0.006
+   },
    "consistency": 0.6530612244897959,
    "steps": 49,
    "turns": {
@@ -747,6 +990,174 @@
    11.319503806354916,
    10.21803138765911,
    15.301649980796945
-  ]
+  ],
+  "turn_rule": {
+   "DG>SPG": {
+    "R": 28
+   },
+   "DPG>DG": {
+    "L": 24
+   },
+   "SPG>DG": {
+    "L": 4
+   },
+   "SPG>DPG": {
+    "L": 24
+   },
+   "SPG>SPG": {
+    "R": 20
+   }
+  },
+  "words": [
+   {
+    "tiles": 164,
+    "types": [
+     "??",
+     "??G",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "S??",
+     "???"
+    ],
+    "turns": "RRLLRRLLRLLRRLLRRLRRLLRRLLRRLRRLLRRLLRLLRRL"
+   },
+   {
+    "tiles": 176,
+    "types": [
+     "??",
+     "?PG",
+     "DG",
+     "??G",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "??",
+     "???",
+     "??"
+    ],
+    "turns": "LLRRLLRRLRRLLRRLLRRLRRLLRRLLRLLRRLLRRLLRLLRRL0L"
+   },
+   {
+    "tiles": 91,
+    "types": [
+     "???",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "DPG",
+     "DG",
+     "SPG",
+     "???"
+    ],
+    "turns": "RLLRRLLRLLRRLLRRLLRLLRR"
+   }
+  ],
+  "pair_share_vs_stack_share": {
+   "correlation": -0.9973732884204052,
+   "fit": [
+    -0.465717554946773,
+    0.35003105092722264
+   ],
+   "stack_free": [
+    0.3333333333333333,
+    0.3511450381679389
+   ],
+   "stacked_070": [
+    0.0,
+    0.0
+   ]
+  }
  }
 }

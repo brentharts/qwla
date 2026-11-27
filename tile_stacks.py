@@ -238,7 +238,8 @@ def main():
                               chance_all_below_max=float((max(dv) / 30) ** len(dv)) if dv else None)
         print(out["summary"])
     if "--figure" in sys.argv:
-        figure(P, L, st, keep, os.path.join(HERE, "tile_stacks.png"))
+        os.makedirs(os.path.join(HERE, "figures"), exist_ok=True)
+        figure(P, L, st, keep, os.path.join(HERE, "figures", "tile_stacks.png"))
     json.dump(out, open(os.path.join(HERE, "tile_stacks.json"), "w"), indent=1)
     if "--tests" in sys.argv:
         assert len(p1["axes"]) == 3 and set(p1["lengths"]) <= {"2", "3"}

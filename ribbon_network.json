@@ -1,0 +1,166 @@
+{
+ "levels": [
+  {
+   "level": 3,
+   "mystics": 63,
+   "successors": {
+    "-": 33,
+    "s": 22,
+    "xy": 8
+   },
+   "predecessors": {
+    "0": 25,
+    "1": 38
+   },
+   "level2_supertiles": 8,
+   "longest_chain": 10,
+   "chains_at_least_half": 7
+  },
+  {
+   "level": 4,
+   "mystics": 496,
+   "successors": {
+    "-": 253,
+    "s": 180,
+    "xy": 63
+   },
+   "predecessors": {
+    "0": 190,
+    "1": 306
+   },
+   "level2_supertiles": 63,
+   "longest_chain": 29,
+   "chains_at_least_half": 20
+  },
+  {
+   "level": 5,
+   "mystics": 3905,
+   "successors": {
+    "-": 1985,
+    "s": 1424,
+    "xy": 496
+   },
+   "predecessors": {
+    "0": 1489,
+    "1": 2416
+   },
+   "level2_supertiles": 496,
+   "longest_chain": 108,
+   "chains_at_least_half": 73
+  },
+  {
+   "level": 6,
+   "mystics": 30744,
+   "successors": {
+    "-": 15621,
+    "s": 11218,
+    "xy": 3905
+   },
+   "predecessors": {
+    "0": 11716,
+    "1": 19028
+   },
+   "level2_supertiles": 3905,
+   "longest_chain": 296,
+   "chains_at_least_half": 289
+  }
+ ],
+ "longest_lengths": [
+  10,
+  29,
+  108,
+  296
+ ],
+ "length_ratios": [
+  2.9,
+  3.7241379310344827,
+  2.740740740740741
+ ],
+ "longest_word": "ysxssyssysxssxssyssysxssxssysxssxssyssysxssxssyssysxssxssysxssxssyssysxssxssyssysxssyssysxssxssyssysxssxssysxssxssyssysxssxssyssysxssxssysxssxssyssysxssxssyssysxssyssysxssxssyssysxssxssyssysxssyssysxssxssyssysxssxssysxssxssyssysxssxssyssysxssxssysxssxssyssysxssxssyssysxssyssysxssxssyssysxssxssxs",
+ "letters": {
+  "y": 53,
+  "s": 187,
+  "x": 56
+ },
+ "straight_per_turn": 1.7155963302752293,
+ "factor_complexity": [
+  3,
+  5,
+  8,
+  12,
+  15,
+  19,
+  23,
+  25,
+  29,
+  33,
+  36,
+  40
+ ],
+ "observed": [
+  {
+   "tiles": 131,
+   "letters": 23,
+   "as_is": true,
+   "swapped": false,
+   "core_as_is": true,
+   "core_swapped": false
+  },
+  {
+   "tiles": 180,
+   "letters": 34,
+   "as_is": true,
+   "swapped": false,
+   "core_as_is": true,
+   "core_swapped": false
+  },
+  {
+   "tiles": 26,
+   "letters": 0,
+   "as_is": false,
+   "swapped": false,
+   "core_as_is": false,
+   "core_swapped": false
+  },
+  {
+   "tiles": 78,
+   "letters": 7,
+   "as_is": true,
+   "swapped": false,
+   "core_as_is": true,
+   "core_swapped": true
+  },
+  {
+   "tiles": 105,
+   "letters": 18,
+   "as_is": true,
+   "swapped": false,
+   "core_as_is": true,
+   "core_swapped": false
+  },
+  {
+   "tiles": 62,
+   "letters": 9,
+   "as_is": true,
+   "swapped": false,
+   "core_as_is": true,
+   "core_swapped": false
+  },
+  {
+   "tiles": 57,
+   "letters": 8,
+   "as_is": true,
+   "swapped": false,
+   "core_as_is": true,
+   "core_swapped": false
+  },
+  {
+   "tiles": 157,
+   "letters": 30,
+   "as_is": true,
+   "swapped": false,
+   "core_as_is": true,
+   "core_swapped": false
+  }
+ ]
+}

@@ -35,7 +35,7 @@ REF, W = TS.REF, TS.W
 
 def prepare(path):
     """Poses, centroids, neighbours and ribbon clusters of a dump (cached beside it; the first call takes minutes)."""
-    cache = path + ".prep.pkl"
+    cache = path + ".prep3.pkl"
     if os.path.exists(cache):
         return pickle.load(open(cache, "rb"))
     import ribbon_hierarchy as RH
@@ -78,7 +78,11 @@ def prepare(path):
             g = sorted(g)
             if len(g) >= 20 and (len(g), tuple(g[:8])) not in seen:
                 seen.add((len(g), tuple(g[:8]))); ribs.append(g)
-    out = dict(P=P, L=L, cent=cent, nb=dict(nb), ribs=ribs, R=dump["R"])
+    D0 = RH.dictionaries()["d0"]                       # labels of the tiles, by the local rule of Stage 9n
+    k0 = RH.keys_of(P, L, None, RH.RHO0, np.arange(len(P)))
+    lab = [(D0.get(int(k)) or (None,))[0] for k in k0]
+    par = [(D0.get(int(k)) or (None, None, None))[2] for k in k0]       # label of the level-1 supertile
+    out = dict(P=P, L=L, cent=cent, nb=dict(nb), ribs=ribs, R=dump["R"], lab=lab, par=par)
     pickle.dump(out, open(cache, "wb"))
     return out
 
@@ -125,6 +129,49 @@ def smooth_measure(Ps, Ls, n_centre, iters=3):
                 outer_before=ln(outer, V), outer_after=ln(outer, X))
 
 
+SHORT = dict(Gamma1="G", Delta="D", Pi="P", Sigma="S", Lambda="L", Xi="X", Psi="Y")
+FLAT = 10                                              # index of the flat (180 degree) vertex of the reference Spectre
+
+
+def pair_tiles(d):
+    """Tiles at a bump-and-dent pair site: the flat vertices of exactly two tiles coincide."""
+    at = defaultdict(list)
+    for u in range(len(d["P"])):
+        f = d["L"][u] @ REF[FLAT] + d["P"][u]
+        at[(round(float(f[0]), 3), round(float(f[1]), 3))].append(u)
+    return {u for lst in at.values() if len(lst) == 2 for u in lst}
+
+
+def walk(d, g, st):
+    """Stacks of a single-strand ribbon in order, walked along its arrow: list of (w direction, type), and the turns."""
+    P, L, nb, cent, lab = d["P"], d["L"], d["nb"], d["cent"], d["lab"]
+    gs = set(g)
+    c = cent[g]; X = c - c.mean(0)
+    w_, v_ = np.linalg.eigh(X.T @ X)
+    start = g[int(np.argmin(X @ v_[:, 1]))]
+    dist = {start: 0}; q = [start]
+    while q:
+        x = q.pop(0)
+        for y in nb.get(x, []):
+            if y in gs and y not in dist:
+                dist[y] = dist[x] + 1; q.append(y)
+    seq = sorted((dist[s[0]], k) for k, (s, _) in enumerate(st) if s[0] in dist)
+    items, cs = [], []
+    for _, k in seq:
+        s = st[k][0]
+        ww = L[s[0]] @ W
+        items.append((round(math.degrees(math.atan2(ww[1], ww[0])) % 360), "".join(SHORT.get(lab[u], "?") for u in s)))
+        cs.append(cent[s].mean(0))
+    ah = sum(np.sign((cs[i + 1] - cs[i]) @ np.array([math.cos(math.radians(items[i][0])), math.sin(math.radians(items[i][0]))])) for i in range(len(items) - 1))
+    if ah < 0:
+        items = items[::-1]
+    turns = []
+    for (a1, _), (a2, _) in zip(items, items[1:]):
+        t = (a2 - a1 + 180) % 360 - 180
+        turns.append({60: "L", -60: "R", 0: "0"}.get(t, "?"))
+    return items, turns
+
+
 def env_key(d, s):
     P, L, nb = d["P"], d["L"], d["nb"]
     cor = sorted({v for u in s for v in nb.get(u, [])} - set(s))
@@ -163,13 +210,28 @@ def main():
             math.hypot(*e["shift"]), e["shift_angle_from_w"]))
     # ---- ribbons ----
     ribs, turns_all, turns_simple, keepfig = [], Counter(), Counter(), None
+    rule, words = defaultdict(Counter), []
     for di, d in enumerate(data):
         P, L, nb, cent = d["P"], d["L"], d["nb"], d["cent"]
+        paired = pair_tiles(d)
+        inner = [u for u in range(len(P)) if np.linalg.norm(P[u]) < d["R"] - 12]
+        print("%s: share of all tiles at a pair site %.3f" % (os.path.basename(files[di]), len(paired & set(inner)) / len(inner)))
         for g in d["ribs"]:
             gs = set(g)
             st = TS.stacks(P, L, g)
+            pshare = len(paired & gs) / len(g)
+            lc = Counter(d["lab"][u] for u in g if d["lab"][u])
+            labs = {k: round(v / sum(lc.values()), 3) for k, v in lc.most_common()}
+            if sum(len(s) for s, _ in st) / len(g) >= 0.7:           # a single silent strand: read its word
+                items, tn = walk(d, g, st)
+                for (a, t1), (b, t2), t in zip(items, items[1:], tn):
+                    if "?" not in t1 + t2:
+                        rule[(t1, t2)][t] += 1
+                words.append(dict(tiles=len(g), types=[t for _, t in items], turns="".join(tn)))
             if len(st) < 5:
-                ribs.append(dict(file=os.path.basename(files[di]), tiles=len(g), stacks=len(st))); continue
+                ribs.append(dict(file=os.path.basename(files[di]), tiles=len(g), stacks=len(st), stack_share=sum(len(s) for s, _ in st) / len(g), pair_site_share=pshare, labels=labs))
+                print("ribbon %3d tiles, no stacks: at pair sites %.2f; labels %s" % (len(g), pshare, dict(list(labs.items())[:5])))
+                continue
             c = cent[g]; X = c - c.mean(0)
             w_, v_ = np.linalg.eigh(X.T @ X)
             start = g[int(np.argmin(X @ v_[:, 1]))]
@@ -200,7 +262,7 @@ def main():
             turns_all.update(turns)
             mw = np.array([[math.cos(math.radians(a)), math.sin(math.radians(a))] for a in ws.values()]).mean(0)
             ribs.append(dict(file=os.path.basename(files[di]), tiles=len(g), stacks=len(st), stack_share=sum(len(s) for s, _ in st) / len(g),
-                             consistency=cons, steps=len(ahead), turns={str(k): v for k, v in sorted(turns.items())},
+                             pair_site_share=pshare, labels=labs, consistency=cons, steps=len(ahead), turns={str(k): v for k, v in sorted(turns.items())},
                              w_directions={str(k): v for k, v in sorted(Counter(ws.values()).items())},
                              mean_w_angle=float(math.degrees(math.atan2(mw[1], mw[0])) % 360), mean_w_length=float(np.linalg.norm(mw)),
                              ribbon_angle=float(math.degrees(math.atan2(v_[1, 1], v_[0, 1])) % 180), classes={str(k): v for k, v in sorted(cl.items())}))
@@ -218,7 +280,16 @@ def main():
     summ = dict(stack_classes=len(order), ribbons=len(ribs), with_stacks=sum(r["stacks"] >= 5 for r in ribs), clean=len(pure),
                 clean_consistency=[r["consistency"] for r in pure], turns_simple={str(k): v for k, v in sorted(turns_simple.items())}, turns_all={str(k): v for k, v in sorted(turns_all.items())},
                 clean_axis_minus_mean_w=dev)
-    print(summ)
+    summ["turn_rule"] = {"%s>%s" % k: dict(v) for k, v in sorted(rule.items())}
+    summ["words"] = words
+    xs = np.array([r["stack_share"] for r in ribs]); ys = np.array([r["pair_site_share"] for r in ribs])
+    summ["pair_share_vs_stack_share"] = dict(correlation=float(np.corrcoef(xs, ys)[0, 1]), fit=[float(v) for v in np.polyfit(xs, ys, 1)],
+                                             stack_free=[float(ys[xs == 0].min()), float(ys[xs == 0].max())], stacked_070=[float(ys[xs >= 0.7].min()), float(ys[xs >= 0.7].max())])
+    print("turn rule (type > next type: turns, walking along the arrow):", summ["turn_rule"])
+    for wd in words:
+        print("  word of a %d-tile ribbon: %s | turns %s" % (wd["tiles"], " ".join(wd["types"]), wd["turns"]))
+    print("pair sites against stacks:", summ["pair_share_vs_stack_share"])
+    print({k: v for k, v in summ.items() if k not in ("turn_rule", "words", "pair_share_vs_stack_share")})
     json.dump(dict(environments=env, ribbons=ribs, summary=summ), open(os.path.join(HERE, "stack_trace.json"), "w"), indent=1)
     if "--figure" in sys.argv and keepfig:
         import matplotlib
@@ -255,10 +326,12 @@ def main():
         ax.spines[["top", "right"]].set_visible(False)
         ax.set_title("b  Steps turn by 60°")
         fig.tight_layout()
-        fig.savefig(os.path.join(HERE, "stack_trace.png")); plt.close(fig)
+        os.makedirs(os.path.join(HERE, "figures"), exist_ok=True)
+        fig.savefig(os.path.join(HERE, "figures", "stack_trace.png")); plt.close(fig)
     if "--tests" in sys.argv:
         assert summ["stack_classes"] == 9
-        print("stack_trace: tests passed (nine stack environments)")
+        assert all(len(v) == 1 for v in rule.values()), "the turn is a function of the two stack types"
+        print("stack_trace: tests passed (nine stack environments; the turn is a function of the two stack types)")
 
 
 if __name__ == "__main__":

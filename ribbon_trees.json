@@ -1,0 +1,213 @@
+{
+ "level6": {
+  "level": 6,
+  "mystics": 30744,
+  "units": [
+   242047,
+   30744,
+   3905,
+   496,
+   63,
+   8,
+   1
+  ],
+  "roles": {
+   "root": {
+    "n": 993,
+    "supertile_labels": {
+     "Lambda": 496,
+     "Pi": 496,
+     "Gamma": 1
+    },
+    "near_boundary": null
+   },
+   "middle": {
+    "n": 10226,
+    "supertile_labels": {
+     "Delta": 3905,
+     "Sigma": 3905,
+     "Pi": 2416
+    },
+    "near_boundary": null
+   },
+   "fork": {
+    "n": 3904,
+    "supertile_labels": {
+     "Gamma": 3904
+    },
+    "near_boundary": null
+   },
+   "end": {
+    "n": 4898,
+    "supertile_labels": {
+     "Psi": 2975,
+     "Xi": 1922,
+     "Pi": 1
+    },
+    "near_boundary": null
+   },
+   "isolated": {
+    "n": 10723,
+    "supertile_labels": {
+     "Phi": 6818,
+     "Psi": 2417,
+     "Xi": 992,
+     "Theta": 496
+    },
+    "near_boundary": null
+   }
+  },
+  "trees": [
+   {
+    "span_level": 2,
+    "mystics": 11,
+    "depth": 6,
+    "count": 803
+   },
+   {
+    "span_level": 3,
+    "mystics": 30,
+    "depth": 17,
+    "count": 173
+   },
+   {
+    "span_level": 4,
+    "mystics": 210,
+    "depth": 77,
+    "count": 13
+   },
+   {
+    "span_level": 5,
+    "mystics": 551,
+    "depth": 186,
+    "count": 3
+   },
+   {
+    "span_level": 5,
+    "mystics": 1615,
+    "depth": 296,
+    "count": 1
+   }
+  ],
+  "boundary": {}
+ },
+ "level5": {
+  "level": 5,
+  "mystics": 3905,
+  "units": [
+   30744,
+   3905,
+   496,
+   63,
+   8,
+   1
+  ],
+  "roles": {
+   "root": {
+    "n": 127,
+    "supertile_labels": {
+     "Lambda": 63,
+     "Pi": 63,
+     "Gamma": 1
+    },
+    "near_boundary": 0.2755905511811024
+   },
+   "middle": {
+    "n": 1298,
+    "supertile_labels": {
+     "Delta": 496,
+     "Sigma": 496,
+     "Pi": 306
+    },
+    "near_boundary": 0.33436055469953774
+   },
+   "fork": {
+    "n": 495,
+    "supertile_labels": {
+     "Gamma": 495
+    },
+    "near_boundary": 0.23232323232323232
+   },
+   "end": {
+    "n": 623,
+    "supertile_labels": {
+     "Psi": 377,
+     "Xi": 244,
+     "Pi": 2
+    },
+    "near_boundary": 0.3868378812199037
+   },
+   "isolated": {
+    "n": 1362,
+    "supertile_labels": {
+     "Phi": 866,
+     "Psi": 307,
+     "Xi": 126,
+     "Theta": 63
+    },
+    "near_boundary": 0.30176211453744495
+   }
+  },
+  "trees": [
+   {
+    "span_level": 2,
+    "mystics": 11,
+    "depth": 6,
+    "count": 102
+   },
+   {
+    "span_level": 3,
+    "mystics": 30,
+    "depth": 17,
+    "count": 22
+   },
+   {
+    "span_level": 4,
+    "mystics": 210,
+    "depth": 77,
+    "count": 2
+   },
+   {
+    "span_level": 4,
+    "mystics": 341,
+    "depth": 108,
+    "count": 1
+   }
+  ],
+  "boundary": {
+   "2": {
+    "trees": 102,
+    "root_at_boundary": 0.20588235294117646,
+    "ends_at_boundary": 0.4183006535947712
+   },
+   "3": {
+    "trees": 22,
+    "root_at_boundary": 0.5,
+    "ends_at_boundary": 0.3571428571428571
+   },
+   "4": {
+    "trees": 3,
+    "root_at_boundary": 1.0,
+    "ends_at_boundary": 0.3642820903094876
+   }
+  }
+ },
+ "forks": {
+  "events": {
+   "x": 84,
+   "y": 71,
+   "xy": 17
+  },
+  "forks": 74,
+  "by_fork": {
+   "x+xy": 8,
+   "y": 29,
+   "x+y": 3,
+   "x": 32,
+   "xy+y": 2
+  },
+  "one_branch_only": 61,
+  "both_in_one_step": 10,
+  "switches_between_steps": 3
+ }
+}
