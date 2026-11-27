@@ -1,0 +1,4727 @@
+{
+ "level": 5,
+ "tiles": 34649,
+ "covering_radius": 3.3753886155702855,
+ "rho": 17.075388615570287,
+ "centres": 19077,
+ "classes": 336,
+ "solved": 336,
+ "unique": 336,
+ "two_or_more": 0,
+ "none_found": 0,
+ "undecided": 0,
+ "max_nodes": 2162,
+ "mean_nodes": 976.4732142857143,
+ "tiles_per_hole": [
+  107,
+  124
+ ],
+ "class_keys": [
+  50077213816598950,
+  78087809537211714,
+  108240872626258773,
+  199145539151210967,
+  337095676241092372,
+  526610133906469867,
+  580188323735494170,
+  826439174344128644,
+  851836601052909417,
+  876993554999376378,
+  883975664512152805,
+  919060755960347879,
+  1199969633666301817,
+  1248937149433862681,
+  1257454699175808699,
+  1400977240887990974,
+  1470874491285768416,
+  1503122946892013819,
+  1565258574843418870,
+  1593555045052827031,
+  1594683670430025764,
+  1595838376055190949,
+  1697788216153228196,
+  1710055771974133199,
+  1757216055258792671,
+  1765854141006040171,
+  1821184326271992164,
+  1866522535993422688,
+  1890224936193665093,
+  1975207021144897630,
+  2089251829455768366,
+  2153982272591452766,
+  2167146703786009410,
+  2562621674943396562,
+  2567216781120762732,
+  2594304121457596681,
+  2644751618555872144,
+  2698362854473873175,
+  2739789286102401960,
+  2747999833509158609,
+  2765770066778838998,
+  2766775094279690945,
+  2821001817108329120,
+  2897733385143310575,
+  2950230659994493990,
+  2966657087487581987,
+  3035158314156183017,
+  3102015401640506617,
+  3490679188686236855,
+  3498895228630719202,
+  3505454631743252485,
+  3566119893499559484,
+  3710470619749844802,
+  3727276093157029381,
+  3754076445943931846,
+  3811286546086082871,
+  3975026555236104393,
+  4190527827631193491,
+  4326193324410291195,
+  4333667157737267615,
+  4467913826556887468,
+  4707594348637061749,
+  4721285110038559659,
+  4729729915093231104,
+  4777198583025945915,
+  4802498115721296093,
+  4837904136000013168,
+  4842900597731129968,
+  5072004723976980793,
+  5080608627593722667,
+  5164947486966554659,
+  5312944638047878428,
+  5383553475978795275,
+  5407783949605497669,
+  5541047304781535754,
+  5564232184392754273,
+  5638474649617088093,
+  5672339885091757260,
+  5727848424738040147,
+  5750807676678001524,
+  5802571426792070407,
+  5819414697456994446,
+  5856642301508461754,
+  5857235786389528901,
+  5948259005808227015,
+  5949758977507128200,
+  6021183954937995067,
+  6028265787470703022,
+  6109789771172756942,
+  6275214231795995613,
+  6362381175496432886,
+  6365218866919161297,
+  6377675026484882562,
+  6408608044120588519,
+  6444065769192619422,
+  6486999547321556741,
+  6566656994522800607,
+  6740287137655664240,
+  6802940860203130412,
+  6938577082291612250,
+  6954112743653539133,
+  7043057830958647122,
+  7137781417526951349,
+  7222546968658136904,
+  7254677230468670502,
+  7314048891201018230,
+  7329219109508127650,
+  7337410321623804969,
+  7403983207131132627,
+  7497159138146058406,
+  7551170757846190420,
+  7647706143780276667,
+  7669075615844379096,
+  7709145045770279835,
+  7725579117326355889,
+  7739471686605187346,
+  7770020651783933001,
+  7770144327966351087,
+  7884256281321712011,
+  7900146069775736079,
+  7942650433089253794,
+  7958430364433841534,
+  7981832386334650172,
+  7997271616432190436,
+  8110390338614792825,
+  8150498673732028919,
+  8178109669081479185,
+  8222015926445951639,
+  8265229556920933378,
+  8287083102581905781,
+  8438233758269425486,
+  8490230840966829408,
+  8491400726887803203,
+  8523925330259563961,
+  8541191436824191015,
+  8544654812553341034,
+  8591157957762480296,
+  8639960205440195738,
+  8670244046748345085,
+  8712446607445637121,
+  8799502550855807445,
+  8800842500682493844,
+  8832620712406343827,
+  8842998598074286055,
+  8909831145042262819,
+  9111901740853345264,
+  9115901519142566844,
+  9241904868561208136,
+  9262779688435245722,
+  9336263043892350438,
+  9347138419006855588,
+  9363898523418798656,
+  9390040438997133361,
+  9411389101836399686,
+  9433832137235371189,
+  9464860528881752139,
+  9499803765660597252,
+  9538360356076669146,
+  9552512266437420278,
+  9623856950024589445,
+  9625397294376943597,
+  9640320554395983483,
+  9670246534411086560,
+  9691157457663893666,
+  9725652669582499101,
+  9768554734346679625,
+  9774308785786398509,
+  9798407541584533280,
+  9847040670084142564,
+  9932318622345626913,
+  9935797362491191196,
+  9949819878037072370,
+  10009360063653390843,
+  10116096191355780686,
+  10173453920353473893,
+  10190932169844041553,
+  10237208515527995589,
+  10247241560893655677,
+  10247247632163792568,
+  10299589413297138750,
+  10305270365129774976,
+  10325986996630082019,
+  10359121978270240038,
+  10359404371361169608,
+  10400310530197485756,
+  10453494193606524822,
+  10455017576431673243,
+  10506309528985297831,
+  10558725647879086652,
+  10705610448798795063,
+  10730875930791266984,
+  10785481924734904202,
+  10813664719586579108,
+  10815916331149767361,
+  10831219711039624067,
+  10842292727333826340,
+  10850201028745196820,
+  10893279572480920452,
+  10920846651319365276,
+  10992037059761449299,
+  11084512649709124734,
+  11112635514426379138,
+  11200551290227413779,
+  11270338962391525098,
+  11289295382133224013,
+  11369146879580911299,
+  11484128967385865096,
+  11518256320644050819,
+  11631829111181519071,
+  11645132261270493293,
+  11663800874081391705,
+  11671685696567966506,
+  11702836685561802355,
+  11720254264456202000,
+  11759765104651741363,
+  11800885617274996697,
+  11828921018245971254,
+  11841870428523880998,
+  12145514233126620377,
+  12215359203100188871,
+  12254691430826299068,
+  12332444880478733813,
+  12354189087759056269,
+  12413438207977545920,
+  12512101438974959737,
+  12559411270354039412,
+  12590449529066530869,
+  12754164685415433190,
+  12792849282645519894,
+  12816596554291196316,
+  12841231162677813753,
+  12899451921727653095,
+  12904318939813737049,
+  12932457239393836431,
+  13005375701050250553,
+  13013967079508857217,
+  13149320296230151180,
+  13220038615138255125,
+  13345481070759385976,
+  13366513098414777226,
+  13373383385568399662,
+  13376039613125466879,
+  13391842778125871823,
+  13418310398501543989,
+  13435415630170879689,
+  13526453844829187475,
+  13668710647843366620,
+  13670987725934481902,
+  13702233997536949381,
+  13816335015494657030,
+  13902929180151689218,
+  13941859054450939948,
+  13968104701663273498,
+  14029758210334386680,
+  14046717342052079510,
+  14067412101202533783,
+  14196871105874153114,
+  14259012563059475052,
+  14288259593328183826,
+  14295480998675198025,
+  14397731943236555106,
+  14442716984793332972,
+  14449886283441996158,
+  14461993452696896016,
+  14493570417296226180,
+  14513113055554141222,
+  14520368290324639141,
+  14529677410657109369,
+  14547706944342431001,
+  14551616399125419723,
+  14588926017797387161,
+  14614792522281519295,
+  14782247052434520074,
+  14847737539288837219,
+  14856139964775308381,
+  14991786958968621669,
+  14992955032040272483,
+  15059628728758793003,
+  15107532885629679117,
+  15112994748978179106,
+  15224924599999338096,
+  15295224558318696199,
+  15307545741601799503,
+  15317993107456452587,
+  15347451670876429876,
+  15544280946273845220,
+  15549573259853975729,
+  15685989561183397413,
+  15715037191681990644,
+  15721949880077965249,
+  15767990969856007133,
+  15831491205209271274,
+  15861834239984232516,
+  15923254763928710637,
+  15962401995541511285,
+  16164080013647857343,
+  16219212747249961190,
+  16222150584818843447,
+  16224701901071776681,
+  16285495166270555253,
+  16366541391280842854,
+  16368590485497415794,
+  16375580967082597010,
+  16448722124241126667,
+  16524191022123476892,
+  16693569253462825975,
+  16764086977742145397,
+  16785266678597041199,
+  16854122223610226518,
+  16911870979091318242,
+  16948576283005109716,
+  16955053048633142992,
+  16962479793856212621,
+  16969988759455715551,
+  17081904429277899974,
+  17092819613031533312,
+  17132151840757643509,
+  17144964067980777455,
+  17176027692541936361,
+  17477033374792528322,
+  17530817960439762573,
+  17618927070251144159,
+  17652345464249968641,
+  17741725075186549676,
+  17744700950959130725,
+  17800238966988944772,
+  17840423288948954196,
+  17968086119562194778,
+  18058822083691206937,
+  18142788248529865175,
+  18167675031268809317,
+  18188730936504966307,
+  18202926414315053487,
+  18234875529431453242,
+  18284842050369742523,
+  18318365400063325284
+ ],
+ "results": [
+  {
+   "cls": 14547706944342431001,
+   "centre": 467,
+   "tiles": 111,
+   "occurrences": 194,
+   "fillings": 1,
+   "nodes": 1029,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.68
+  },
+  {
+   "cls": 6938577082291612250,
+   "centre": 468,
+   "tiles": 110,
+   "occurrences": 218,
+   "fillings": 1,
+   "nodes": 969,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 1.74
+  },
+  {
+   "cls": 6362381175496432886,
+   "centre": 469,
+   "tiles": 109,
+   "occurrences": 176,
+   "fillings": 1,
+   "nodes": 1014,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.5
+  },
+  {
+   "cls": 13968104701663273498,
+   "centre": 442,
+   "tiles": 110,
+   "occurrences": 176,
+   "fillings": 1,
+   "nodes": 1103,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 1.8
+  },
+  {
+   "cls": 7497159138146058406,
+   "centre": 490,
+   "tiles": 110,
+   "occurrences": 176,
+   "fillings": 1,
+   "nodes": 1036,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 1.57
+  },
+  {
+   "cls": 9363898523418798656,
+   "centre": 491,
+   "tiles": 108,
+   "occurrences": 176,
+   "fillings": 1,
+   "nodes": 1059,
+   "undecided": false,
+   "tiles_in_filling": [
+    108
+   ],
+   "seconds": 1.63
+  },
+  {
+   "cls": 13418310398501543989,
+   "centre": 492,
+   "tiles": 109,
+   "occurrences": 176,
+   "fillings": 1,
+   "nodes": 977,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.54
+  },
+  {
+   "cls": 11702836685561802355,
+   "centre": 493,
+   "tiles": 109,
+   "occurrences": 176,
+   "fillings": 1,
+   "nodes": 904,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.33
+  },
+  {
+   "cls": 15923254763928710637,
+   "centre": 494,
+   "tiles": 109,
+   "occurrences": 176,
+   "fillings": 1,
+   "nodes": 849,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.39
+  },
+  {
+   "cls": 12754164685415433190,
+   "centre": 496,
+   "tiles": 111,
+   "occurrences": 176,
+   "fillings": 1,
+   "nodes": 872,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.32
+  },
+  {
+   "cls": 2594304121457596681,
+   "centre": 557,
+   "tiles": 109,
+   "occurrences": 162,
+   "fillings": 1,
+   "nodes": 570,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 0.85
+  },
+  {
+   "cls": 17132151840757643509,
+   "centre": 551,
+   "tiles": 111,
+   "occurrences": 162,
+   "fillings": 1,
+   "nodes": 651,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.07
+  },
+  {
+   "cls": 17652345464249968641,
+   "centre": 440,
+   "tiles": 109,
+   "occurrences": 143,
+   "fillings": 1,
+   "nodes": 1042,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.7
+  },
+  {
+   "cls": 18234875529431453242,
+   "centre": 441,
+   "tiles": 109,
+   "occurrences": 143,
+   "fillings": 1,
+   "nodes": 1058,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.74
+  },
+  {
+   "cls": 7997271616432190436,
+   "centre": 426,
+   "tiles": 113,
+   "occurrences": 127,
+   "fillings": 1,
+   "nodes": 861,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.39
+  },
+  {
+   "cls": 2089251829455768366,
+   "centre": 433,
+   "tiles": 113,
+   "occurrences": 127,
+   "fillings": 1,
+   "nodes": 988,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.5
+  },
+  {
+   "cls": 8222015926445951639,
+   "centre": 434,
+   "tiles": 112,
+   "occurrences": 127,
+   "fillings": 1,
+   "nodes": 741,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.16
+  },
+  {
+   "cls": 2747999833509158609,
+   "centre": 650,
+   "tiles": 114,
+   "occurrences": 121,
+   "fillings": 1,
+   "nodes": 989,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.65
+  },
+  {
+   "cls": 12899451921727653095,
+   "centre": 651,
+   "tiles": 113,
+   "occurrences": 121,
+   "fillings": 1,
+   "nodes": 1012,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.55
+  },
+  {
+   "cls": 15317993107456452587,
+   "centre": 462,
+   "tiles": 109,
+   "occurrences": 118,
+   "fillings": 1,
+   "nodes": 1178,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.77
+  },
+  {
+   "cls": 11663800874081391705,
+   "centre": 463,
+   "tiles": 109,
+   "occurrences": 118,
+   "fillings": 1,
+   "nodes": 1079,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.66
+  },
+  {
+   "cls": 50077213816598950,
+   "centre": 465,
+   "tiles": 109,
+   "occurrences": 118,
+   "fillings": 1,
+   "nodes": 915,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.45
+  },
+  {
+   "cls": 9774308785786398509,
+   "centre": 466,
+   "tiles": 111,
+   "occurrences": 118,
+   "fillings": 1,
+   "nodes": 996,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.52
+  },
+  {
+   "cls": 12932457239393836431,
+   "centre": 470,
+   "tiles": 109,
+   "occurrences": 118,
+   "fillings": 1,
+   "nodes": 1101,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.66
+  },
+  {
+   "cls": 14029758210334386680,
+   "centre": 680,
+   "tiles": 113,
+   "occurrences": 111,
+   "fillings": 1,
+   "nodes": 755,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.17
+  },
+  {
+   "cls": 7770020651783933001,
+   "centre": 595,
+   "tiles": 108,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 838,
+   "undecided": false,
+   "tiles_in_filling": [
+    108
+   ],
+   "seconds": 1.31
+  },
+  {
+   "cls": 5541047304781535754,
+   "centre": 664,
+   "tiles": 112,
+   "occurrences": 105,
+   "fillings": 1,
+   "nodes": 1136,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.76
+  },
+  {
+   "cls": 17744700950959130725,
+   "centre": 596,
+   "tiles": 108,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 822,
+   "undecided": false,
+   "tiles_in_filling": [
+    108
+   ],
+   "seconds": 1.23
+  },
+  {
+   "cls": 14782247052434520074,
+   "centre": 597,
+   "tiles": 109,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 801,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.31
+  },
+  {
+   "cls": 5857235786389528901,
+   "centre": 598,
+   "tiles": 108,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 731,
+   "undecided": false,
+   "tiles_in_filling": [
+    108
+   ],
+   "seconds": 1.18
+  },
+  {
+   "cls": 14461993452696896016,
+   "centre": 599,
+   "tiles": 110,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 936,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 1.45
+  },
+  {
+   "cls": 2766775094279690945,
+   "centre": 603,
+   "tiles": 108,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 781,
+   "undecided": false,
+   "tiles_in_filling": [
+    108
+   ],
+   "seconds": 1.16
+  },
+  {
+   "cls": 10813664719586579108,
+   "centre": 604,
+   "tiles": 113,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 1167,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.91
+  },
+  {
+   "cls": 4721285110038559659,
+   "centre": 611,
+   "tiles": 113,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 881,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.56
+  },
+  {
+   "cls": 9411389101836399686,
+   "centre": 612,
+   "tiles": 114,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 854,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.33
+  },
+  {
+   "cls": 13526453844829187475,
+   "centre": 613,
+   "tiles": 110,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 1037,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 1.63
+  },
+  {
+   "cls": 15549573259853975729,
+   "centre": 617,
+   "tiles": 114,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 889,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.38
+  },
+  {
+   "cls": 1821184326271992164,
+   "centre": 618,
+   "tiles": 112,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 942,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.39
+  },
+  {
+   "cls": 12792849282645519894,
+   "centre": 619,
+   "tiles": 111,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 865,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.31
+  },
+  {
+   "cls": 12904318939813737049,
+   "centre": 620,
+   "tiles": 111,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 782,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.16
+  },
+  {
+   "cls": 10992037059761449299,
+   "centre": 621,
+   "tiles": 110,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 956,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 1.48
+  },
+  {
+   "cls": 16854122223610226518,
+   "centre": 648,
+   "tiles": 113,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 1345,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 2.04
+  },
+  {
+   "cls": 13391842778125871823,
+   "centre": 649,
+   "tiles": 113,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 911,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.36
+  },
+  {
+   "cls": 5727848424738040147,
+   "centre": 656,
+   "tiles": 115,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 1391,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.99
+  },
+  {
+   "cls": 1595838376055190949,
+   "centre": 655,
+   "tiles": 114,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 1570,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 2.51
+  },
+  {
+   "cls": 8178109669081479185,
+   "centre": 657,
+   "tiles": 112,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 903,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.28
+  },
+  {
+   "cls": 6802940860203130412,
+   "centre": 661,
+   "tiles": 116,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 1429,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 2.46
+  },
+  {
+   "cls": 6444065769192619422,
+   "centre": 662,
+   "tiles": 115,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 1573,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 2.31
+  },
+  {
+   "cls": 10705610448798795063,
+   "centre": 663,
+   "tiles": 111,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 1029,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.52
+  },
+  {
+   "cls": 8438233758269425486,
+   "centre": 665,
+   "tiles": 111,
+   "occurrences": 100,
+   "fillings": 1,
+   "nodes": 913,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.49
+  },
+  {
+   "cls": 6377675026484882562,
+   "centre": 375,
+   "tiles": 113,
+   "occurrences": 94,
+   "fillings": 1,
+   "nodes": 913,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.38
+  },
+  {
+   "cls": 8909831145042262819,
+   "centre": 376,
+   "tiles": 113,
+   "occurrences": 94,
+   "fillings": 1,
+   "nodes": 920,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.36
+  },
+  {
+   "cls": 14588926017797387161,
+   "centre": 377,
+   "tiles": 113,
+   "occurrences": 94,
+   "fillings": 1,
+   "nodes": 924,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.41
+  },
+  {
+   "cls": 3710470619749844802,
+   "centre": 378,
+   "tiles": 113,
+   "occurrences": 94,
+   "fillings": 1,
+   "nodes": 763,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.23
+  },
+  {
+   "cls": 4777198583025945915,
+   "centre": 668,
+   "tiles": 110,
+   "occurrences": 92,
+   "fillings": 1,
+   "nodes": 920,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 1.36
+  },
+  {
+   "cls": 13702233997536949381,
+   "centre": 675,
+   "tiles": 113,
+   "occurrences": 92,
+   "fillings": 1,
+   "nodes": 638,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 0.99
+  },
+  {
+   "cls": 6275214231795995613,
+   "centre": 683,
+   "tiles": 115,
+   "occurrences": 92,
+   "fillings": 1,
+   "nodes": 770,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.26
+  },
+  {
+   "cls": 12590449529066530869,
+   "centre": 357,
+   "tiles": 117,
+   "occurrences": 91,
+   "fillings": 1,
+   "nodes": 1028,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 1.62
+  },
+  {
+   "cls": 7222546968658136904,
+   "centre": 358,
+   "tiles": 113,
+   "occurrences": 91,
+   "fillings": 1,
+   "nodes": 1000,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.65
+  },
+  {
+   "cls": 6740287137655664240,
+   "centre": 435,
+   "tiles": 107,
+   "occurrences": 89,
+   "fillings": 1,
+   "nodes": 912,
+   "undecided": false,
+   "tiles_in_filling": [
+    107
+   ],
+   "seconds": 1.33
+  },
+  {
+   "cls": 11645132261270493293,
+   "centre": 436,
+   "tiles": 108,
+   "occurrences": 89,
+   "fillings": 1,
+   "nodes": 937,
+   "undecided": false,
+   "tiles_in_filling": [
+    108
+   ],
+   "seconds": 1.46
+  },
+  {
+   "cls": 13816335015494657030,
+   "centre": 437,
+   "tiles": 109,
+   "occurrences": 89,
+   "fillings": 1,
+   "nodes": 953,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.44
+  },
+  {
+   "cls": 1975207021144897630,
+   "centre": 438,
+   "tiles": 108,
+   "occurrences": 89,
+   "fillings": 1,
+   "nodes": 933,
+   "undecided": false,
+   "tiles_in_filling": [
+    108
+   ],
+   "seconds": 1.49
+  },
+  {
+   "cls": 14992955032040272483,
+   "centre": 439,
+   "tiles": 109,
+   "occurrences": 89,
+   "fillings": 1,
+   "nodes": 886,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.42
+  },
+  {
+   "cls": 18202926414315053487,
+   "centre": 444,
+   "tiles": 112,
+   "occurrences": 89,
+   "fillings": 1,
+   "nodes": 612,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 0.91
+  },
+  {
+   "cls": 17081904429277899974,
+   "centre": 443,
+   "tiles": 108,
+   "occurrences": 89,
+   "fillings": 1,
+   "nodes": 966,
+   "undecided": false,
+   "tiles_in_filling": [
+    108
+   ],
+   "seconds": 1.49
+  },
+  {
+   "cls": 12841231162677813753,
+   "centre": 445,
+   "tiles": 113,
+   "occurrences": 89,
+   "fillings": 1,
+   "nodes": 857,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.38
+  },
+  {
+   "cls": 9949819878037072370,
+   "centre": 450,
+   "tiles": 113,
+   "occurrences": 89,
+   "fillings": 1,
+   "nodes": 836,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.28
+  },
+  {
+   "cls": 8544654812553341034,
+   "centre": 451,
+   "tiles": 113,
+   "occurrences": 89,
+   "fillings": 1,
+   "nodes": 858,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.27
+  },
+  {
+   "cls": 13373383385568399662,
+   "centre": 452,
+   "tiles": 114,
+   "occurrences": 89,
+   "fillings": 1,
+   "nodes": 815,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.23
+  },
+  {
+   "cls": 13005375701050250553,
+   "centre": 457,
+   "tiles": 114,
+   "occurrences": 89,
+   "fillings": 1,
+   "nodes": 681,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.02
+  },
+  {
+   "cls": 14449886283441996158,
+   "centre": 453,
+   "tiles": 111,
+   "occurrences": 89,
+   "fillings": 1,
+   "nodes": 720,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.07
+  },
+  {
+   "cls": 13345481070759385976,
+   "centre": 458,
+   "tiles": 111,
+   "occurrences": 89,
+   "fillings": 1,
+   "nodes": 793,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.11
+  },
+  {
+   "cls": 2153982272591452766,
+   "centre": 459,
+   "tiles": 109,
+   "occurrences": 89,
+   "fillings": 1,
+   "nodes": 797,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.22
+  },
+  {
+   "cls": 14046717342052079510,
+   "centre": 461,
+   "tiles": 109,
+   "occurrences": 89,
+   "fillings": 1,
+   "nodes": 662,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.0
+  },
+  {
+   "cls": 17618927070251144159,
+   "centre": 460,
+   "tiles": 111,
+   "occurrences": 89,
+   "fillings": 1,
+   "nodes": 933,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.35
+  },
+  {
+   "cls": 16969988759455715551,
+   "centre": 560,
+   "tiles": 115,
+   "occurrences": 86,
+   "fillings": 1,
+   "nodes": 891,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.38
+  },
+  {
+   "cls": 12354189087759056269,
+   "centre": 563,
+   "tiles": 115,
+   "occurrences": 86,
+   "fillings": 1,
+   "nodes": 861,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.34
+  },
+  {
+   "cls": 13668710647843366620,
+   "centre": 564,
+   "tiles": 112,
+   "occurrences": 86,
+   "fillings": 1,
+   "nodes": 815,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.25
+  },
+  {
+   "cls": 883975664512152805,
+   "centre": 565,
+   "tiles": 111,
+   "occurrences": 86,
+   "fillings": 1,
+   "nodes": 920,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.51
+  },
+  {
+   "cls": 10506309528985297831,
+   "centre": 676,
+   "tiles": 114,
+   "occurrences": 84,
+   "fillings": 1,
+   "nodes": 697,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.1
+  },
+  {
+   "cls": 14442716984793332972,
+   "centre": 677,
+   "tiles": 117,
+   "occurrences": 84,
+   "fillings": 1,
+   "nodes": 729,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 1.12
+  },
+  {
+   "cls": 10558725647879086652,
+   "centre": 678,
+   "tiles": 114,
+   "occurrences": 84,
+   "fillings": 1,
+   "nodes": 633,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 0.94
+  },
+  {
+   "cls": 11200551290227413779,
+   "centre": 679,
+   "tiles": 113,
+   "occurrences": 84,
+   "fillings": 1,
+   "nodes": 657,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.03
+  },
+  {
+   "cls": 10359121978270240038,
+   "centre": 681,
+   "tiles": 113,
+   "occurrences": 84,
+   "fillings": 1,
+   "nodes": 715,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.03
+  },
+  {
+   "cls": 12254691430826299068,
+   "centre": 489,
+   "tiles": 111,
+   "occurrences": 76,
+   "fillings": 1,
+   "nodes": 962,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.49
+  },
+  {
+   "cls": 1710055771974133199,
+   "centre": 639,
+   "tiles": 111,
+   "occurrences": 67,
+   "fillings": 1,
+   "nodes": 1233,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.85
+  },
+  {
+   "cls": 13941859054450939948,
+   "centre": 640,
+   "tiles": 113,
+   "occurrences": 67,
+   "fillings": 1,
+   "nodes": 1350,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 2.0
+  },
+  {
+   "cls": 14259012563059475052,
+   "centre": 641,
+   "tiles": 114,
+   "occurrences": 67,
+   "fillings": 1,
+   "nodes": 1786,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 2.73
+  },
+  {
+   "cls": 9935797362491191196,
+   "centre": 647,
+   "tiles": 113,
+   "occurrences": 67,
+   "fillings": 1,
+   "nodes": 1364,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 2.1
+  },
+  {
+   "cls": 15347451670876429876,
+   "centre": 652,
+   "tiles": 114,
+   "occurrences": 67,
+   "fillings": 1,
+   "nodes": 965,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.57
+  },
+  {
+   "cls": 6408608044120588519,
+   "centre": 653,
+   "tiles": 115,
+   "occurrences": 67,
+   "fillings": 1,
+   "nodes": 1474,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 2.41
+  },
+  {
+   "cls": 4707594348637061749,
+   "centre": 654,
+   "tiles": 115,
+   "occurrences": 67,
+   "fillings": 1,
+   "nodes": 1411,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 2.18
+  },
+  {
+   "cls": 16224701901071776681,
+   "centre": 504,
+   "tiles": 115,
+   "occurrences": 62,
+   "fillings": 1,
+   "nodes": 663,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.04
+  },
+  {
+   "cls": 8842998598074286055,
+   "centre": 531,
+   "tiles": 112,
+   "occurrences": 62,
+   "fillings": 1,
+   "nodes": 638,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 0.95
+  },
+  {
+   "cls": 826439174344128644,
+   "centre": 549,
+   "tiles": 112,
+   "occurrences": 62,
+   "fillings": 1,
+   "nodes": 644,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 0.95
+  },
+  {
+   "cls": 11828921018245971254,
+   "centre": 552,
+   "tiles": 112,
+   "occurrences": 62,
+   "fillings": 1,
+   "nodes": 695,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.06
+  },
+  {
+   "cls": 16911870979091318242,
+   "centre": 553,
+   "tiles": 109,
+   "occurrences": 62,
+   "fillings": 1,
+   "nodes": 611,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 0.96
+  },
+  {
+   "cls": 1697788216153228196,
+   "centre": 555,
+   "tiles": 110,
+   "occurrences": 62,
+   "fillings": 1,
+   "nodes": 554,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 0.79
+  },
+  {
+   "cls": 7337410321623804969,
+   "centre": 554,
+   "tiles": 110,
+   "occurrences": 62,
+   "fillings": 1,
+   "nodes": 652,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 1.07
+  },
+  {
+   "cls": 10116096191355780686,
+   "centre": 556,
+   "tiles": 110,
+   "occurrences": 62,
+   "fillings": 1,
+   "nodes": 520,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 0.81
+  },
+  {
+   "cls": 9241904868561208136,
+   "centre": 558,
+   "tiles": 114,
+   "occurrences": 62,
+   "fillings": 1,
+   "nodes": 693,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.08
+  },
+  {
+   "cls": 15685989561183397413,
+   "centre": 658,
+   "tiles": 113,
+   "occurrences": 59,
+   "fillings": 1,
+   "nodes": 968,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.53
+  },
+  {
+   "cls": 16693569253462825975,
+   "centre": 659,
+   "tiles": 113,
+   "occurrences": 59,
+   "fillings": 1,
+   "nodes": 786,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.14
+  },
+  {
+   "cls": 12512101438974959737,
+   "centre": 756,
+   "tiles": 112,
+   "occurrences": 59,
+   "fillings": 1,
+   "nodes": 821,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.2
+  },
+  {
+   "cls": 5638474649617088093,
+   "centre": 660,
+   "tiles": 113,
+   "occurrences": 59,
+   "fillings": 1,
+   "nodes": 1140,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.73
+  },
+  {
+   "cls": 16222150584818843447,
+   "centre": 757,
+   "tiles": 114,
+   "occurrences": 59,
+   "fillings": 1,
+   "nodes": 732,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.05
+  },
+  {
+   "cls": 1257454699175808699,
+   "centre": 758,
+   "tiles": 112,
+   "occurrences": 59,
+   "fillings": 1,
+   "nodes": 636,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 0.91
+  },
+  {
+   "cls": 16524191022123476892,
+   "centre": 1013,
+   "tiles": 113,
+   "occurrences": 59,
+   "fillings": 1,
+   "nodes": 809,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.31
+  },
+  {
+   "cls": 11518256320644050819,
+   "centre": 1014,
+   "tiles": 116,
+   "occurrences": 59,
+   "fillings": 1,
+   "nodes": 955,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.49
+  },
+  {
+   "cls": 10730875930791266984,
+   "centre": 1015,
+   "tiles": 113,
+   "occurrences": 59,
+   "fillings": 1,
+   "nodes": 844,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.32
+  },
+  {
+   "cls": 14288259593328183826,
+   "centre": 568,
+   "tiles": 108,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 922,
+   "undecided": false,
+   "tiles_in_filling": [
+    108
+   ],
+   "seconds": 1.37
+  },
+  {
+   "cls": 5564232184392754273,
+   "centre": 569,
+   "tiles": 109,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 937,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.44
+  },
+  {
+   "cls": 3811286546086082871,
+   "centre": 570,
+   "tiles": 110,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 1002,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 1.44
+  },
+  {
+   "cls": 14614792522281519295,
+   "centre": 571,
+   "tiles": 109,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 801,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.24
+  },
+  {
+   "cls": 10305270365129774976,
+   "centre": 572,
+   "tiles": 110,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 861,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 1.33
+  },
+  {
+   "cls": 8800842500682493844,
+   "centre": 576,
+   "tiles": 109,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 939,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.43
+  },
+  {
+   "cls": 2644751618555872144,
+   "centre": 577,
+   "tiles": 112,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 1053,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.51
+  },
+  {
+   "cls": 8491400726887803203,
+   "centre": 578,
+   "tiles": 113,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 1024,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.59
+  },
+  {
+   "cls": 11484128967385865096,
+   "centre": 579,
+   "tiles": 115,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 986,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.45
+  },
+  {
+   "cls": 16366541391280842854,
+   "centre": 580,
+   "tiles": 113,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 1042,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.59
+  },
+  {
+   "cls": 16164080013647857343,
+   "centre": 581,
+   "tiles": 112,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 1023,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.6
+  },
+  {
+   "cls": 5407783949605497669,
+   "centre": 582,
+   "tiles": 113,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 940,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.53
+  },
+  {
+   "cls": 17741725075186549676,
+   "centre": 583,
+   "tiles": 114,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 979,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.53
+  },
+  {
+   "cls": 7314048891201018230,
+   "centre": 584,
+   "tiles": 113,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 995,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.44
+  },
+  {
+   "cls": 10237208515527995589,
+   "centre": 585,
+   "tiles": 115,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 915,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.32
+  },
+  {
+   "cls": 16785266678597041199,
+   "centre": 586,
+   "tiles": 113,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 1036,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.5
+  },
+  {
+   "cls": 6021183954937995067,
+   "centre": 587,
+   "tiles": 115,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 872,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.3
+  },
+  {
+   "cls": 6109789771172756942,
+   "centre": 588,
+   "tiles": 116,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 1188,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.77
+  },
+  {
+   "cls": 4326193324410291195,
+   "centre": 589,
+   "tiles": 114,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 1626,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 2.7
+  },
+  {
+   "cls": 5164947486966554659,
+   "centre": 590,
+   "tiles": 115,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 805,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.24
+  },
+  {
+   "cls": 8799502550855807445,
+   "centre": 591,
+   "tiles": 113,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 982,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.35
+  },
+  {
+   "cls": 7329219109508127650,
+   "centre": 592,
+   "tiles": 110,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 977,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 1.39
+  },
+  {
+   "cls": 18167675031268809317,
+   "centre": 594,
+   "tiles": 110,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 932,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 1.46
+  },
+  {
+   "cls": 9552512266437420278,
+   "centre": 593,
+   "tiles": 113,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 1026,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.56
+  },
+  {
+   "cls": 8832620712406343827,
+   "centre": 936,
+   "tiles": 113,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 717,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.15
+  },
+  {
+   "cls": 9670246534411086560,
+   "centre": 600,
+   "tiles": 111,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 911,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.42
+  },
+  {
+   "cls": 8110390338614792825,
+   "centre": 937,
+   "tiles": 112,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 672,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.01
+  },
+  {
+   "cls": 14856139964775308381,
+   "centre": 3400,
+   "tiles": 114,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 829,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.32
+  },
+  {
+   "cls": 9336263043892350438,
+   "centre": 3401,
+   "tiles": 115,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 880,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.21
+  },
+  {
+   "cls": 3102015401640506617,
+   "centre": 3402,
+   "tiles": 114,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 891,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.28
+  },
+  {
+   "cls": 9625397294376943597,
+   "centre": 3403,
+   "tiles": 114,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 834,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.28
+  },
+  {
+   "cls": 12332444880478733813,
+   "centre": 3404,
+   "tiles": 113,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 830,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.15
+  },
+  {
+   "cls": 2567216781120762732,
+   "centre": 3405,
+   "tiles": 112,
+   "occurrences": 54,
+   "fillings": 1,
+   "nodes": 804,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.17
+  },
+  {
+   "cls": 6365218866919161297,
+   "centre": 3996,
+   "tiles": 115,
+   "occurrences": 51,
+   "fillings": 1,
+   "nodes": 1229,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.81
+  },
+  {
+   "cls": 3566119893499559484,
+   "centre": 3997,
+   "tiles": 115,
+   "occurrences": 51,
+   "fillings": 1,
+   "nodes": 1354,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 2.26
+  },
+  {
+   "cls": 3490679188686236855,
+   "centre": 4107,
+   "tiles": 113,
+   "occurrences": 51,
+   "fillings": 1,
+   "nodes": 827,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.2
+  },
+  {
+   "cls": 15861834239984232516,
+   "centre": 4109,
+   "tiles": 112,
+   "occurrences": 51,
+   "fillings": 1,
+   "nodes": 1010,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.43
+  },
+  {
+   "cls": 8523925330259563961,
+   "centre": 4110,
+   "tiles": 115,
+   "occurrences": 51,
+   "fillings": 1,
+   "nodes": 1008,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.53
+  },
+  {
+   "cls": 10359404371361169608,
+   "centre": 4112,
+   "tiles": 115,
+   "occurrences": 51,
+   "fillings": 1,
+   "nodes": 820,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.17
+  },
+  {
+   "cls": 9111901740853345264,
+   "centre": 4111,
+   "tiles": 117,
+   "occurrences": 51,
+   "fillings": 1,
+   "nodes": 1170,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 1.67
+  },
+  {
+   "cls": 7709145045770279835,
+   "centre": 4113,
+   "tiles": 115,
+   "occurrences": 51,
+   "fillings": 1,
+   "nodes": 1006,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.51
+  },
+  {
+   "cls": 15721949880077965249,
+   "centre": 4114,
+   "tiles": 114,
+   "occurrences": 51,
+   "fillings": 1,
+   "nodes": 1302,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.81
+  },
+  {
+   "cls": 17968086119562194778,
+   "centre": 4115,
+   "tiles": 112,
+   "occurrences": 51,
+   "fillings": 1,
+   "nodes": 885,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.31
+  },
+  {
+   "cls": 4837904136000013168,
+   "centre": 4116,
+   "tiles": 113,
+   "occurrences": 51,
+   "fillings": 1,
+   "nodes": 993,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.42
+  },
+  {
+   "cls": 15112994748978179106,
+   "centre": 4117,
+   "tiles": 111,
+   "occurrences": 51,
+   "fillings": 1,
+   "nodes": 771,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.13
+  },
+  {
+   "cls": 2966657087487581987,
+   "centre": 497,
+   "tiles": 114,
+   "occurrences": 49,
+   "fillings": 1,
+   "nodes": 981,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.52
+  },
+  {
+   "cls": 9847040670084142564,
+   "centre": 498,
+   "tiles": 117,
+   "occurrences": 49,
+   "fillings": 1,
+   "nodes": 969,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 1.6
+  },
+  {
+   "cls": 7669075615844379096,
+   "centre": 499,
+   "tiles": 118,
+   "occurrences": 49,
+   "fillings": 1,
+   "nodes": 1160,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 1.84
+  },
+  {
+   "cls": 6486999547321556741,
+   "centre": 500,
+   "tiles": 115,
+   "occurrences": 49,
+   "fillings": 1,
+   "nodes": 940,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.61
+  },
+  {
+   "cls": 9725652669582499101,
+   "centre": 501,
+   "tiles": 117,
+   "occurrences": 49,
+   "fillings": 1,
+   "nodes": 870,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 1.35
+  },
+  {
+   "cls": 5672339885091757260,
+   "centre": 502,
+   "tiles": 114,
+   "occurrences": 49,
+   "fillings": 1,
+   "nodes": 971,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.62
+  },
+  {
+   "cls": 9262779688435245722,
+   "centre": 503,
+   "tiles": 114,
+   "occurrences": 49,
+   "fillings": 1,
+   "nodes": 714,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.15
+  },
+  {
+   "cls": 13149320296230151180,
+   "centre": 505,
+   "tiles": 115,
+   "occurrences": 49,
+   "fillings": 1,
+   "nodes": 627,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.08
+  },
+  {
+   "cls": 10299589413297138750,
+   "centre": 605,
+   "tiles": 115,
+   "occurrences": 46,
+   "fillings": 1,
+   "nodes": 1139,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.81
+  },
+  {
+   "cls": 18142788248529865175,
+   "centre": 606,
+   "tiles": 114,
+   "occurrences": 46,
+   "fillings": 1,
+   "nodes": 925,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.5
+  },
+  {
+   "cls": 11841870428523880998,
+   "centre": 607,
+   "tiles": 114,
+   "occurrences": 46,
+   "fillings": 1,
+   "nodes": 932,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.5
+  },
+  {
+   "cls": 11800885617274996697,
+   "centre": 608,
+   "tiles": 115,
+   "occurrences": 46,
+   "fillings": 1,
+   "nodes": 1131,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.73
+  },
+  {
+   "cls": 18058822083691206937,
+   "centre": 610,
+   "tiles": 114,
+   "occurrences": 46,
+   "fillings": 1,
+   "nodes": 861,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.3
+  },
+  {
+   "cls": 16948576283005109716,
+   "centre": 609,
+   "tiles": 114,
+   "occurrences": 46,
+   "fillings": 1,
+   "nodes": 1146,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.8
+  },
+  {
+   "cls": 2562621674943396562,
+   "centre": 916,
+   "tiles": 116,
+   "occurrences": 46,
+   "fillings": 1,
+   "nodes": 843,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.14
+  },
+  {
+   "cls": 17477033374792528322,
+   "centre": 917,
+   "tiles": 115,
+   "occurrences": 46,
+   "fillings": 1,
+   "nodes": 813,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.3
+  },
+  {
+   "cls": 12413438207977545920,
+   "centre": 427,
+   "tiles": 116,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 886,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.44
+  },
+  {
+   "cls": 1890224936193665093,
+   "centre": 646,
+   "tiles": 111,
+   "occurrences": 42,
+   "fillings": 1,
+   "nodes": 1135,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.8
+  },
+  {
+   "cls": 15962401995541511285,
+   "centre": 429,
+   "tiles": 113,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 809,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.29
+  },
+  {
+   "cls": 2950230659994493990,
+   "centre": 428,
+   "tiles": 116,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 897,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.44
+  },
+  {
+   "cls": 18284842050369742523,
+   "centre": 431,
+   "tiles": 113,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 875,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.42
+  },
+  {
+   "cls": 14529677410657109369,
+   "centre": 430,
+   "tiles": 116,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 922,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.57
+  },
+  {
+   "cls": 16375580967082597010,
+   "centre": 432,
+   "tiles": 113,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 852,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.37
+  },
+  {
+   "cls": 580188323735494170,
+   "centre": 614,
+   "tiles": 113,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 908,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.45
+  },
+  {
+   "cls": 14520368290324639141,
+   "centre": 615,
+   "tiles": 117,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 976,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 1.56
+  },
+  {
+   "cls": 16764086977742145397,
+   "centre": 616,
+   "tiles": 114,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 881,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.4
+  },
+  {
+   "cls": 7043057830958647122,
+   "centre": 682,
+   "tiles": 114,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 857,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.3
+  },
+  {
+   "cls": 5750807676678001524,
+   "centre": 685,
+   "tiles": 117,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 1221,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 2.16
+  },
+  {
+   "cls": 17530817960439762573,
+   "centre": 686,
+   "tiles": 116,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 964,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.7
+  },
+  {
+   "cls": 2167146703786009410,
+   "centre": 687,
+   "tiles": 117,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 926,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 1.38
+  },
+  {
+   "cls": 3505454631743252485,
+   "centre": 688,
+   "tiles": 118,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 1197,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 1.8
+  },
+  {
+   "cls": 6028265787470703022,
+   "centre": 689,
+   "tiles": 116,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 1331,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 2.06
+  },
+  {
+   "cls": 108240872626258773,
+   "centre": 690,
+   "tiles": 114,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 959,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.41
+  },
+  {
+   "cls": 2821001817108329120,
+   "centre": 1072,
+   "tiles": 114,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 930,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.43
+  },
+  {
+   "cls": 2739789286102401960,
+   "centre": 1083,
+   "tiles": 112,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 971,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.43
+  },
+  {
+   "cls": 1594683670430025764,
+   "centre": 1084,
+   "tiles": 113,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 1023,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.7
+  },
+  {
+   "cls": 15224924599999338096,
+   "centre": 1085,
+   "tiles": 114,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 1001,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.43
+  },
+  {
+   "cls": 10247247632163792568,
+   "centre": 1086,
+   "tiles": 115,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 1100,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.64
+  },
+  {
+   "cls": 3035158314156183017,
+   "centre": 1087,
+   "tiles": 116,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 1107,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.85
+  },
+  {
+   "cls": 919060755960347879,
+   "centre": 1089,
+   "tiles": 114,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 940,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.46
+  },
+  {
+   "cls": 15307545741601799503,
+   "centre": 1088,
+   "tiles": 118,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 1211,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 2.0
+  },
+  {
+   "cls": 9464860528881752139,
+   "centre": 1092,
+   "tiles": 114,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 1003,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.43
+  },
+  {
+   "cls": 14067412101202533783,
+   "centre": 1091,
+   "tiles": 113,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 958,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.56
+  },
+  {
+   "cls": 10850201028745196820,
+   "centre": 1093,
+   "tiles": 115,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 882,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.34
+  },
+  {
+   "cls": 14513113055554141222,
+   "centre": 1094,
+   "tiles": 115,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 866,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.35
+  },
+  {
+   "cls": 15831491205209271274,
+   "centre": 1095,
+   "tiles": 114,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 852,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.26
+  },
+  {
+   "cls": 12559411270354039412,
+   "centre": 1096,
+   "tiles": 116,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 831,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.34
+  },
+  {
+   "cls": 1199969633666301817,
+   "centre": 1097,
+   "tiles": 116,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 937,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.43
+  },
+  {
+   "cls": 12816596554291196316,
+   "centre": 1098,
+   "tiles": 116,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 877,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.41
+  },
+  {
+   "cls": 16219212747249961190,
+   "centre": 1099,
+   "tiles": 114,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 877,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.39
+  },
+  {
+   "cls": 1765854141006040171,
+   "centre": 1100,
+   "tiles": 115,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 876,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.3
+  },
+  {
+   "cls": 7254677230468670502,
+   "centre": 1101,
+   "tiles": 111,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 875,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.39
+  },
+  {
+   "cls": 18188730936504966307,
+   "centre": 1102,
+   "tiles": 113,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 901,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.37
+  },
+  {
+   "cls": 1248937149433862681,
+   "centre": 1103,
+   "tiles": 114,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 893,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.43
+  },
+  {
+   "cls": 11671685696567966506,
+   "centre": 1104,
+   "tiles": 114,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 946,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.46
+  },
+  {
+   "cls": 9347138419006855588,
+   "centre": 1105,
+   "tiles": 116,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 833,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.44
+  },
+  {
+   "cls": 13366513098414777226,
+   "centre": 1106,
+   "tiles": 116,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 913,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.43
+  },
+  {
+   "cls": 2897733385143310575,
+   "centre": 1107,
+   "tiles": 113,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 935,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.42
+  },
+  {
+   "cls": 5383553475978795275,
+   "centre": 1109,
+   "tiles": 112,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 829,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.4
+  },
+  {
+   "cls": 3754076445943931846,
+   "centre": 2690,
+   "tiles": 114,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 901,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.39
+  },
+  {
+   "cls": 14991786958968621669,
+   "centre": 2691,
+   "tiles": 116,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 1153,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.79
+  },
+  {
+   "cls": 2698362854473873175,
+   "centre": 2692,
+   "tiles": 115,
+   "occurrences": 41,
+   "fillings": 1,
+   "nodes": 939,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.48
+  },
+  {
+   "cls": 78087809537211714,
+   "centre": 2662,
+   "tiles": 114,
+   "occurrences": 33,
+   "fillings": 1,
+   "nodes": 1018,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.53
+  },
+  {
+   "cls": 13902929180151689218,
+   "centre": 2669,
+   "tiles": 114,
+   "occurrences": 33,
+   "fillings": 1,
+   "nodes": 790,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.13
+  },
+  {
+   "cls": 16285495166270555253,
+   "centre": 2670,
+   "tiles": 114,
+   "occurrences": 33,
+   "fillings": 1,
+   "nodes": 939,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.42
+  },
+  {
+   "cls": 7981832386334650172,
+   "centre": 2671,
+   "tiles": 110,
+   "occurrences": 33,
+   "fillings": 1,
+   "nodes": 815,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 1.37
+  },
+  {
+   "cls": 8265229556920933378,
+   "centre": 2672,
+   "tiles": 112,
+   "occurrences": 33,
+   "fillings": 1,
+   "nodes": 658,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.14
+  },
+  {
+   "cls": 10785481924734904202,
+   "centre": 2673,
+   "tiles": 114,
+   "occurrences": 33,
+   "fillings": 1,
+   "nodes": 689,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.08
+  },
+  {
+   "cls": 14397731943236555106,
+   "centre": 2674,
+   "tiles": 113,
+   "occurrences": 33,
+   "fillings": 1,
+   "nodes": 680,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.05
+  },
+  {
+   "cls": 9768554734346679625,
+   "centre": 2675,
+   "tiles": 113,
+   "occurrences": 33,
+   "fillings": 1,
+   "nodes": 633,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.11
+  },
+  {
+   "cls": 10400310530197485756,
+   "centre": 2676,
+   "tiles": 112,
+   "occurrences": 33,
+   "fillings": 1,
+   "nodes": 619,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.02
+  },
+  {
+   "cls": 8541191436824191015,
+   "centre": 2677,
+   "tiles": 111,
+   "occurrences": 33,
+   "fillings": 1,
+   "nodes": 638,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 0.93
+  },
+  {
+   "cls": 15544280946273845220,
+   "centre": 2679,
+   "tiles": 111,
+   "occurrences": 33,
+   "fillings": 1,
+   "nodes": 822,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.37
+  },
+  {
+   "cls": 7647706143780276667,
+   "centre": 2686,
+   "tiles": 113,
+   "occurrences": 33,
+   "fillings": 1,
+   "nodes": 629,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.04
+  },
+  {
+   "cls": 10009360063653390843,
+   "centre": 454,
+   "tiles": 112,
+   "occurrences": 30,
+   "fillings": 1,
+   "nodes": 683,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.06
+  },
+  {
+   "cls": 13220038615138255125,
+   "centre": 455,
+   "tiles": 113,
+   "occurrences": 30,
+   "fillings": 1,
+   "nodes": 616,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.06
+  },
+  {
+   "cls": 13670987725934481902,
+   "centre": 456,
+   "tiles": 111,
+   "occurrences": 30,
+   "fillings": 1,
+   "nodes": 563,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 0.84
+  },
+  {
+   "cls": 16448722124241126667,
+   "centre": 4142,
+   "tiles": 113,
+   "occurrences": 30,
+   "fillings": 1,
+   "nodes": 870,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.35
+  },
+  {
+   "cls": 5312944638047878428,
+   "centre": 4162,
+   "tiles": 110,
+   "occurrences": 30,
+   "fillings": 1,
+   "nodes": 908,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 1.35
+  },
+  {
+   "cls": 5856642301508461754,
+   "centre": 4163,
+   "tiles": 110,
+   "occurrences": 30,
+   "fillings": 1,
+   "nodes": 890,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 1.51
+  },
+  {
+   "cls": 876993554999376378,
+   "centre": 4164,
+   "tiles": 109,
+   "occurrences": 30,
+   "fillings": 1,
+   "nodes": 911,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.3
+  },
+  {
+   "cls": 10893279572480920452,
+   "centre": 4165,
+   "tiles": 110,
+   "occurrences": 30,
+   "fillings": 1,
+   "nodes": 777,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 1.24
+  },
+  {
+   "cls": 11631829111181519071,
+   "centre": 4166,
+   "tiles": 113,
+   "occurrences": 30,
+   "fillings": 1,
+   "nodes": 922,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.48
+  },
+  {
+   "cls": 11270338962391525098,
+   "centre": 4168,
+   "tiles": 112,
+   "occurrences": 30,
+   "fillings": 1,
+   "nodes": 887,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.33
+  },
+  {
+   "cls": 16368590485497415794,
+   "centre": 4170,
+   "tiles": 109,
+   "occurrences": 30,
+   "fillings": 1,
+   "nodes": 858,
+   "undecided": false,
+   "tiles_in_filling": [
+    109
+   ],
+   "seconds": 1.43
+  },
+  {
+   "cls": 9538360356076669146,
+   "centre": 4178,
+   "tiles": 114,
+   "occurrences": 30,
+   "fillings": 1,
+   "nodes": 922,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.55
+  },
+  {
+   "cls": 13435415630170879689,
+   "centre": 4169,
+   "tiles": 114,
+   "occurrences": 29,
+   "fillings": 1,
+   "nodes": 973,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.55
+  },
+  {
+   "cls": 526610133906469867,
+   "centre": 4187,
+   "tiles": 115,
+   "occurrences": 29,
+   "fillings": 1,
+   "nodes": 956,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.41
+  },
+  {
+   "cls": 10247241560893655677,
+   "centre": 4190,
+   "tiles": 114,
+   "occurrences": 29,
+   "fillings": 1,
+   "nodes": 921,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.36
+  },
+  {
+   "cls": 6566656994522800607,
+   "centre": 4189,
+   "tiles": 117,
+   "occurrences": 29,
+   "fillings": 1,
+   "nodes": 1274,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 2.17
+  },
+  {
+   "cls": 4467913826556887468,
+   "centre": 4191,
+   "tiles": 113,
+   "occurrences": 29,
+   "fillings": 1,
+   "nodes": 944,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.51
+  },
+  {
+   "cls": 14295480998675198025,
+   "centre": 4192,
+   "tiles": 114,
+   "occurrences": 29,
+   "fillings": 1,
+   "nodes": 997,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.57
+  },
+  {
+   "cls": 10815916331149767361,
+   "centre": 4194,
+   "tiles": 116,
+   "occurrences": 29,
+   "fillings": 1,
+   "nodes": 1319,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 2.27
+  },
+  {
+   "cls": 8670244046748345085,
+   "centre": 4195,
+   "tiles": 115,
+   "occurrences": 29,
+   "fillings": 1,
+   "nodes": 1480,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 2.27
+  },
+  {
+   "cls": 9390040438997133361,
+   "centre": 4196,
+   "tiles": 120,
+   "occurrences": 29,
+   "fillings": 1,
+   "nodes": 1574,
+   "undecided": false,
+   "tiles_in_filling": [
+    120
+   ],
+   "seconds": 2.37
+  },
+  {
+   "cls": 5819414697456994446,
+   "centre": 4349,
+   "tiles": 117,
+   "occurrences": 29,
+   "fillings": 1,
+   "nodes": 2008,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 3.18
+  },
+  {
+   "cls": 14847737539288837219,
+   "centre": 4350,
+   "tiles": 117,
+   "occurrences": 29,
+   "fillings": 1,
+   "nodes": 2023,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 2.97
+  },
+  {
+   "cls": 17800238966988944772,
+   "centre": 4351,
+   "tiles": 118,
+   "occurrences": 29,
+   "fillings": 1,
+   "nodes": 2162,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 3.38
+  },
+  {
+   "cls": 15767990969856007133,
+   "centre": 4352,
+   "tiles": 117,
+   "occurrences": 29,
+   "fillings": 1,
+   "nodes": 1460,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 2.61
+  },
+  {
+   "cls": 15059628728758793003,
+   "centre": 4353,
+   "tiles": 116,
+   "occurrences": 29,
+   "fillings": 1,
+   "nodes": 1616,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 2.87
+  },
+  {
+   "cls": 8712446607445637121,
+   "centre": 4354,
+   "tiles": 114,
+   "occurrences": 29,
+   "fillings": 1,
+   "nodes": 1473,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 2.61
+  },
+  {
+   "cls": 17176027692541936361,
+   "centre": 3984,
+   "tiles": 115,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 1159,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.89
+  },
+  {
+   "cls": 10190932169844041553,
+   "centre": 3985,
+   "tiles": 118,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 993,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 1.54
+  },
+  {
+   "cls": 7739471686605187346,
+   "centre": 3986,
+   "tiles": 116,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 932,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.5
+  },
+  {
+   "cls": 11759765104651741363,
+   "centre": 3987,
+   "tiles": 115,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 919,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.41
+  },
+  {
+   "cls": 11084512649709124734,
+   "centre": 3988,
+   "tiles": 120,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 970,
+   "undecided": false,
+   "tiles_in_filling": [
+    120
+   ],
+   "seconds": 1.63
+  },
+  {
+   "cls": 11289295382133224013,
+   "centre": 3989,
+   "tiles": 117,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 1070,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 1.83
+  },
+  {
+   "cls": 11720254264456202000,
+   "centre": 3990,
+   "tiles": 117,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 1145,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 1.7
+  },
+  {
+   "cls": 6954112743653539133,
+   "centre": 3991,
+   "tiles": 115,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 1479,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 2.43
+  },
+  {
+   "cls": 8639960205440195738,
+   "centre": 3992,
+   "tiles": 115,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 1328,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 2.18
+  },
+  {
+   "cls": 17092819613031533312,
+   "centre": 3999,
+   "tiles": 113,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 990,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.47
+  },
+  {
+   "cls": 3498895228630719202,
+   "centre": 3998,
+   "tiles": 116,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 1517,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 2.38
+  },
+  {
+   "cls": 10842292727333826340,
+   "centre": 4027,
+   "tiles": 113,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 1046,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.68
+  },
+  {
+   "cls": 11112635514426379138,
+   "centre": 4047,
+   "tiles": 115,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 857,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.68
+  },
+  {
+   "cls": 5072004723976980793,
+   "centre": 4048,
+   "tiles": 113,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 975,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.75
+  },
+  {
+   "cls": 4333667157737267615,
+   "centre": 4049,
+   "tiles": 112,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 1042,
+   "undecided": false,
+   "tiles_in_filling": [
+    112
+   ],
+   "seconds": 1.83
+  },
+  {
+   "cls": 15715037191681990644,
+   "centre": 4050,
+   "tiles": 114,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 995,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.57
+  },
+  {
+   "cls": 12145514233126620377,
+   "centre": 4051,
+   "tiles": 114,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 1506,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 2.66
+  },
+  {
+   "cls": 1866522535993422688,
+   "centre": 4052,
+   "tiles": 116,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 968,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.38
+  },
+  {
+   "cls": 15295224558318696199,
+   "centre": 4124,
+   "tiles": 110,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 842,
+   "undecided": false,
+   "tiles_in_filling": [
+    110
+   ],
+   "seconds": 1.21
+  },
+  {
+   "cls": 1565258574843418870,
+   "centre": 4054,
+   "tiles": 120,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 1034,
+   "undecided": false,
+   "tiles_in_filling": [
+    120
+   ],
+   "seconds": 1.59
+  },
+  {
+   "cls": 18318365400063325284,
+   "centre": 4171,
+   "tiles": 114,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 1047,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.81
+  },
+  {
+   "cls": 7551170757846190420,
+   "centre": 4172,
+   "tiles": 116,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 989,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.61
+  },
+  {
+   "cls": 7958430364433841534,
+   "centre": 4173,
+   "tiles": 118,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 1001,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 1.41
+  },
+  {
+   "cls": 8490230840966829408,
+   "centre": 4174,
+   "tiles": 115,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 1031,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.64
+  },
+  {
+   "cls": 13013967079508857217,
+   "centre": 4175,
+   "tiles": 116,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 992,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.46
+  },
+  {
+   "cls": 5802571426792070407,
+   "centre": 4177,
+   "tiles": 114,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 923,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.43
+  },
+  {
+   "cls": 9691157457663893666,
+   "centre": 4179,
+   "tiles": 115,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 843,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.4
+  },
+  {
+   "cls": 1400977240887990974,
+   "centre": 4181,
+   "tiles": 117,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 847,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 1.36
+  },
+  {
+   "cls": 4190527827631193491,
+   "centre": 4182,
+   "tiles": 118,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 1073,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 1.7
+  },
+  {
+   "cls": 9623856950024589445,
+   "centre": 4183,
+   "tiles": 117,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 1195,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 1.95
+  },
+  {
+   "cls": 5080608627593722667,
+   "centre": 4184,
+   "tiles": 117,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 861,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 1.38
+  },
+  {
+   "cls": 7725579117326355889,
+   "centre": 4185,
+   "tiles": 116,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 865,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.22
+  },
+  {
+   "cls": 7900146069775736079,
+   "centre": 4186,
+   "tiles": 115,
+   "occurrences": 27,
+   "fillings": 1,
+   "nodes": 935,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.52
+  },
+  {
+   "cls": 7942650433089253794,
+   "centre": 4038,
+   "tiles": 113,
+   "occurrences": 26,
+   "fillings": 1,
+   "nodes": 1020,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.72
+  },
+  {
+   "cls": 1757216055258792671,
+   "centre": 4045,
+   "tiles": 115,
+   "occurrences": 26,
+   "fillings": 1,
+   "nodes": 898,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.51
+  },
+  {
+   "cls": 4729729915093231104,
+   "centre": 4046,
+   "tiles": 113,
+   "occurrences": 26,
+   "fillings": 1,
+   "nodes": 941,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.51
+  },
+  {
+   "cls": 10831219711039624067,
+   "centre": 4180,
+   "tiles": 113,
+   "occurrences": 26,
+   "fillings": 1,
+   "nodes": 863,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.35
+  },
+  {
+   "cls": 10455017576431673243,
+   "centre": 4053,
+   "tiles": 115,
+   "occurrences": 26,
+   "fillings": 1,
+   "nodes": 1277,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.98
+  },
+  {
+   "cls": 1593555045052827031,
+   "centre": 4188,
+   "tiles": 114,
+   "occurrences": 26,
+   "fillings": 1,
+   "nodes": 946,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.51
+  },
+  {
+   "cls": 16955053048633142992,
+   "centre": 4348,
+   "tiles": 113,
+   "occurrences": 26,
+   "fillings": 1,
+   "nodes": 1871,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 2.82
+  },
+  {
+   "cls": 9798407541584533280,
+   "centre": 4356,
+   "tiles": 114,
+   "occurrences": 26,
+   "fillings": 1,
+   "nodes": 1495,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 2.34
+  },
+  {
+   "cls": 10173453920353473893,
+   "centre": 4357,
+   "tiles": 118,
+   "occurrences": 26,
+   "fillings": 1,
+   "nodes": 1417,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 2.23
+  },
+  {
+   "cls": 9433832137235371189,
+   "centre": 4358,
+   "tiles": 124,
+   "occurrences": 26,
+   "fillings": 1,
+   "nodes": 1526,
+   "undecided": false,
+   "tiles_in_filling": [
+    124
+   ],
+   "seconds": 2.37
+  },
+  {
+   "cls": 9499803765660597252,
+   "centre": 4359,
+   "tiles": 118,
+   "occurrences": 26,
+   "fillings": 1,
+   "nodes": 1386,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 2.12
+  },
+  {
+   "cls": 10920846651319365276,
+   "centre": 4360,
+   "tiles": 118,
+   "occurrences": 26,
+   "fillings": 1,
+   "nodes": 1378,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 2.34
+  },
+  {
+   "cls": 9932318622345626913,
+   "centre": 4361,
+   "tiles": 124,
+   "occurrences": 26,
+   "fillings": 1,
+   "nodes": 1602,
+   "undecided": false,
+   "tiles_in_filling": [
+    124
+   ],
+   "seconds": 2.62
+  },
+  {
+   "cls": 17144964067980777455,
+   "centre": 4362,
+   "tiles": 118,
+   "occurrences": 26,
+   "fillings": 1,
+   "nodes": 1604,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 2.44
+  },
+  {
+   "cls": 7884256281321712011,
+   "centre": 4363,
+   "tiles": 118,
+   "occurrences": 26,
+   "fillings": 1,
+   "nodes": 1500,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 2.72
+  },
+  {
+   "cls": 7137781417526951349,
+   "centre": 4364,
+   "tiles": 115,
+   "occurrences": 26,
+   "fillings": 1,
+   "nodes": 1052,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.67
+  },
+  {
+   "cls": 14196871105874153114,
+   "centre": 3914,
+   "tiles": 117,
+   "occurrences": 25,
+   "fillings": 1,
+   "nodes": 889,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 1.55
+  },
+  {
+   "cls": 10453494193606524822,
+   "centre": 4365,
+   "tiles": 118,
+   "occurrences": 26,
+   "fillings": 1,
+   "nodes": 1375,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 2.24
+  },
+  {
+   "cls": 8150498673732028919,
+   "centre": 3917,
+   "tiles": 118,
+   "occurrences": 25,
+   "fillings": 1,
+   "nodes": 922,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 1.76
+  },
+  {
+   "cls": 3975026555236104393,
+   "centre": 3918,
+   "tiles": 114,
+   "occurrences": 25,
+   "fillings": 1,
+   "nodes": 1012,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.59
+  },
+  {
+   "cls": 1470874491285768416,
+   "centre": 3919,
+   "tiles": 113,
+   "occurrences": 25,
+   "fillings": 1,
+   "nodes": 834,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.35
+  },
+  {
+   "cls": 15107532885629679117,
+   "centre": 4126,
+   "tiles": 116,
+   "occurrences": 24,
+   "fillings": 1,
+   "nodes": 927,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.33
+  },
+  {
+   "cls": 1503122946892013819,
+   "centre": 4127,
+   "tiles": 122,
+   "occurrences": 24,
+   "fillings": 1,
+   "nodes": 848,
+   "undecided": false,
+   "tiles_in_filling": [
+    122
+   ],
+   "seconds": 1.49
+  },
+  {
+   "cls": 9115901519142566844,
+   "centre": 4128,
+   "tiles": 117,
+   "occurrences": 24,
+   "fillings": 1,
+   "nodes": 728,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 1.09
+  },
+  {
+   "cls": 17840423288948954196,
+   "centre": 4130,
+   "tiles": 122,
+   "occurrences": 24,
+   "fillings": 1,
+   "nodes": 872,
+   "undecided": false,
+   "tiles_in_filling": [
+    122
+   ],
+   "seconds": 1.47
+  },
+  {
+   "cls": 5948259005808227015,
+   "centre": 4129,
+   "tiles": 117,
+   "occurrences": 24,
+   "fillings": 1,
+   "nodes": 1090,
+   "undecided": false,
+   "tiles_in_filling": [
+    117
+   ],
+   "seconds": 1.91
+  },
+  {
+   "cls": 14493570417296226180,
+   "centre": 4132,
+   "tiles": 118,
+   "occurrences": 24,
+   "fillings": 1,
+   "nodes": 1609,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 2.48
+  },
+  {
+   "cls": 14551616399125419723,
+   "centre": 4131,
+   "tiles": 118,
+   "occurrences": 24,
+   "fillings": 1,
+   "nodes": 1974,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 3.06
+  },
+  {
+   "cls": 8287083102581905781,
+   "centre": 4133,
+   "tiles": 115,
+   "occurrences": 24,
+   "fillings": 1,
+   "nodes": 830,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.24
+  },
+  {
+   "cls": 3727276093157029381,
+   "centre": 4134,
+   "tiles": 118,
+   "occurrences": 24,
+   "fillings": 1,
+   "nodes": 923,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 1.47
+  },
+  {
+   "cls": 4842900597731129968,
+   "centre": 4140,
+   "tiles": 116,
+   "occurrences": 24,
+   "fillings": 1,
+   "nodes": 692,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.16
+  },
+  {
+   "cls": 12215359203100188871,
+   "centre": 4141,
+   "tiles": 113,
+   "occurrences": 24,
+   "fillings": 1,
+   "nodes": 694,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 1.05
+  },
+  {
+   "cls": 337095676241092372,
+   "centre": 4337,
+   "tiles": 111,
+   "occurrences": 24,
+   "fillings": 1,
+   "nodes": 680,
+   "undecided": false,
+   "tiles_in_filling": [
+    111
+   ],
+   "seconds": 1.1
+  },
+  {
+   "cls": 2765770066778838998,
+   "centre": 4193,
+   "tiles": 113,
+   "occurrences": 24,
+   "fillings": 1,
+   "nodes": 1312,
+   "undecided": false,
+   "tiles_in_filling": [
+    113
+   ],
+   "seconds": 2.15
+  },
+  {
+   "cls": 9640320554395983483,
+   "centre": 2663,
+   "tiles": 118,
+   "occurrences": 8,
+   "fillings": 1,
+   "nodes": 986,
+   "undecided": false,
+   "tiles_in_filling": [
+    118
+   ],
+   "seconds": 1.51
+  },
+  {
+   "cls": 11369146879580911299,
+   "centre": 2664,
+   "tiles": 115,
+   "occurrences": 8,
+   "fillings": 1,
+   "nodes": 953,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.54
+  },
+  {
+   "cls": 7770144327966351087,
+   "centre": 2665,
+   "tiles": 115,
+   "occurrences": 8,
+   "fillings": 1,
+   "nodes": 883,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.54
+  },
+  {
+   "cls": 10325986996630082019,
+   "centre": 2666,
+   "tiles": 119,
+   "occurrences": 8,
+   "fillings": 1,
+   "nodes": 948,
+   "undecided": false,
+   "tiles_in_filling": [
+    119
+   ],
+   "seconds": 1.52
+  },
+  {
+   "cls": 8591157957762480296,
+   "centre": 2667,
+   "tiles": 115,
+   "occurrences": 8,
+   "fillings": 1,
+   "nodes": 889,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.5
+  },
+  {
+   "cls": 16962479793856212621,
+   "centre": 2668,
+   "tiles": 115,
+   "occurrences": 8,
+   "fillings": 1,
+   "nodes": 888,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.4
+  },
+  {
+   "cls": 5949758977507128200,
+   "centre": 4101,
+   "tiles": 115,
+   "occurrences": 8,
+   "fillings": 1,
+   "nodes": 826,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.62
+  },
+  {
+   "cls": 4802498115721296093,
+   "centre": 4102,
+   "tiles": 116,
+   "occurrences": 8,
+   "fillings": 1,
+   "nodes": 763,
+   "undecided": false,
+   "tiles_in_filling": [
+    116
+   ],
+   "seconds": 1.2
+  },
+  {
+   "cls": 851836601052909417,
+   "centre": 4103,
+   "tiles": 114,
+   "occurrences": 8,
+   "fillings": 1,
+   "nodes": 677,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.05
+  },
+  {
+   "cls": 13376039613125466879,
+   "centre": 4104,
+   "tiles": 114,
+   "occurrences": 8,
+   "fillings": 1,
+   "nodes": 759,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.11
+  },
+  {
+   "cls": 199145539151210967,
+   "centre": 4105,
+   "tiles": 114,
+   "occurrences": 8,
+   "fillings": 1,
+   "nodes": 789,
+   "undecided": false,
+   "tiles_in_filling": [
+    114
+   ],
+   "seconds": 1.23
+  },
+  {
+   "cls": 7403983207131132627,
+   "centre": 4106,
+   "tiles": 115,
+   "occurrences": 8,
+   "fillings": 1,
+   "nodes": 796,
+   "undecided": false,
+   "tiles_in_filling": [
+    115
+   ],
+   "seconds": 1.36
+  }
+ ]
+}
