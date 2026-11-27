@@ -2,6 +2,26 @@
 
 **A Coupled Multi-Scale Quantum Simulator Built on Chiral Aperiodic Einstein Monotiles**
 
+---
+
+## Latest result: phason flips of the Spectre tiling are ribbons, and pair sites follow the window
+
+Stage 3 asks what a flip of the tiling does to the bump-and-dent pairs that carry the qubits. At a generic phase of the cut-and-project model (radius 60, steps 0.015 to 0.06, window membership tested exactly in `exact_window.py`) there are no small local flips and no closed clusters: every flip is a **ribbon** of tiles that crosses the whole region. Details and numbers are in `ROADMAP_QUANTUM_GRAVITY.md` (Stage 3); the code is `generic_phase.py`, the figures come from `make_ribbon_figures.py`.
+
+![A silent and an active ribbon](figures/ribbon_1_silent_vs_active.png)
+
+**Figure 1, a silent and an active ribbon.** Each panel straightens one ribbon along its principal axis and draws the removed tiles on the tiles around them. Blue removed tiles have no pair-site leaf; orange ones do; pale orange and grey tiles are neighbours with and without a pair site; black dots mark pairs destroyed by the flip. Panel a is a 60-tile ribbon with no pair site on any of its tiles, so the flip changes no pair. Panel b is an 85-tile ribbon with pair sites all along it, where the flip destroys and creates about 0.24 pairs per unit length each (net zero on average).
+
+![Pair status against window position](figures/ribbon_2_window_position.png)
+
+**Figure 2, why a ribbon is silent or active.** Panel a is the O window (grey) with the window point of every removed O tile; orange points are tiles at a pair site and blue points are tiles without one. Pair sites lie on the lower edge of the window. Panel b shows the same in one coordinate: a cut at `z_y` = 0 sorts 91% of the 2462 removed O tiles correctly. Panel c gives the share of each ribbon's O tiles that lie below that cut: about 0.07 for the 11 silent ribbons and 0.33 for the 24 active ones, so a ribbon is silent when the tiles it moves sit on the upper boundary of the window.
+
+![Ribbon statistics](figures/ribbon_3_statistics.png)
+
+**Figure 3, how long the ribbons are and how pair sites are spaced.** Panel a plots tiles against extent for ribbons found in a region of radius 60 and one of radius 100: the longer region gives longer ribbons (up to 362 tiles), with about 0.95 tiles per unit of extent (dotted line). Panel b shows where the ribbon ends lie: always at the edge of the enumerated region (dotted lines at radius 76 and 116), so the ends are artefacts of the cut-off and the ribbons run at least that far; no ribbon closes inside the region. Panel c is the gap between neighbouring pair sites along a ribbon (552 gaps, mean 3.3, dashed): two spacings near 1 to 2 and 6 to 7, neither a single period nor a random sequence.
+
+Limits: one tile class set (window class 0 at level 3), 3 phases and 12 directions per step size, and the same ribbon is counted at more than one step size, so the samples are not independent.
+
 This project connects a matrix-free, functional quantum state simulator (`State`) with an editable geometric object model of the curved **Einstein Spectre monotile** (`spectremodel.py`) to create a network of three entangled quantum computers at substitution scales of **9**, **71**, and **559** tiles.
 
 ---
