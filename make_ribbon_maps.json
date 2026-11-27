@@ -1,0 +1,54 @@
+{
+ "forest": {
+  "level": 5,
+  "mystics": 3905,
+  "links": 2416,
+  "trees": {
+   "11": 102,
+   "30": 22,
+   "210": 2,
+   "341": 1
+  },
+  "forks": 496,
+  "roots": 127,
+  "cut_in": 1,
+  "cut_out": 2,
+  "tiles_on_chains": 22391,
+  "tiles": 34649,
+  "max_flow": 341
+ },
+ "heat": {
+  "file": "ribbon_dump_R110_s12.json",
+  "tiles": 6085,
+  "steps": 8,
+  "flipped": 806,
+  "flipped_share": 0.1324568611339359,
+  "by_count": {
+   "1": 312,
+   "2": 178,
+   "3": 268,
+   "4": 39,
+   "5": 7,
+   "6": 2
+  },
+  "kinds": {
+   "other": 366,
+   "active": 162,
+   "silent": 278
+  },
+  "pair_site_share_all": 0.43944124897288417,
+  "pair_site_share_flipped": 0.20967741935483872,
+  "hottest": {
+   "steps": 6,
+   "tiles": 2,
+   "centre": [
+    -51.72114317029974,
+    -69.12658773652741
+   ],
+   "labels": {
+    "Gamma1": 1,
+    "Gamma2": 1
+   }
+  }
+ }
+}

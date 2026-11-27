@@ -237,7 +237,8 @@ while done < NPH and tries < 40:
     if os.environ.get("DUMP"):                      # every Spectre of the patch, for ribbon_hierarchy.py
         _kid = {k: a for a, k in enumerate(keys_)}
         _polys = [[[[round(x, 4), round(y, 4)] for x, y in g.exterior.coords[:-1]] for g in (list(p.geoms) if hasattr(p, "geoms") else [p])] for p in pol]
-        DUMPED.append(dict(phase=done, y0=y0.tolist(), R=RREG, delta=DSMALL, tiles=_polys, steps=[]))
+        _win = [[S_of[k[0]], round(float(present[k][0]), 5), round(float(present[k][1]), 5)] for k in keys_]      # window point of each key, in Z_0(S)
+        DUMPED.append(dict(phase=done, y0=y0.tolist(), R=RREG, delta=DSMALL, tiles=_polys, window=_win, steps=[]))
     for idir in range(NDIR):
         phi = 2 * np.pi * (idir + 0.5) / NDIR
         gone, amb2, created, ambn, zn = step(present, phi, DSMALL)
