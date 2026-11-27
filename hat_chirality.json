@@ -1,0 +1,10 @@
+{
+ "tilings": 4096,
+ "classes_up_to_rotation": 96,
+ "wl_classes": 96,
+ "chiral_bit_patterns": 1320,
+ "min_flipped_in_a_chiral_pattern": 4,
+ "wl_changes_under_rotation": 0,
+ "wl_differs_from_mirror_pattern": 1320,
+ "simple_counts_differ_from_mirror_pattern": 0
+}

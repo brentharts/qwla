@@ -4,6 +4,21 @@
 
 ---
 
+## Latest result: on the sphere, flips are 12 bits, and the hat's hand is not the arrow of the flux
+
+On the Hat Trick ball (60 hats, 12 pentagons) every flip of the tiling is closed, and the model that follows has two separate kinds of handedness. The full account with figures is in [`HAT_TIME.md`](HAT_TIME.md); numbers and labels are in `ROADMAP_QUANTUM_GRAVITY.md` (Stage 3 and Stage 9c).
+
+![Three tilings of the Hat Trick ball](figures/hat_time_1_rings.png)
+
+- **Twelve ring bits.** The ring of 5 hats around each pentagon has exactly two tilings, and the ball has exactly 2^12 = 4096 hat tilings: one bit per cone point. The number of vertices is 80 minus the number of neighbouring ring pairs that are both flipped (`hat_flips.py`).
+- **Bits as punctures.** Read as spins, the bits contain the 132-dimensional space of a sphere with 12 spin-1/2 punctures, and the vertex count becomes the Heisenberg model on the icosahedron there (`ring_bits.py`).
+- **Quantisation levels.** That model is the large-level limit of a family obtained by the skein quantisation that Asselmeyer-Maluga and Krol use for wild embeddings (arXiv:1211.3012). At level 2 it is a free Majorana model, one Majorana per cone point, with the same flux through all 20 faces (`qdeform_punctures.py`).
+- **Two kinds of handedness.** The hat has a hand, and the ring bits see it: four flipped rings on a left-handed pole-to-pole path give a different tiling from four on a right-handed one (`hat_chirality.py`). But every function of the tiling is odd under reflection only, while the flux is odd under reflection and under time reversal. So the hat breaks mirror symmetry, and the sign of the level, which the tiling does not choose, is what breaks time reversal.
+
+Limits: one sphere and the hat, not the Spectre; reading a bit as a spin is a definition; the last point is a symmetry argument, not a computation on the quantum states; no wild embedding or 4-dimensional structure appears.
+
+---
+
 ## Latest result: phason flips of the Spectre tiling are ribbons, and pair sites follow the window
 
 Stage 3 asks what a flip of the tiling does to the bump-and-dent pairs that carry the qubits. At a generic phase of the cut-and-project model (radius 60, steps 0.015 to 0.06, window membership tested exactly in `exact_window.py`) there are no small local flips and no closed clusters: every flip is a **ribbon** of tiles that crosses the whole region. Details and numbers are in `ROADMAP_QUANTUM_GRAVITY.md` (Stage 3); the code is `generic_phase.py`, the figures come from `make_ribbon_figures.py`.

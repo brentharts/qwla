@@ -1,0 +1,23 @@
+{
+ "local_environment_classes": 124,
+ "classes_with_a_chiral_part": 93,
+ "lowest_order": [
+  4,
+  5,
+  6
+ ],
+ "order4_proportional_to_chi4": 69,
+ "slopes": {
+  "-1.0": 8,
+  "0.0": 54,
+  "1.0": 6,
+  "2.0": 1
+ },
+ "rank_of_chiral_parts": 6,
+ "chi4_values": {
+  "-1": 480,
+  "0": 3136,
+  "1": 480
+ },
+ "patterns_with_chi4_nonzero": 960
+}
