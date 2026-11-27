@@ -97,6 +97,25 @@ Set beside 3C and 3C2, the three ground states give 0.068 (level 2), 0.077 (spin
   The per-puncture term grows smoothly and monotonically from level 2 to the classical limit, and slowly: it is still 0.18 at level 50 against 0.22. The per-edge term rises to about 0.13 near level 10 and then falls back a little. So the near-area law of level 2 is the end of a smooth family, not a special feature of free fermions, and the volume term is controlled by the level.
 - **Caveat.** These coefficients are for arcs only and are not comparable with those of 3C, 3C2 and 3C3, which use all 2047 regions (classical: 0.113 and 0.216 on arcs, 0.077 and 0.234 on all regions). On arcs the number of cut edges and the size are strongly tied, so the split between the two terms is less well determined than the trend with the level.
 
+### C5. An area operator in the centre: it exists, and it does not carry the boundary law (Exact numerics; negative)
+
+The anyonic entropy of 3C4 has the form
+
+    S(A) = <L_A> + S_bulk,     L_A = sum_c ln d_c P_c,     S_bulk = sum_c p_c [ -ln p_c + S(rho_c) ],
+
+where P_c projects on total charge c of the region. L_A lies in the centre of the region's algebra and the space is a direct sum over its eigenvalues. This is the structure of the paper's H_D = direct sum over area sectors with S = <A>/4G + (rest), and of entropy formulas with an area operator in the centre of an algebra (**Known** in outline). So the model has a natural candidate for the area operator of a region: the logarithm of the quantum dimension of its total charge. `anyon_entropy.py` fits the two parts separately on the 75 arcs:
+
+      level                 2      3      4      5      6      10     20     50     classical
+      share of <L> in S     0.31   0.39   0.43   0.45   0.47   0.49   0.50   0.50   0.50
+      R^2 of <L> fit        0.03   0.02   0.00   0.05   0.13   0.37   0.52   0.58   0.60
+      R^2 of S_bulk fit     0.71   0.90   0.93   0.94   0.94   0.95   0.95   0.95   0.96
+      S_bulk per cut edge   0.078  0.106  0.112  0.111  0.108  0.097  0.083  0.069  0.061
+
+- <L> is a third to a half of the entropy, but it is not a function of the cut and the size: the linear fit explains almost nothing of it at low level and 60% classically. At level 2 it is exactly (1/2) ln 2 for a region with an odd number of punctures and 0 for an even one, because charges 0 and 1 both have d = 1.
+- The dependence on the cut sits in S_bulk, the distribution over charges and the entanglement inside each charge sector.
+- So the hoped-for reading "area term = central operator, proportional to the boundary" fails here: the central operator is there, and the boundary law is real (3C4), but they are different parts of the entropy. **Negative.** The total S, not <L>, is what follows the cut.
+- Scope: arcs only, one Hamiltonian (nearest-neighbour), ground state only.
+
 ### D. The ground state is not a coherent polyhedron (Exact numerics; negative)
 
 The standard classical picture of 12 equal-area faces with normals along the dodecahedron has a quantum counterpart, the coherent intertwiner: a product of spin-1/2 coherent states along the 12 normals, projected to the singlets (**Known**, Livine and Speziale). I computed its fidelity with the exact ground state: |<gs|coherent>|^2 / |P coherent|^2 = 6.5e-5, against 0.0076 for the uniform average over the 132 singlets. It is essentially orthogonal. Over 200 random sets of 12 directions the mean is 0.0074 and the maximum 0.114, and over all 4096 sign patterns of the dodecahedron normals the best is 0.036. So at spin-1/2 the Heisenberg ground state is not close to the regular-dodecahedron geometry, nor to any single coherent state tried. That is expected for spin-1/2, where nothing is semiclassical, and it says that the puncture model reaches the paper's semiclassical regime (Section 6) only for large spins or large level. **Spin 1** (`null_cone_spin1_fidelity.py`, spin-1 coherent states as the symmetric square of the spin-1/2 ones): the fidelity of the dodecahedron state with the spin-1 singlet ground state is 1.1e-4, against a uniform baseline of 1/4213 = 2.4e-4 and a random-direction mean of 4.4e-4 (30 draws, maximum 6.7e-3); the best of 256 sampled sign patterns (one in sixteen of the 4096) is 1.4e-3. So the dodecahedron is again at or below chance and nowhere near the ground state. Doubling the spin has not moved the ground state toward the classical geometry; I expect that this needs spins much larger than 1, or a Hamiltonian that favours it, and I have not tested that. **Not done:** spins above 1, and all 4096 sign patterns at spin 1.

@@ -1,0 +1,766 @@
+{
+ "level": 5,
+ "tiles": 34649,
+ "tile_area": 8.196152422706632,
+ "lam": 2.805883701475779,
+ "results": [
+  {
+   "k": 0,
+   "rows": [
+    {
+     "rho": 1.0,
+     "units": 34648,
+     "patterns": 3,
+     "mean_multiplicity": 11549.333333333334,
+     "ambiguous_patterns": 3,
+     "ambiguous_share": 1.0
+    },
+    {
+     "rho": 1.5,
+     "units": 34648,
+     "patterns": 3,
+     "mean_multiplicity": 11549.333333333334,
+     "ambiguous_patterns": 3,
+     "ambiguous_share": 1.0
+    },
+    {
+     "rho": 2.0,
+     "units": 34647,
+     "patterns": 8,
+     "mean_multiplicity": 4330.875,
+     "ambiguous_patterns": 8,
+     "ambiguous_share": 1.0
+    },
+    {
+     "rho": 2.5,
+     "units": 31877,
+     "patterns": 11,
+     "mean_multiplicity": 2897.909090909091,
+     "ambiguous_patterns": 9,
+     "ambiguous_share": 0.9689117545565769
+    },
+    {
+     "rho": 3.0,
+     "units": 31877,
+     "patterns": 14,
+     "mean_multiplicity": 2276.9285714285716,
+     "ambiguous_patterns": 11,
+     "ambiguous_share": 0.9533519465445306
+    },
+    {
+     "rho": 3.5,
+     "units": 30210,
+     "patterns": 17,
+     "mean_multiplicity": 1777.0588235294117,
+     "ambiguous_patterns": 11,
+     "ambiguous_share": 0.9062562065541212
+    },
+    {
+     "rho": 4.0,
+     "units": 29414,
+     "patterns": 22,
+     "mean_multiplicity": 1337.0,
+     "ambiguous_patterns": 14,
+     "ambiguous_share": 0.8749235058135582
+    },
+    {
+     "rho": 4.5,
+     "units": 29228,
+     "patterns": 29,
+     "mean_multiplicity": 1007.8620689655172,
+     "ambiguous_patterns": 17,
+     "ambiguous_share": 0.8111742165047215
+    },
+    {
+     "rho": 5.0,
+     "units": 29113,
+     "patterns": 33,
+     "mean_multiplicity": 882.2121212121212,
+     "ambiguous_patterns": 19,
+     "ambiguous_share": 0.7813004499708034
+    },
+    {
+     "rho": 5.5,
+     "units": 29113,
+     "patterns": 37,
+     "mean_multiplicity": 786.8378378378378,
+     "ambiguous_patterns": 18,
+     "ambiguous_share": 0.7175488613334249
+    },
+    {
+     "rho": 6.0,
+     "units": 28134,
+     "patterns": 53,
+     "mean_multiplicity": 530.8301886792453,
+     "ambiguous_patterns": 18,
+     "ambiguous_share": 0.5302480983862942
+    },
+    {
+     "rho": 6.5,
+     "units": 27689,
+     "patterns": 59,
+     "mean_multiplicity": 469.3050847457627,
+     "ambiguous_patterns": 18,
+     "ambiguous_share": 0.47412329806060166
+    },
+    {
+     "rho": 7.0,
+     "units": 27388,
+     "patterns": 63,
+     "mean_multiplicity": 434.73015873015873,
+     "ambiguous_patterns": 17,
+     "ambiguous_share": 0.41065430115379
+    },
+    {
+     "rho": 7.5,
+     "units": 27388,
+     "patterns": 77,
+     "mean_multiplicity": 355.68831168831167,
+     "ambiguous_patterns": 8,
+     "ambiguous_share": 0.17412735504600554
+    },
+    {
+     "rho": 8.0,
+     "units": 27087,
+     "patterns": 84,
+     "mean_multiplicity": 322.4642857142857,
+     "ambiguous_patterns": 9,
+     "ambiguous_share": 0.15911691955550633
+    },
+    {
+     "rho": 8.5,
+     "units": 26299,
+     "patterns": 95,
+     "mean_multiplicity": 276.8315789473684,
+     "ambiguous_patterns": 7,
+     "ambiguous_share": 0.11753298604509677
+    },
+    {
+     "rho": 9.0,
+     "units": 26051,
+     "patterns": 101,
+     "mean_multiplicity": 257.9306930693069,
+     "ambiguous_patterns": 6,
+     "ambiguous_share": 0.07635023607539058
+    },
+    {
+     "rho": 9.5,
+     "units": 25929,
+     "patterns": 110,
+     "mean_multiplicity": 235.71818181818182,
+     "ambiguous_patterns": 3,
+     "ambiguous_share": 0.04099656754984766
+    },
+    {
+     "rho": 10.0,
+     "units": 25398,
+     "patterns": 126,
+     "mean_multiplicity": 201.57142857142858,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 10.5,
+     "units": 25037,
+     "patterns": 137,
+     "mean_multiplicity": 182.75182481751824,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 11.0,
+     "units": 24325,
+     "patterns": 142,
+     "mean_multiplicity": 171.30281690140845,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 11.5,
+     "units": 23897,
+     "patterns": 160,
+     "mean_multiplicity": 149.35625,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 12.0,
+     "units": 23678,
+     "patterns": 172,
+     "mean_multiplicity": 137.6627906976744,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 12.5,
+     "units": 23636,
+     "patterns": 182,
+     "mean_multiplicity": 129.86813186813185,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 13.0,
+     "units": 22986,
+     "patterns": 191,
+     "mean_multiplicity": 120.3455497382199,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 13.5,
+     "units": 22824,
+     "patterns": 207,
+     "mean_multiplicity": 110.26086956521739,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 14.0,
+     "units": 22772,
+     "patterns": 228,
+     "mean_multiplicity": 99.87719298245614,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 14.5,
+     "units": 22686,
+     "patterns": 258,
+     "mean_multiplicity": 87.93023255813954,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 15.0,
+     "units": 22644,
+     "patterns": 275,
+     "mean_multiplicity": 82.34181818181818,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 15.5,
+     "units": 22377,
+     "patterns": 290,
+     "mean_multiplicity": 77.16206896551724,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 16.0,
+     "units": 22377,
+     "patterns": 316,
+     "mean_multiplicity": 70.8132911392405,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 16.5,
+     "units": 21964,
+     "patterns": 317,
+     "mean_multiplicity": 69.28706624605678,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 17.0,
+     "units": 21770,
+     "patterns": 333,
+     "mean_multiplicity": 65.37537537537537,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 17.5,
+     "units": 21600,
+     "patterns": 358,
+     "mean_multiplicity": 60.33519553072626,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 18.0,
+     "units": 21004,
+     "patterns": 380,
+     "mean_multiplicity": 55.27368421052632,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 18.5,
+     "units": 20886,
+     "patterns": 387,
+     "mean_multiplicity": 53.968992248062015,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 19.0,
+     "units": 20552,
+     "patterns": 398,
+     "mean_multiplicity": 51.63819095477387,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 19.5,
+     "units": 20294,
+     "patterns": 424,
+     "mean_multiplicity": 47.863207547169814,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 20.0,
+     "units": 20104,
+     "patterns": 450,
+     "mean_multiplicity": 44.675555555555555,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    }
+   ],
+   "rho": 10.0,
+   "rho_in_level_units": 10.0,
+   "n_roles": 80
+  },
+  {
+   "k": 1,
+   "rows": [
+    {
+     "rho": 2.805883701475779,
+     "units": 3527,
+     "patterns": 9,
+     "mean_multiplicity": 391.8888888888889,
+     "ambiguous_patterns": 7,
+     "ambiguous_share": 0.9642755883186844
+    },
+    {
+     "rho": 4.208825552213669,
+     "units": 3527,
+     "patterns": 9,
+     "mean_multiplicity": 391.8888888888889,
+     "ambiguous_patterns": 7,
+     "ambiguous_share": 0.9642755883186844
+    },
+    {
+     "rho": 5.611767402951558,
+     "units": 3224,
+     "patterns": 12,
+     "mean_multiplicity": 268.6666666666667,
+     "ambiguous_patterns": 9,
+     "ambiguous_share": 0.9413771712158809
+    },
+    {
+     "rho": 7.014709253689447,
+     "units": 3038,
+     "patterns": 13,
+     "mean_multiplicity": 233.69230769230768,
+     "ambiguous_patterns": 9,
+     "ambiguous_share": 0.9170506912442397
+    },
+    {
+     "rho": 8.417651104427337,
+     "units": 2941,
+     "patterns": 16,
+     "mean_multiplicity": 183.8125,
+     "ambiguous_patterns": 9,
+     "ambiguous_share": 0.861271676300578
+    },
+    {
+     "rho": 9.820592955165226,
+     "units": 2941,
+     "patterns": 26,
+     "mean_multiplicity": 113.11538461538461,
+     "ambiguous_patterns": 16,
+     "ambiguous_share": 0.7980278816729004
+    },
+    {
+     "rho": 11.223534805903116,
+     "units": 2756,
+     "patterns": 32,
+     "mean_multiplicity": 86.125,
+     "ambiguous_patterns": 20,
+     "ambiguous_share": 0.7706821480406386
+    },
+    {
+     "rho": 12.626476656641005,
+     "units": 2615,
+     "patterns": 34,
+     "mean_multiplicity": 76.91176470588235,
+     "ambiguous_patterns": 20,
+     "ambiguous_share": 0.7395793499043977
+    },
+    {
+     "rho": 14.029418507378894,
+     "units": 2599,
+     "patterns": 43,
+     "mean_multiplicity": 60.44186046511628,
+     "ambiguous_patterns": 21,
+     "ambiguous_share": 0.6156213928434013
+    },
+    {
+     "rho": 15.432360358116783,
+     "units": 2539,
+     "patterns": 49,
+     "mean_multiplicity": 51.816326530612244,
+     "ambiguous_patterns": 22,
+     "ambiguous_share": 0.5714848365498227
+    },
+    {
+     "rho": 16.835302208854674,
+     "units": 2392,
+     "patterns": 56,
+     "mean_multiplicity": 42.714285714285715,
+     "ambiguous_patterns": 21,
+     "ambiguous_share": 0.5025083612040134
+    },
+    {
+     "rho": 18.238244059592564,
+     "units": 2350,
+     "patterns": 72,
+     "mean_multiplicity": 32.638888888888886,
+     "ambiguous_patterns": 17,
+     "ambiguous_share": 0.2927659574468085
+    },
+    {
+     "rho": 19.641185910330453,
+     "units": 2335,
+     "patterns": 74,
+     "mean_multiplicity": 31.554054054054053,
+     "ambiguous_patterns": 17,
+     "ambiguous_share": 0.27708779443254816
+    },
+    {
+     "rho": 21.044127761068342,
+     "units": 2199,
+     "patterns": 85,
+     "mean_multiplicity": 25.870588235294118,
+     "ambiguous_patterns": 14,
+     "ambiguous_share": 0.2478399272396544
+    },
+    {
+     "rho": 22.44706961180623,
+     "units": 2147,
+     "patterns": 89,
+     "mean_multiplicity": 24.123595505617978,
+     "ambiguous_patterns": 13,
+     "ambiguous_share": 0.21658127619934792
+    },
+    {
+     "rho": 23.85001146254412,
+     "units": 2077,
+     "patterns": 101,
+     "mean_multiplicity": 20.564356435643564,
+     "ambiguous_patterns": 9,
+     "ambiguous_share": 0.1333654309099663
+    },
+    {
+     "rho": 25.25295331328201,
+     "units": 2035,
+     "patterns": 104,
+     "mean_multiplicity": 19.567307692307693,
+     "ambiguous_patterns": 7,
+     "ambiguous_share": 0.10712530712530713
+    },
+    {
+     "rho": 26.6558951640199,
+     "units": 1969,
+     "patterns": 117,
+     "mean_multiplicity": 16.82905982905983,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 28.05883701475779,
+     "units": 1929,
+     "patterns": 148,
+     "mean_multiplicity": 13.033783783783784,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 29.461778865495678,
+     "units": 1846,
+     "patterns": 152,
+     "mean_multiplicity": 12.144736842105264,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 30.864720716233567,
+     "units": 1818,
+     "patterns": 164,
+     "mean_multiplicity": 11.085365853658537,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 32.26766256697146,
+     "units": 1755,
+     "patterns": 171,
+     "mean_multiplicity": 10.263157894736842,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 33.67060441770935,
+     "units": 1655,
+     "patterns": 192,
+     "mean_multiplicity": 8.619791666666666,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 35.07354626844724,
+     "units": 1616,
+     "patterns": 205,
+     "mean_multiplicity": 7.882926829268293,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 36.47648811918513,
+     "units": 1534,
+     "patterns": 215,
+     "mean_multiplicity": 7.134883720930232,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 37.87942996992302,
+     "units": 1524,
+     "patterns": 232,
+     "mean_multiplicity": 6.568965517241379,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 39.282371820660906,
+     "units": 1444,
+     "patterns": 242,
+     "mean_multiplicity": 5.966942148760331,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 40.685313671398795,
+     "units": 1421,
+     "patterns": 258,
+     "mean_multiplicity": 5.507751937984496,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 42.088255522136684,
+     "units": 1381,
+     "patterns": 270,
+     "mean_multiplicity": 5.114814814814815,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 43.49119737287457,
+     "units": 1305,
+     "patterns": 281,
+     "mean_multiplicity": 4.644128113879003,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 44.89413922361246,
+     "units": 1289,
+     "patterns": 295,
+     "mean_multiplicity": 4.3694915254237285,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 46.29708107435035,
+     "units": 1281,
+     "patterns": 303,
+     "mean_multiplicity": 4.227722772277228,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 47.70002292508824,
+     "units": 1232,
+     "patterns": 311,
+     "mean_multiplicity": 3.9614147909967845,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 49.10296477582613,
+     "units": 1170,
+     "patterns": 321,
+     "mean_multiplicity": 3.6448598130841123,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 50.50590662656402,
+     "units": 1147,
+     "patterns": 320,
+     "mean_multiplicity": 3.584375,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 51.90884847730191,
+     "units": 1098,
+     "patterns": 332,
+     "mean_multiplicity": 3.3072289156626504,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 53.3117903280398,
+     "units": 1075,
+     "patterns": 339,
+     "mean_multiplicity": 3.1710914454277286,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 54.71473217877769,
+     "units": 1072,
+     "patterns": 342,
+     "mean_multiplicity": 3.134502923976608,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    },
+    {
+     "rho": 56.11767402951558,
+     "units": 1051,
+     "patterns": 360,
+     "mean_multiplicity": 2.9194444444444443,
+     "ambiguous_patterns": 0,
+     "ambiguous_share": 0.0
+    }
+   ],
+   "rho": 26.6558951640199,
+   "rho_in_level_units": 9.5,
+   "n_roles": 71
+  },
+  {
+   "k": 2,
+   "rows": [
+    {
+     "rho": 7.872983346207418,
+     "units": 406,
+     "patterns": 12,
+     "mean_multiplicity": 33.833333333333336,
+     "ambiguous_patterns": 9,
+     "ambiguous_share": 0.9408866995073891
+    },
+    {
+     "rho": 11.809475019311126,
+     "units": 406,
+     "patterns": 12,
+     "mean_multiplicity": 33.833333333333336,
+     "ambiguous_patterns": 9,
+     "ambiguous_share": 0.9408866995073891
+    },
+    {
+     "rho": 15.745966692414836,
+     "units": 372,
+     "patterns": 13,
+     "mean_multiplicity": 28.615384615384617,
+     "ambiguous_patterns": 9,
+     "ambiguous_share": 0.9139784946236559
+    },
+    {
+     "rho": 19.682458365518546,
+     "units": 299,
+     "patterns": 16,
+     "mean_multiplicity": 18.6875,
+     "ambiguous_patterns": 9,
+     "ambiguous_share": 0.8361204013377926
+    },
+    {
+     "rho": 23.618950038622252,
+     "units": 260,
+     "patterns": 17,
+     "mean_multiplicity": 15.294117647058824,
+     "ambiguous_patterns": 9,
+     "ambiguous_share": 0.8
+    },
+    {
+     "rho": 27.555441711725962,
+     "units": 230,
+     "patterns": 17,
+     "mean_multiplicity": 13.529411764705882,
+     "ambiguous_patterns": 9,
+     "ambiguous_share": 0.8260869565217391
+    },
+    {
+     "rho": 31.49193338482967,
+     "units": 230,
+     "patterns": 27,
+     "mean_multiplicity": 8.518518518518519,
+     "ambiguous_patterns": 12,
+     "ambiguous_share": 0.6652173913043479
+    },
+    {
+     "rho": 35.42842505793338,
+     "units": 198,
+     "patterns": 40,
+     "mean_multiplicity": 4.95,
+     "ambiguous_patterns": 16,
+     "ambiguous_share": 0.5202020202020202
+    },
+    {
+     "rho": 39.36491673103709,
+     "units": 175,
+     "patterns": 40,
+     "mean_multiplicity": 4.375,
+     "ambiguous_patterns": 16,
+     "ambiguous_share": 0.52
+    },
+    {
+     "rho": 43.3014084041408,
+     "units": 167,
+     "patterns": 40,
+     "mean_multiplicity": 4.175,
+     "ambiguous_patterns": 15,
+     "ambiguous_share": 0.49101796407185627
+    },
+    {
+     "rho": 47.237900077244504,
+     "units": 156,
+     "patterns": 48,
+     "mean_multiplicity": 3.25,
+     "ambiguous_patterns": 10,
+     "ambiguous_share": 0.2948717948717949
+    },
+    {
+     "rho": 51.174391750348214,
+     "units": 138,
+     "patterns": 52,
+     "mean_multiplicity": 2.6538461538461537,
+     "ambiguous_patterns": 9,
+     "ambiguous_share": 0.26811594202898553
+    }
+   ],
+   "rho": null,
+   "rho_in_level_units": null,
+   "n_roles": 71
+  },
+  {
+   "k": 3,
+   "rows": [],
+   "rho": null,
+   "rho_in_level_units": null,
+   "n_roles": 47
+  }
+ ],
+ "confinement": {
+  "r": 10.0,
+  "D": 3.496248454411624,
+  "rho_star": 10.969735503097214,
+  "base_unit_area": 9.237200276293327,
+  "supertiles_within": 40.92623797486504
+ }
+}

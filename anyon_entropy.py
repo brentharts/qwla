@@ -23,6 +23,10 @@ with multiplicity n'_c; a second generic element links the eigenvalues of one se
 rho_c. A sector is identified with its charge by (n_c, n'_c), the numbers of fusion paths, and by the trace of one
 generator where those tie.
 
+The entropy splits as  S = <L> + S_bulk  with  L = sum_c ln d_c (projector on charge c), an operator in the centre of
+the region's algebra, and S_bulk = sum_c p_c [ -ln p_c + S(rho_c) ]: the form of an entropy with an area operator in the
+centre (Stage 9m). Both parts are fitted separately.
+
 Usage: python3 anyon_entropy.py [--tests]       (about a minute)
 """
 import itertools
@@ -215,6 +219,7 @@ def main():
             assert max(abs(S - L2.entropy(G2, sorted(R))) for R, S, _ in ent.values()) < 1e-6
         # one row per bipartition and disc: keep the smaller side; the same vertex set from the two cycles is compared
         rows, seen, twice = [], {}, []
+        rows_area, rows_bulk = [], []
         for (ci, i, m), (R, S, tab) in sorted(ent.items()):
             key = R if (len(R) < 6 or (len(R) == 6 and 0 in R)) else frozenset(range(N)) - R
             if (ci, key) in seen:
@@ -224,18 +229,24 @@ def main():
                 twice.append(abs(S - seen[(0, key)])); continue
             cut = sum((p in key) != (q in key) for p, q in E)
             rows.append((len(key), cut, S))
+            area = sum(r['p'] * math.log(r['d']) for r in tab if r['p'] > 0)
+            rows_area.append((len(key), cut, area)); rows_bulk.append((len(key), cut, S - area))
         f = fit(rows)
+        fa, fb = fit(rows_area), fit(rows_bulk)
+        share = float(np.mean([a[2] / r[2] for a, r in zip(rows_area, rows)]))
         by = {}
         for m in range(1, 7):
             sub = [S for mm, c, S in rows if mm == m]
             by[m] = dict(n=len(sub), S_mean=float(np.mean(sub)), S_min=float(min(sub)), S_max=float(max(sub)))
         rec = dict(level=k if k is not None else "classical", dim=models[0].D, E0=models[0].E0, fit=f, by_size=by,
                    same_set_two_cycles=dict(n=len(twice), max_difference=float(max(twice)) if twice else None),
-                   complement_check=worst_c, S_one=by[1]["S_mean"], ln_d=math.log(qdim(k, 1)))
+                   complement_check=worst_c, fit_area_term=fa, fit_bulk_term=fb, mean_area_share=share, S_one=by[1]["S_mean"], ln_d=math.log(qdim(k, 1)))
         out["levels"].append(rec)
         print("k=%-9s dim=%3d  per edge %.4f  per puncture %.4f  const %+.4f  R2 %.3f (size only %.3f)  regions %d   S(1)=%.4f  max S(6)=%.4f  two-cycle diff %s" % (
             rec["level"], rec["dim"], f["per_cut_edge"], f["per_puncture"], f["const"], f["R2_cut_and_size"], f["R2_size_only"], f["regions"],
             by[1]["S_mean"], by[6]["S_max"], rec["same_set_two_cycles"]))
+        print("    area term <ln d_c>: per edge %.4f per puncture %.4f R2 %.3f | bulk term: per edge %.4f per puncture %.4f R2 %.3f | mean share of area term %.3f" % (
+            fa["per_cut_edge"], fa["per_puncture"], fa["R2_cut_and_size"], fb["per_cut_edge"], fb["per_puncture"], fb["R2_cut_and_size"], share))
     json.dump(out, open(os.path.join(HERE, "anyon_entropy.json"), "w"), indent=1)
     if "--tests" in sys.argv:
         print("anyon_entropy: all tests passed (arc = complement at every level; k = 2 equals the Majorana formula; classical equals the spin entropy)")
