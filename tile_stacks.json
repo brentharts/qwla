@@ -1,0 +1,410 @@
+{
+ "patch": {
+  "level": 4,
+  "tiles": 4401,
+  "in_stacks": 2542,
+  "share": 0.5775960009088843,
+  "lengths": {
+   "2": 812,
+   "3": 306
+  },
+  "axes": {
+   "15.0": 372,
+   "75.0": 372,
+   "135.0": 374
+  },
+  "label_share_in_stacks": {
+   "Delta": 1.0,
+   "Gamma1": 0.998,
+   "Gamma2": 0.0,
+   "Lambda": 1.0,
+   "Phi": 0.0,
+   "Pi": 1.0,
+   "Psi": 0.551,
+   "Sigma": 1.0,
+   "Theta": 0.0,
+   "Xi": 0.659
+  },
+  "mismatch_values": {
+   "0.0": 3460,
+   "0.3282": 648
+  }
+ },
+ "build_shapes_literal": {
+  "level": 4,
+  "tolerance": 0.05,
+  "tiles": 4401,
+  "tiles_with_partner": 136,
+  "height_errors": {
+   "0.0333": 68,
+   "0.0455": 68
+  },
+  "nearest_partner_distance": {
+   "66.08": 66,
+   "70.81": 2,
+   "181.21": 40,
+   "185.94": 28
+  }
+ },
+ "ribbons": [
+  {
+   "file": "ribbon_dump_R110_s11.json",
+   "tiles": 131,
+   "angle": 61.84801163305856,
+   "in_stacks": 0,
+   "share": 0.0,
+   "lengths": {},
+   "stacks_per_axis": {},
+   "deviation_from_nearest_axis": 16.84801163305856
+  },
+  {
+   "file": "ribbon_dump_R110_s11.json",
+   "tiles": 180,
+   "angle": 7.846457567241401,
+   "in_stacks": 0,
+   "share": 0.0,
+   "lengths": {},
+   "stacks_per_axis": {},
+   "deviation_from_nearest_axis": 22.8464575672414
+  },
+  {
+   "file": "ribbon_dump_R110_s11.json",
+   "tiles": 164,
+   "angle": 179.53584407529442,
+   "in_stacks": 120,
+   "share": 0.7317073170731707,
+   "lengths": {
+    "2": 12,
+    "3": 32
+   },
+   "stacks_per_axis": {
+    "45.0": 13,
+    "105.0": 13,
+    "165.0": 18
+   },
+   "deviation_from_nearest_axis": 14.53584407529442
+  },
+  {
+   "file": "ribbon_dump_R110_s11.json",
+   "tiles": 26,
+   "angle": 64.51256086544291,
+   "in_stacks": 0,
+   "share": 0.0,
+   "lengths": {},
+   "stacks_per_axis": {},
+   "deviation_from_nearest_axis": 19.512560865442907
+  },
+  {
+   "file": "ribbon_dump_R110_s11.json",
+   "tiles": 231,
+   "angle": 174.94021785851683,
+   "in_stacks": 120,
+   "share": 0.5194805194805194,
+   "lengths": {
+    "2": 12,
+    "3": 32
+   },
+   "stacks_per_axis": {
+    "45.0": 13,
+    "105.0": 13,
+    "165.0": 18
+   },
+   "deviation_from_nearest_axis": 9.940217858516831
+  },
+  {
+   "file": "ribbon_dump_R110_s11.json",
+   "tiles": 78,
+   "angle": 169.97967351648882,
+   "in_stacks": 0,
+   "share": 0.0,
+   "lengths": {},
+   "stacks_per_axis": {},
+   "deviation_from_nearest_axis": 4.979673516488816
+  },
+  {
+   "file": "ribbon_dump_R110_s11.json",
+   "tiles": 379,
+   "angle": 93.88542611685071,
+   "in_stacks": 121,
+   "share": 0.31926121372031663,
+   "lengths": {
+    "2": 17,
+    "3": 29
+   },
+   "stacks_per_axis": {
+    "45.0": 16,
+    "105.0": 17,
+    "165.0": 13
+   },
+   "deviation_from_nearest_axis": 11.11457388314929
+  },
+  {
+   "file": "ribbon_dump_R110_s11.json",
+   "tiles": 279,
+   "angle": 62.582284745560415,
+   "in_stacks": 109,
+   "share": 0.3906810035842294,
+   "lengths": {
+    "2": 14,
+    "3": 27
+   },
+   "stacks_per_axis": {
+    "45.0": 17,
+    "105.0": 12,
+    "165.0": 12
+   },
+   "deviation_from_nearest_axis": 17.582284745560415
+  },
+  {
+   "file": "ribbon_dump_R110_s11.json",
+   "baseline_share": 0.5778321108394459,
+   "axes": [
+    45.0,
+    105.0,
+    165.0
+   ]
+  },
+  {
+   "file": "ribbon_dump_R110_s12.json",
+   "tiles": 105,
+   "angle": 110.22083393060362,
+   "in_stacks": 0,
+   "share": 0.0,
+   "lengths": {},
+   "stacks_per_axis": {},
+   "deviation_from_nearest_axis": 5.220833930603618
+  },
+  {
+   "file": "ribbon_dump_R110_s12.json",
+   "tiles": 62,
+   "angle": 134.1850851886556,
+   "in_stacks": 0,
+   "share": 0.0,
+   "lengths": {},
+   "stacks_per_axis": {},
+   "deviation_from_nearest_axis": 29.18508518865559
+  },
+  {
+   "file": "ribbon_dump_R110_s12.json",
+   "tiles": 339,
+   "angle": 56.47012474505393,
+   "in_stacks": 59,
+   "share": 0.17404129793510326,
+   "lengths": {
+    "2": 10,
+    "3": 13
+   },
+   "stacks_per_axis": {
+    "45.0": 7,
+    "105.0": 7,
+    "165.0": 9
+   },
+   "deviation_from_nearest_axis": 11.47012474505393
+  },
+  {
+   "file": "ribbon_dump_R110_s12.json",
+   "tiles": 388,
+   "angle": 57.24327166967232,
+   "in_stacks": 90,
+   "share": 0.23195876288659795,
+   "lengths": {
+    "2": 15,
+    "3": 20
+   },
+   "stacks_per_axis": {
+    "45.0": 9,
+    "105.0": 13,
+    "165.0": 13
+   },
+   "deviation_from_nearest_axis": 12.243271669672318
+  },
+  {
+   "file": "ribbon_dump_R110_s12.json",
+   "tiles": 393,
+   "angle": 57.47609149679072,
+   "in_stacks": 248,
+   "share": 0.6310432569974554,
+   "lengths": {
+    "2": 28,
+    "3": 64
+   },
+   "stacks_per_axis": {
+    "45.0": 31,
+    "105.0": 34,
+    "165.0": 27
+   },
+   "deviation_from_nearest_axis": 12.476091496790723
+  },
+  {
+   "file": "ribbon_dump_R110_s12.json",
+   "tiles": 176,
+   "angle": 48.6054734746426,
+   "in_stacks": 129,
+   "share": 0.7329545454545454,
+   "lengths": {
+    "2": 15,
+    "3": 33
+   },
+   "stacks_per_axis": {
+    "45.0": 18,
+    "105.0": 16,
+    "165.0": 14
+   },
+   "deviation_from_nearest_axis": 3.6054734746426007
+  },
+  {
+   "file": "ribbon_dump_R110_s12.json",
+   "tiles": 210,
+   "angle": 44.806163107177696,
+   "in_stacks": 129,
+   "share": 0.6142857142857143,
+   "lengths": {
+    "2": 15,
+    "3": 33
+   },
+   "stacks_per_axis": {
+    "45.0": 18,
+    "105.0": 16,
+    "165.0": 14
+   },
+   "deviation_from_nearest_axis": 0.1938368928223042
+  },
+  {
+   "file": "ribbon_dump_R110_s12.json",
+   "baseline_share": 0.5763586956521739,
+   "axes": [
+    45.0,
+    105.0,
+    165.0
+   ]
+  },
+  {
+   "file": "ribbon_dump_R110_s13.json",
+   "tiles": 453,
+   "angle": 109.95400701843604,
+   "in_stacks": 215,
+   "share": 0.4746136865342163,
+   "lengths": {
+    "2": 28,
+    "3": 53
+   },
+   "stacks_per_axis": {
+    "45.0": 23,
+    "105.0": 30,
+    "165.0": 28
+   },
+   "deviation_from_nearest_axis": 4.9540070184360445
+  },
+  {
+   "file": "ribbon_dump_R110_s13.json",
+   "tiles": 365,
+   "angle": 101.3201451396451,
+   "in_stacks": 196,
+   "share": 0.536986301369863,
+   "lengths": {
+    "2": 20,
+    "3": 52
+   },
+   "stacks_per_axis": {
+    "45.0": 23,
+    "105.0": 25,
+    "165.0": 24
+   },
+   "deviation_from_nearest_axis": 3.6798548603548937
+  },
+  {
+   "file": "ribbon_dump_R110_s13.json",
+   "tiles": 91,
+   "angle": 49.40825533166604,
+   "in_stacks": 66,
+   "share": 0.7252747252747253,
+   "lengths": {
+    "2": 6,
+    "3": 18
+   },
+   "stacks_per_axis": {
+    "45.0": 9,
+    "105.0": 7,
+    "165.0": 8
+   },
+   "deviation_from_nearest_axis": 4.408255331666041
+  },
+  {
+   "file": "ribbon_dump_R110_s13.json",
+   "tiles": 57,
+   "angle": 18.431758223090753,
+   "in_stacks": 0,
+   "share": 0.0,
+   "lengths": {},
+   "stacks_per_axis": {},
+   "deviation_from_nearest_axis": 26.568241776909247
+  },
+  {
+   "file": "ribbon_dump_R110_s13.json",
+   "tiles": 157,
+   "angle": 110.52584222150155,
+   "in_stacks": 0,
+   "share": 0.0,
+   "lengths": {},
+   "stacks_per_axis": {},
+   "deviation_from_nearest_axis": 5.525842221501549
+  },
+  {
+   "file": "ribbon_dump_R110_s13.json",
+   "tiles": 217,
+   "angle": 115.63456134900346,
+   "in_stacks": 44,
+   "share": 0.20276497695852536,
+   "lengths": {
+    "2": 7,
+    "3": 10
+   },
+   "stacks_per_axis": {
+    "45.0": 5,
+    "105.0": 5,
+    "165.0": 7
+   },
+   "deviation_from_nearest_axis": 10.634561349003462
+  },
+  {
+   "file": "ribbon_dump_R110_s13.json",
+   "tiles": 503,
+   "angle": 124.8335478206796,
+   "in_stacks": 129,
+   "share": 0.25646123260437376,
+   "lengths": {
+    "2": 21,
+    "3": 29
+   },
+   "stacks_per_axis": {
+    "45.0": 14,
+    "105.0": 17,
+    "165.0": 19
+   },
+   "deviation_from_nearest_axis": 19.8335478206796
+  },
+  {
+   "file": "ribbon_dump_R110_s13.json",
+   "baseline_share": 0.5782608695652174,
+   "axes": [
+    45.0,
+    105.0,
+    165.0
+   ]
+  }
+ ],
+ "summary": {
+  "ribbons": 22,
+  "with_stacks": 14,
+  "without_stacks": 8,
+  "deviation_with_stacks": {
+   "mean": 9.762281801545921,
+   "max": 19.8335478206796
+  },
+  "deviation_without_stacks": {
+   "mean": 16.33583833748771,
+   "max": 29.18508518865559
+  },
+  "chance_all_below_max": 0.0030472503886486814
+ }
+}
