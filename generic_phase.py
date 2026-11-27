@@ -11,6 +11,7 @@ and added tiles, tested for closure (equal footprints, no overlap with persistin
 disc boundary and free of ambiguous tiles. Output: per cluster tile counts, (dV, dE, dF), boundary counts, pairs destroyed/created.
 
 Usage: SPECTRE_DIR=.. WADA_DIR=.. python3 generic_phase.py [n_phases=6] [n_directions=24] [delta=0.03] [R=36]
+       DUMP=file.json writes every Spectre of each patch and the tiles removed by each step (for ribbon_hierarchy.py).
 """
 import collections
 import json
@@ -196,6 +197,7 @@ def poly_coords(k):
 
 
 SEEN = set()
+DUMPED = []
 rows, log = [], []
 rs = np.random.default_rng(int(os.environ.get("SEED", "1")))
 done = 0
@@ -232,9 +234,15 @@ while done < NPH and tries < 40:
                 _c0["alone" if len(lst) == 1 else ("pair" if len(lst) == 2 and all(v == 10 for v in lst) else ("two_other" if len(lst) == 2 else "three_plus"))] += 1
         log[-1]["baseline_cat"] = dict(_c0)
         print("baseline leaf categories (inner disc):", dict(_c0), flush=True)
+    if os.environ.get("DUMP"):                      # every Spectre of the patch, for ribbon_hierarchy.py
+        _kid = {k: a for a, k in enumerate(keys_)}
+        _polys = [[[[round(x, 4), round(y, 4)] for x, y in g.exterior.coords[:-1]] for g in (list(p.geoms) if hasattr(p, "geoms") else [p])] for p in pol]
+        DUMPED.append(dict(phase=done, y0=y0.tolist(), R=RREG, delta=DSMALL, tiles=_polys, steps=[]))
     for idir in range(NDIR):
         phi = 2 * np.pi * (idir + 0.5) / NDIR
         gone, amb2, created, ambn, zn = step(present, phi, DSMALL)
+        if os.environ.get("DUMP"):
+            DUMPED[-1]["steps"].append(dict(idir=idir, phi=float(phi), removed=[_kid[k] for k in gone if k in _kid]))
         gset = set(gone)
         for comp in clusters(gone, amb2, created, ambn):
             if any(n[0] in ("a", "m") for n in comp):
@@ -346,3 +354,6 @@ out = os.path.join(HERE, "generic_phase_d%g_R%g%s.json" % (DSMALL, RREG, os.envi
 json.dump(dict(DELTA=DSMALL, R=RREG, MARGIN=MARGIN, log=log, rows=rows), open(out, "w"))
 print(collections.Counter(r["status"] for r in rows))
 print("->", out)
+if os.environ.get("DUMP"):
+    json.dump(DUMPED, open(os.path.join(HERE, os.environ["DUMP"]), "w"))
+    print("->", os.environ["DUMP"])
