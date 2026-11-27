@@ -1,0 +1,100 @@
+{
+ "note": "generic_phase.py 2 72 0.03 60 with TAG=_dir: per ribbon, the arc of phason directions (5 degree steps) for which it flips",
+ "ribbons": [
+  {
+   "phase": 1,
+   "tiles": 24,
+   "physical_angle": 23.8,
+   "active_deg": 135,
+   "span_deg": 135,
+   "centre_deg": 127.5,
+   "ends": 2
+  },
+  {
+   "phase": 1,
+   "tiles": 45,
+   "physical_angle": 130.7,
+   "active_deg": 80,
+   "span_deg": 80,
+   "centre_deg": 270.0,
+   "ends": 2
+  },
+  {
+   "phase": 1,
+   "tiles": 60,
+   "physical_angle": 152.7,
+   "active_deg": 55,
+   "span_deg": 115,
+   "centre_deg": 167.5,
+   "ends": 2
+  },
+  {
+   "phase": 1,
+   "tiles": 135,
+   "physical_angle": null,
+   "active_deg": 55,
+   "span_deg": 55,
+   "centre_deg": 187.5,
+   "ends": 4
+  },
+  {
+   "phase": 2,
+   "tiles": 31,
+   "physical_angle": 52.9,
+   "active_deg": 195,
+   "span_deg": 195,
+   "centre_deg": 142.5,
+   "ends": 2
+  },
+  {
+   "phase": 2,
+   "tiles": 21,
+   "physical_angle": 58.4,
+   "active_deg": 85,
+   "span_deg": 85,
+   "centre_deg": 2.5,
+   "ends": 2
+  },
+  {
+   "phase": 2,
+   "tiles": 63,
+   "physical_angle": 69.8,
+   "active_deg": 80,
+   "span_deg": 80,
+   "centre_deg": 130.0,
+   "ends": 2
+  },
+  {
+   "phase": 2,
+   "tiles": 64,
+   "physical_angle": 94.8,
+   "active_deg": 30,
+   "span_deg": 40,
+   "centre_deg": 70.0,
+   "ends": 2
+  },
+  {
+   "phase": 2,
+   "tiles": 138,
+   "physical_angle": null,
+   "active_deg": 10,
+   "span_deg": 10,
+   "centre_deg": 60.0,
+   "ends": 3
+  },
+  {
+   "phase": 2,
+   "tiles": 71,
+   "physical_angle": 178.7,
+   "active_deg": 10,
+   "span_deg": 10,
+   "centre_deg": 245.0,
+   "ends": 2
+  }
+ ],
+ "ribbons_per_run": {
+  "0": 38,
+  "1": 65,
+  "2": 41
+ }
+}
