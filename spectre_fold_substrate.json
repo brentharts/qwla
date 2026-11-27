@@ -1,0 +1,114 @@
+{
+ "rows": [
+  {
+   "N": 10,
+   "draws": 60,
+   "closed": 13,
+   "mean_pairs": 1.8461538461538463,
+   "max_pairs": 3,
+   "cones_min": 6,
+   "cones_max": 7,
+   "swaps": {
+    "swaps": 29,
+    "deficits change": 11,
+    "number of cones changes": 7,
+    "pairs change": 17
+   },
+   "seconds": 1
+  },
+  {
+   "N": 15,
+   "draws": 60,
+   "closed": 2,
+   "mean_pairs": 2.5,
+   "max_pairs": 3,
+   "cones_min": 7,
+   "cones_max": 7,
+   "swaps": {
+    "swaps": 2,
+    "deficits change": 1,
+    "number of cones changes": 1,
+    "pairs change": 1
+   },
+   "seconds": 2
+  },
+  {
+   "N": 20,
+   "draws": 60,
+   "closed": 0,
+   "mean_pairs": null,
+   "max_pairs": null,
+   "cones_min": null,
+   "cones_max": null,
+   "swaps": {},
+   "seconds": 2
+  },
+  {
+   "N": 30,
+   "draws": 60,
+   "closed": 0,
+   "mean_pairs": null,
+   "max_pairs": null,
+   "cones_min": null,
+   "cones_max": null,
+   "swaps": {},
+   "seconds": 3
+  },
+  {
+   "N": 40,
+   "draws": 60,
+   "closed": 0,
+   "mean_pairs": null,
+   "max_pairs": null,
+   "cones_min": null,
+   "cones_max": null,
+   "swaps": {},
+   "seconds": 5
+  },
+  {
+   "N": 60,
+   "draws": 60,
+   "closed": 0,
+   "mean_pairs": null,
+   "max_pairs": null,
+   "cones_min": null,
+   "cones_max": null,
+   "swaps": {},
+   "seconds": 7
+  },
+  {
+   "N": 80,
+   "draws": 60,
+   "closed": 0,
+   "mean_pairs": null,
+   "max_pairs": null,
+   "cones_min": null,
+   "cones_max": null,
+   "swaps": {},
+   "seconds": 11
+  }
+ ],
+ "best": {
+  "tiles": [
+   75,
+   76,
+   77,
+   139,
+   339,
+   340,
+   341,
+   342,
+   343,
+   346
+  ],
+  "pairs": 3,
+  "deficits": [
+   90,
+   90,
+   120,
+   120,
+   120,
+   180
+  ]
+ }
+}
