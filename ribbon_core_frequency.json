@@ -1,0 +1,488 @@
+{
+ "levels": [
+  3,
+  4,
+  5,
+  6
+ ],
+ "counts": {
+  "Mystics": [
+   63,
+   496,
+   3905,
+   30744
+  ],
+  "links": [
+   76,
+   612,
+   4832,
+   38056
+  ],
+  "core": [
+   48,
+   379,
+   2984,
+   23493
+  ],
+  "core, degree 2": [
+   29,
+   209,
+   1625,
+   12773
+  ],
+  "core, degree 3": [
+   12,
+   108,
+   864,
+   6816
+  ],
+  "core, degree 4": [
+   7,
+   62,
+   495,
+   3904
+  ],
+  "all Delta": [
+   8,
+   63,
+   496,
+   3905
+  ],
+  "core Delta": [
+   8,
+   63,
+   496,
+   3905
+  ],
+  "all Gamma": [
+   8,
+   63,
+   496,
+   3905
+  ],
+  "core Gamma": [
+   8,
+   63,
+   496,
+   3905
+  ],
+  "all Lambda": [
+   1,
+   8,
+   63,
+   496
+  ],
+  "core Lambda": [
+   1,
+   8,
+   63,
+   496
+  ],
+  "all Phi": [
+   14,
+   110,
+   866,
+   6818
+  ],
+  "core Phi": [
+   7,
+   55,
+   433,
+   3409
+  ],
+  "all Pi": [
+   7,
+   47,
+   371,
+   2913
+  ],
+  "core Pi": [
+   7,
+   47,
+   371,
+   2913
+  ],
+  "all Psi": [
+   10,
+   86,
+   684,
+   5392
+  ],
+  "core Psi": [
+   2,
+   24,
+   196,
+   1550
+  ],
+  "all Sigma": [
+   8,
+   63,
+   496,
+   3905
+  ],
+  "core Sigma": [
+   8,
+   63,
+   496,
+   3905
+  ],
+  "all Theta": [
+   1,
+   8,
+   63,
+   496
+  ],
+  "core Theta": [
+   1,
+   8,
+   63,
+   496
+  ],
+  "all Xi": [
+   6,
+   48,
+   370,
+   2914
+  ],
+  "core Xi": [
+   6,
+   48,
+   370,
+   2914
+  ],
+  "degree 1": [
+   12,
+   94,
+   740,
+   5826
+  ],
+  "degree 2": [
+   20,
+   138,
+   1066,
+   8372
+  ],
+  "degree 3": [
+   24,
+   202,
+   1604,
+   12642
+  ],
+  "degree 4": [
+   7,
+   62,
+   495,
+   3904
+  ]
+ },
+ "limits": {
+  "Mystics": {
+   "recurrence_holds": [
+    true,
+    true
+   ],
+   "A": 1,
+   "B": 0,
+   "C": 1,
+   "value": 1.0,
+   "share_at_top_level": 1.0
+  },
+  "links": {
+   "recurrence_holds": [
+    false,
+    false
+   ],
+   "A": 207872,
+   "B": -53672,
+   "C": 1,
+   "value": 1.2378423555055633,
+   "share_at_top_level": 1.2378350247202705
+  },
+  "core": {
+   "recurrence_holds": [
+    true,
+    true
+   ],
+   "A": 268,
+   "B": -69,
+   "C": 1,
+   "value": 0.764149111688198,
+   "share_at_top_level": 0.7641491022638564
+  },
+  "core, degree 2": {
+   "recurrence_holds": [
+    false,
+    false
+   ],
+   "A": -311523,
+   "B": 80435,
+   "C": 1,
+   "value": 0.41545219358522445,
+   "share_at_top_level": 0.41546317980744213
+  },
+  "core, degree 3": {
+   "recurrence_holds": [
+    false,
+    false
+   ],
+   "A": 207840,
+   "B": -53664,
+   "C": 1,
+   "value": 0.2217091251804959,
+   "share_at_top_level": 0.22170179547228727
+  },
+  "core, degree 4": {
+   "recurrence_holds": [
+    false,
+    false
+   ],
+   "A": 103951,
+   "B": -26840,
+   "C": 1,
+   "value": 0.12698779292986728,
+   "share_at_top_level": 0.12698412698412698
+  },
+  "all Delta": {
+   "recurrence_holds": [
+    true,
+    true
+   ],
+   "A": 4,
+   "B": -1,
+   "C": 1,
+   "value": 0.12701665379258298,
+   "share_at_top_level": 0.12701665365599793
+  },
+  "core Delta": {
+   "recurrence_holds": [
+    true,
+    true
+   ],
+   "A": 4,
+   "B": -1,
+   "C": 1,
+   "value": 0.12701665379258298,
+   "share_at_top_level": 0.12701665365599793
+  },
+  "all Gamma": {
+   "recurrence_holds": [
+    true,
+    true
+   ],
+   "A": 4,
+   "B": -1,
+   "C": 1,
+   "value": 0.12701665379258298,
+   "share_at_top_level": 0.12701665365599793
+  },
+  "core Gamma": {
+   "recurrence_holds": [
+    true,
+    true
+   ],
+   "A": 4,
+   "B": -1,
+   "C": 1,
+   "value": 0.12701665379258298,
+   "share_at_top_level": 0.12701665365599793
+  },
+  "all Lambda": {
+   "recurrence_holds": [
+    true,
+    true
+   ],
+   "A": 31,
+   "B": -8,
+   "C": 1,
+   "value": 0.01613323034066383,
+   "share_at_top_level": 0.016133229247983348
+  },
+  "core Lambda": {
+   "recurrence_holds": [
+    true,
+    true
+   ],
+   "A": 31,
+   "B": -8,
+   "C": 1,
+   "value": 0.01613323034066383,
+   "share_at_top_level": 0.016133229247983348
+  },
+  "all Phi": {
+   "recurrence_holds": [
+    true,
+    true
+   ],
+   "A": -54,
+   "B": 14,
+   "C": 1,
+   "value": 0.22176684690384008,
+   "share_at_top_level": 0.22176684881602915
+  },
+  "core Phi": {
+   "recurrence_holds": [
+    true,
+    true
+   ],
+   "A": -27,
+   "B": 7,
+   "C": 1,
+   "value": 0.11088342345192004,
+   "share_at_top_level": 0.11088342440801457
+  },
+  "all Pi": {
+   "recurrence_holds": [
+    false,
+    false
+   ],
+   "A": -119129,
+   "B": 30759,
+   "C": 1,
+   "value": 0.09474599393433891,
+   "share_at_top_level": 0.09475019516003122
+  },
+  "core Pi": {
+   "recurrence_holds": [
+    false,
+    false
+   ],
+   "A": -119129,
+   "B": 30759,
+   "C": 1,
+   "value": 0.09474599393433891,
+   "share_at_top_level": 0.09475019516003122
+  },
+  "all Psi": {
+   "recurrence_holds": [
+    false,
+    false
+   ],
+   "A": 104044,
+   "B": -26864,
+   "C": 1,
+   "value": 0.17538748394872528,
+   "share_at_top_level": 0.17538381472807701
+  },
+  "core Psi": {
+   "recurrence_holds": [
+    false,
+    false
+   ],
+   "A": 104284,
+   "B": -26926,
+   "C": 1,
+   "value": 0.05042001909168903,
+   "share_at_top_level": 0.05041634139994796
+  },
+  "all Sigma": {
+   "recurrence_holds": [
+    true,
+    true
+   ],
+   "A": 4,
+   "B": -1,
+   "C": 1,
+   "value": 0.12701665379258298,
+   "share_at_top_level": 0.12701665365599793
+  },
+  "core Sigma": {
+   "recurrence_holds": [
+    true,
+    true
+   ],
+   "A": 4,
+   "B": -1,
+   "C": 1,
+   "value": 0.12701665379258298,
+   "share_at_top_level": 0.12701665365599793
+  },
+  "all Theta": {
+   "recurrence_holds": [
+    true,
+    true
+   ],
+   "A": 31,
+   "B": -8,
+   "C": 1,
+   "value": 0.01613323034066383,
+   "share_at_top_level": 0.016133229247983348
+  },
+  "core Theta": {
+   "recurrence_holds": [
+    true,
+    true
+   ],
+   "A": 31,
+   "B": -8,
+   "C": 1,
+   "value": 0.01613323034066383,
+   "share_at_top_level": 0.016133229247983348
+  },
+  "all Xi": {
+   "recurrence_holds": [
+    false,
+    false
+   ],
+   "A": 15066,
+   "B": -3890,
+   "C": 1,
+   "value": 0.09478325314739777,
+   "share_at_top_level": 0.09478272183190216
+  },
+  "core Xi": {
+   "recurrence_holds": [
+    false,
+    false
+   ],
+   "A": 15066,
+   "B": -3890,
+   "C": 1,
+   "value": 0.09478325314739777,
+   "share_at_top_level": 0.09478272183190216
+  },
+  "degree 1": {
+   "recurrence_holds": [
+    true,
+    true
+   ],
+   "A": -116,
+   "B": 30,
+   "C": 1,
+   "value": 0.1895003862225053,
+   "share_at_top_level": 0.18950039032006244
+  },
+  "degree 2": {
+   "recurrence_holds": [
+    false,
+    false
+   ],
+   "A": -311558,
+   "B": 80444,
+   "C": 1,
+   "value": 0.27230230945860967,
+   "share_at_top_level": 0.27231329690346084
+  },
+  "degree 3": {
+   "recurrence_holds": [
+    false,
+    false
+   ],
+   "A": 207724,
+   "B": -53634,
+   "C": 1,
+   "value": 0.4112095113960095,
+   "share_at_top_level": 0.41120218579234974
+  },
+  "degree 4": {
+   "recurrence_holds": [
+    false,
+    false
+   ],
+   "A": 103951,
+   "B": -26840,
+   "C": 1,
+   "value": 0.12698779292986728,
+   "share_at_top_level": 0.12698412698412698
+  }
+ }
+}

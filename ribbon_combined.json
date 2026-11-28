@@ -1,0 +1,305 @@
+{
+ "patches": [
+  {
+   "level": 4,
+   "mystics": 496,
+   "links": 612,
+   "grammar": {
+    "Delta": {
+     "in y | out alpha+s": 63
+    },
+    "Gamma": {
+     "in beta+s | out x+y": 54,
+     "in alpha+s | out x+y": 8,
+     "in - | out x+y": 1
+    },
+    "Lambda": {
+     "in - | out alpha+s": 8
+    },
+    "Phi": {
+     "in alpha | out alpha": 55,
+     "in - | out alpha": 55
+    },
+    "Pi": {
+     "in alpha+s | out s": 38,
+     "in alpha | out s": 8,
+     "in alpha+s | out -": 1
+    },
+    "Psi": {
+     "in alpha+s | out -": 47,
+     "in alpha | out -": 39
+    },
+    "Sigma": {
+     "in x | out alpha+s": 63
+    },
+    "Theta": {
+     "in alpha | out alpha+beta": 8
+    },
+    "Xi": {
+     "in alpha+s | out beta": 30,
+     "in alpha | out beta": 16,
+     "in alpha+s | out -": 2
+    }
+   },
+   "edges": {
+    "Gamma -x-> Sigma": 63,
+    "Gamma -y-> Delta": 63,
+    "Sigma -alpha-> Phi": 55,
+    "Phi -alpha-> Psi": 47,
+    "Xi -beta-> Gamma": 46,
+    "Pi -s-> Gamma": 46,
+    "Delta -alpha-> Psi": 39,
+    "Phi -alpha-> Xi": 32,
+    "Sigma -s-> Pi": 32,
+    "Phi -alpha-> Pi": 31,
+    "Delta -s-> Psi": 24,
+    "Delta -s-> Xi": 24,
+    "Sigma -s-> Psi": 23,
+    "Delta -alpha-> Xi": 16,
+    "Lambda -s-> Gamma": 8,
+    "Lambda -alpha-> Pi": 8,
+    "Delta -s-> Gamma": 8,
+    "Delta -alpha-> Pi": 8,
+    "Theta -alpha-> Gamma": 8,
+    "Theta -beta-> Gamma": 8,
+    "Sigma -s-> Xi": 8,
+    "Sigma -alpha-> Theta": 8,
+    "Delta -s-> Pi": 7
+   },
+   "components": [
+    496
+   ],
+   "degrees": {
+    "1": 94,
+    "2": 138,
+    "3": 202,
+    "4": 62
+   },
+   "core": 379,
+   "core_share": 0.7641129032258065,
+   "core_components": [
+    379
+   ],
+   "core_degrees": {
+    "2": 209,
+    "3": 108,
+    "4": 62
+   },
+   "core_labels": {
+    "Delta": 63,
+    "Sigma": 63,
+    "Gamma": 63,
+    "Phi": 55,
+    "Xi": 48,
+    "Pi": 47,
+    "Psi": 24,
+    "Lambda": 8,
+    "Theta": 8
+   }
+  },
+  {
+   "level": 5,
+   "mystics": 3905,
+   "links": 4832,
+   "grammar": {
+    "Delta": {
+     "in y | out alpha+s": 496
+    },
+    "Gamma": {
+     "in beta+s | out x+y": 432,
+     "in alpha+s | out x+y": 63,
+     "in - | out x+y": 1
+    },
+    "Lambda": {
+     "in - | out alpha+s": 63
+    },
+    "Phi": {
+     "in alpha | out alpha": 433,
+     "in - | out alpha": 433
+    },
+    "Pi": {
+     "in alpha+s | out s": 306,
+     "in alpha | out s": 63,
+     "in alpha+s | out -": 2
+    },
+    "Psi": {
+     "in alpha+s | out -": 377,
+     "in alpha | out -": 307
+    },
+    "Sigma": {
+     "in x | out alpha+s": 496
+    },
+    "Theta": {
+     "in alpha | out alpha+beta": 63
+    },
+    "Xi": {
+     "in alpha+s | out beta": 243,
+     "in alpha | out beta": 126,
+     "in alpha+s | out -": 1
+    }
+   },
+   "edges": {
+    "Gamma -x-> Sigma": 496,
+    "Gamma -y-> Delta": 496,
+    "Sigma -alpha-> Phi": 433,
+    "Phi -alpha-> Psi": 377,
+    "Xi -beta-> Gamma": 369,
+    "Pi -s-> Gamma": 369,
+    "Delta -alpha-> Psi": 307,
+    "Sigma -s-> Pi": 252,
+    "Phi -alpha-> Pi": 245,
+    "Phi -alpha-> Xi": 244,
+    "Delta -s-> Psi": 196,
+    "Sigma -s-> Psi": 181,
+    "Delta -s-> Xi": 181,
+    "Delta -alpha-> Xi": 126,
+    "Lambda -s-> Gamma": 63,
+    "Lambda -alpha-> Pi": 63,
+    "Delta -s-> Gamma": 63,
+    "Delta -alpha-> Pi": 63,
+    "Theta -alpha-> Gamma": 63,
+    "Theta -beta-> Gamma": 63,
+    "Sigma -s-> Xi": 63,
+    "Sigma -alpha-> Theta": 63,
+    "Delta -s-> Pi": 56
+   },
+   "components": [
+    3905
+   ],
+   "degrees": {
+    "1": 740,
+    "2": 1066,
+    "3": 1604,
+    "4": 495
+   },
+   "core": 2984,
+   "core_share": 0.7641485275288092,
+   "core_components": [
+    2984
+   ],
+   "core_degrees": {
+    "2": 1625,
+    "3": 864,
+    "4": 495
+   },
+   "core_labels": {
+    "Delta": 496,
+    "Sigma": 496,
+    "Gamma": 496,
+    "Phi": 433,
+    "Pi": 371,
+    "Xi": 370,
+    "Psi": 196,
+    "Lambda": 63,
+    "Theta": 63
+   }
+  },
+  {
+   "level": 6,
+   "mystics": 30744,
+   "links": 38056,
+   "grammar": {
+    "Delta": {
+     "in y | out alpha+s": 3905
+    },
+    "Gamma": {
+     "in beta+s | out x+y": 3408,
+     "in alpha+s | out x+y": 496,
+     "in - | out x+y": 1
+    },
+    "Lambda": {
+     "in - | out alpha+s": 496
+    },
+    "Phi": {
+     "in alpha | out alpha": 3409,
+     "in - | out alpha": 3409
+    },
+    "Pi": {
+     "in alpha+s | out s": 2416,
+     "in alpha | out s": 496,
+     "in alpha+s | out -": 1
+    },
+    "Psi": {
+     "in alpha+s | out -": 2975,
+     "in alpha | out -": 2417
+    },
+    "Sigma": {
+     "in x | out alpha+s": 3905
+    },
+    "Theta": {
+     "in alpha | out alpha+beta": 496
+    },
+    "Xi": {
+     "in alpha+s | out beta": 1920,
+     "in alpha | out beta": 992,
+     "in alpha+s | out -": 2
+    }
+   },
+   "edges": {
+    "Gamma -x-> Sigma": 3905,
+    "Gamma -y-> Delta": 3905,
+    "Sigma -alpha-> Phi": 3409,
+    "Phi -alpha-> Psi": 2975,
+    "Xi -beta-> Gamma": 2912,
+    "Pi -s-> Gamma": 2912,
+    "Delta -alpha-> Psi": 2417,
+    "Sigma -s-> Pi": 1984,
+    "Phi -alpha-> Xi": 1922,
+    "Phi -alpha-> Pi": 1921,
+    "Delta -s-> Psi": 1550,
+    "Delta -s-> Xi": 1426,
+    "Sigma -s-> Psi": 1425,
+    "Delta -alpha-> Xi": 992,
+    "Lambda -s-> Gamma": 496,
+    "Lambda -alpha-> Pi": 496,
+    "Delta -s-> Gamma": 496,
+    "Delta -alpha-> Pi": 496,
+    "Theta -alpha-> Gamma": 496,
+    "Theta -beta-> Gamma": 496,
+    "Sigma -s-> Xi": 496,
+    "Sigma -alpha-> Theta": 496,
+    "Delta -s-> Pi": 433
+   },
+   "components": [
+    30744
+   ],
+   "degrees": {
+    "1": 5826,
+    "2": 8372,
+    "3": 12642,
+    "4": 3904
+   },
+   "core": 23493,
+   "core_share": 0.7641491022638564,
+   "core_components": [
+    23493
+   ],
+   "core_degrees": {
+    "2": 12773,
+    "3": 6816,
+    "4": 3904
+   },
+   "core_labels": {
+    "Delta": 3905,
+    "Sigma": 3905,
+    "Gamma": 3905,
+    "Phi": 3409,
+    "Xi": 2914,
+    "Pi": 2913,
+    "Psi": 1550,
+    "Lambda": 496,
+    "Theta": 496
+   }
+  }
+ ],
+ "observed": {
+  "flipped_mystics": 671,
+  "flipped_neighbours": {
+   "0": 1,
+   "1": 15,
+   "2": 643,
+   "3": 12
+  },
+  "share_with_two_or_more": 0.9761549925484352
+ }
+}

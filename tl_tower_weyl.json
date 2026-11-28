@@ -1,0 +1,124 @@
+{
+ "generic_commutator_is_top_projection": true,
+ "levels": {
+  "1": {
+   "nonzero_for_n": [
+    0
+   ],
+   "as_stated": true
+  },
+  "2": {
+   "nonzero_for_n": [
+    0,
+    1
+   ],
+   "as_stated": true
+  },
+  "3": {
+   "nonzero_for_n": [
+    0,
+    1,
+    2
+   ],
+   "as_stated": true
+  },
+  "4": {
+   "nonzero_for_n": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "as_stated": true
+  },
+  "5": {
+   "nonzero_for_n": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "as_stated": true
+  },
+  "6": {
+   "nonzero_for_n": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "as_stated": true
+  },
+  "7": {
+   "nonzero_for_n": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "as_stated": true
+  },
+  "8": {
+   "nonzero_for_n": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "as_stated": true
+  }
+ },
+ "pairs": {
+  "generic": {
+   "0": 2,
+   "2": 1,
+   "4": 0,
+   "6": 0,
+   "8": 0,
+   "10": 0
+  },
+  "2": {
+   "0": 2,
+   "2": 1,
+   "4": 0,
+   "6": 0,
+   "8": 0,
+   "10": 0
+  },
+  "3": {
+   "0": 2,
+   "2": 1,
+   "4": 0,
+   "6": 0,
+   "8": 0,
+   "10": 0
+  },
+  "6": {
+   "0": 2,
+   "2": 1,
+   "4": 0,
+   "6": 0,
+   "8": 0,
+   "10": 0
+  }
+ },
+ "dim_12_punctures_by_level": [
+  1,
+  32,
+  89,
+  122,
+  131,
+  132,
+  132
+ ]
+}

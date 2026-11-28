@@ -1,0 +1,53 @@
+{
+ "events": 11,
+ "table": {
+  "start, at a root of the network | stack within 3": 5,
+  "stop, at an end of the network | stack within 3": 3,
+  "stop, at an end of the network | stack within 4 to 8": 1,
+  "stop, in mid-chain | stack within 4 to 8": 2
+ },
+ "followed_by_stack": 11,
+ "hubs": [
+  {
+   "file": "ribbon_dump_R110_s11.json",
+   "removed_by": 7,
+   "of": 8,
+   "supertile": "Gamma",
+   "network_role": "fork",
+   "flipped_neighbours": {
+    "Xi": 1,
+    "Gamma2": 1,
+    "Pi": 1,
+    "Delta": 1
+   }
+  },
+  {
+   "file": "ribbon_dump_R110_s12.json",
+   "removed_by": 6,
+   "of": 8,
+   "supertile": "Gamma",
+   "network_role": "fork",
+   "flipped_neighbours": {
+    "Delta": 1,
+    "Pi": 2,
+    "Gamma2": 1,
+    "Phi": 1,
+    "Xi": 1
+   }
+  },
+  {
+   "file": "ribbon_dump_R110_s13.json",
+   "removed_by": 8,
+   "of": 8,
+   "supertile": "Gamma",
+   "network_role": "fork",
+   "flipped_neighbours": {
+    "Phi": 1,
+    "Xi": 1,
+    "Pi": 2,
+    "Gamma2": 1,
+    "Delta": 1
+   }
+  }
+ ]
+}
