@@ -8,7 +8,7 @@
     "SsP"
    ],
    "enters": [
-    "L>G"
+    "LsG"
    ],
    "leaves": [
     "PsG"
@@ -25,7 +25,7 @@
     "SsP"
    ],
    "enters": [
-    "P>G"
+    "PsG"
    ],
    "leaves": [
     "PsG"
@@ -41,7 +41,7 @@
     "SsX"
    ],
    "enters": [
-    "P>G"
+    "PsG"
    ],
    "leaves": [
     "DsG",
@@ -59,7 +59,7 @@
     "SsP"
    ],
    "enters": [
-    "P>G"
+    "PsG"
    ],
    "leaves": [
     "PsG"
@@ -76,7 +76,7 @@
     "SsY"
    ],
    "enters": [
-    "P>G"
+    "PsG"
    ],
    "leaves": [],
    "count": 371,
@@ -91,7 +91,7 @@
     "SsP"
    ],
    "enters": [
-    "D>G"
+    "DsG"
    ],
    "leaves": [
     "LsG",
@@ -109,7 +109,7 @@
     "SsP"
    ],
    "enters": [
-    "P>G"
+    "PsG"
    ],
    "leaves": [
     "PsG",
@@ -127,7 +127,7 @@
     "SsY"
    ],
    "enters": [
-    "P>G"
+    "PsG"
    ],
    "leaves": [
     "PsG"
@@ -144,7 +144,7 @@
     "SsY"
    ],
    "enters": [
-    "P>G"
+    "PsG"
    ],
    "leaves": [],
    "count": 684,

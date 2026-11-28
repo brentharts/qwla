@@ -13,7 +13,9 @@ hierarchically, by a rule that depends only on supertile labels:
 
 Together these are a graph substitution: a chain through a supertile is determined by the label, and so on down.
 
-Usage: python3 ribbon_substitution.py [--level 6] [--tests]
+With --combined the same is done for the network of all five links (ribbon_combined.py; alpha and beta are written a, b).
+
+Usage: python3 ribbon_substitution.py [--level 6] [--combined] [--tests]
 """
 import json
 import os
@@ -39,18 +41,29 @@ def main():
     for k in range(2, level):
         anc[k] = np.array([levels[k - 1][a][2] for a in anc[k - 1]])
     lab = {k: [SH[levels[k][a][1]] for a in anc[k]] for k in anc}
-    succ, pred = RT.links(P, L)
+    combined = "--combined" in sys.argv                # all five links (ribbon_combined.py) instead of the three active ones
+    if combined:
+        import ribbon_combined as RC
+        succ, _ = RC.graph(P, L)
+        short = {"alpha": "a", "beta": "b"}
+        succ = {u: {short.get(k, k): v for k, v in d.items()} for u, d in succ.items()}
+    else:
+        succ, _ = RT.links(P, L)
     n = len(G)
     out = {}
     # ---- 1: inside a level-2 supertile, at the level of Mystics ----
     by = defaultdict(list)
     for u in range(n):
         by[anc[2][u]].append(u)
+    inc = defaultdict(list)
+    for u in succ:
+        for k, v in succ[u].items():
+            inc[v].append((u, k))
     pat = defaultdict(Counter)
     for sid, nodes in by.items():
         ns = set(nodes)
         inside = tuple(sorted("%s%s%s" % (lab[1][u], k, lab[1][v]) for u in nodes for k, v in succ.get(u, {}).items() if v in ns))
-        ent = tuple(sorted("%s>%s" % (lab[1][pred[u]], lab[1][u]) for u in nodes if u in pred and pred[u] not in ns))
+        ent = tuple(sorted("%s%s%s" % (lab[1][u], k, lab[1][v]) for v in nodes for u, k in inc[v] if u not in ns))
         ex = tuple(sorted("%s%s%s" % (lab[1][u], k, lab[1][v]) for u in nodes for k, v in succ.get(u, {}).items() if v not in ns))
         pat[lab[2][nodes[0]]][(inside, ent, ex)] += 1
     out["inside_level2"] = {}
@@ -90,7 +103,7 @@ def main():
     out["same_two_levels_up"] = same
     print("pattern at k + 2 equal to the pattern at k, links inside:", same)
     print("the same for the links leaving (a supertile at the edge of the patch can lack one):", out["leaving_links_same"])
-    json.dump(out, open(os.path.join(HERE, "ribbon_substitution.json"), "w"), indent=1)
+    json.dump(out, open(os.path.join(HERE, "ribbon_substitution%s.json" % ("_combined" if combined else "")), "w"), indent=1)
     if "--tests" in sys.argv:
         assert all(v["count"] >= v["total"] - 2 for v in out["inside_level2"].values())               # one pattern per label, but for the patch boundary
         assert all(v["count"] >= v["total"] - 2 for kk in out["coarse"].values() for v in kk.values())
