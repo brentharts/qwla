@@ -418,6 +418,15 @@ The forest of Stage 9w was for active strands only. Silent strands also pass fro
 - **Not exact here.** The counts of Pi, Psi and Xi supertiles, of links and of degrees 2, 3 and 4 do not obey the two-term recurrence (they carry a slower correction, as the pair counts of the substrate do, whose recurrence also has the factor `x^2 - 4x - 1`). Their shares at level 6 are 0.0948, 0.1754, 0.0948 for the three labels, 1.2378 links per Mystic and 0.2723, 0.4112, 0.1270 for degrees 2, 3, 4; exact values would need the full substitution matrix with the sub-types.
 - **Reading.** Three quarters of the Mystics, and no more, lie where a ribbon can run. The frequency of forks is the inverse of the inflation factor: each time the tiling is inflated once, every Mystic region acquires on average one fork.
 
+### Stage 10e: the branch at a fork is decided by where the fork sits on the rim of the Mystic window (`ribbon_fork_window.py`; figure `figures/ribbon_fork_window.png`; Numeric, 74 forks)
+
+Stage 9w: the branch at a fork belongs to the phase, not to the step. Here the phase is made explicit as the window point of the fork in `Z_0(G)`.
+
+- **All flipped forks lie on the tail (Numeric).** The 74 forks that are inside a flipped active ribbon in the three patches have window points on the lower rim of the tail of the Mystic window (x from 2.9 to 3.5), ending at the hub at the tip.
+- **The branch is a stretch of the rim (Numeric).** 32 forks take branch `x`, 29 take `y`, 13 take both (in one step or in different steps). Along the rim the `x` forks occupy one stretch, nearer the body of the window, and the `y` forks the next stretch, towards the tip; the forks that take both sit at the ends of the stretches and at the tip. Predicting the branch of a fork from its nearest neighbour in the window, leaving the fork itself out, is right for 61 of the 61 single-branch forks (a majority guess: 52%); a single straight line in the window separates them with 59 of 61.
+- **Answer.** What in the phase decides the branch is the position of the fork's window point along the rim of the tail. The forks that take both branches are those whose window point lies at a corner between two stretches, where two pieces of the rim meet; the hub is the extreme case, the tip. So the question "which branch" is the question "which piece of the fractal boundary of `Z_0(G)`", and the choice changes only when the phase carries a fork's window point past a corner.
+- **Not done.** The pieces of the rim as sets (the boundary of the window is a graph-directed fractal, so the stretches should be images of it under the maps of the system); the same for the links of the silent strands; a larger sample.
+
 ### Stage 9k: entanglement of the level-2 ground state is close to a boundary law (`null_cone_level2.py`; Exact)
 
 - At level 2 the ground state is the Gaussian state with covariance `<i gamma_p gamma_q> = a_pq / sqrt5`: correlations are `1/sqrt5` on icosahedron edges and exactly zero beyond nearest neighbours (because `a^2 = -5`). **Exact.**
