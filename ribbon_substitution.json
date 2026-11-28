@@ -1,0 +1,651 @@
+{
+ "inside_level2": {
+  "D": {
+   "inside": [
+    "DsX",
+    "GxS",
+    "GyD",
+    "SsP"
+   ],
+   "enters": [
+    "L>G"
+   ],
+   "leaves": [
+    "PsG"
+   ],
+   "count": 496,
+   "total": 496,
+   "variants": 1
+  },
+  "F": {
+   "inside": [
+    "DsY",
+    "GxS",
+    "GyD",
+    "SsP"
+   ],
+   "enters": [
+    "P>G"
+   ],
+   "leaves": [
+    "PsG"
+   ],
+   "count": 866,
+   "total": 866,
+   "variants": 1
+  },
+  "G": {
+   "inside": [
+    "GxS",
+    "GyD",
+    "SsX"
+   ],
+   "enters": [
+    "P>G"
+   ],
+   "leaves": [
+    "DsG",
+    "PsG"
+   ],
+   "count": 495,
+   "total": 496,
+   "variants": 2
+  },
+  "L": {
+   "inside": [
+    "DsX",
+    "GxS",
+    "GyD",
+    "SsP"
+   ],
+   "enters": [
+    "P>G"
+   ],
+   "leaves": [
+    "PsG"
+   ],
+   "count": 63,
+   "total": 63,
+   "variants": 1
+  },
+  "P": {
+   "inside": [
+    "DsX",
+    "GxS",
+    "GyD",
+    "SsY"
+   ],
+   "enters": [
+    "P>G"
+   ],
+   "leaves": [],
+   "count": 371,
+   "total": 371,
+   "variants": 1
+  },
+  "S": {
+   "inside": [
+    "DsX",
+    "GxS",
+    "GyD",
+    "SsP"
+   ],
+   "enters": [
+    "D>G"
+   ],
+   "leaves": [
+    "LsG",
+    "PsG"
+   ],
+   "count": 496,
+   "total": 496,
+   "variants": 1
+  },
+  "T": {
+   "inside": [
+    "DsP",
+    "GxS",
+    "GyD",
+    "SsP"
+   ],
+   "enters": [
+    "P>G"
+   ],
+   "leaves": [
+    "PsG",
+    "PsG"
+   ],
+   "count": 63,
+   "total": 63,
+   "variants": 1
+  },
+  "X": {
+   "inside": [
+    "DsP",
+    "GxS",
+    "GyD",
+    "SsY"
+   ],
+   "enters": [
+    "P>G"
+   ],
+   "leaves": [
+    "PsG"
+   ],
+   "count": 369,
+   "total": 370,
+   "variants": 2
+  },
+  "Y": {
+   "inside": [
+    "DsY",
+    "GxS",
+    "GyD",
+    "SsY"
+   ],
+   "enters": [
+    "P>G"
+   ],
+   "leaves": [],
+   "count": 684,
+   "total": 684,
+   "variants": 1
+  }
+ },
+ "coarse": {
+  "2": {
+   "D": {
+    "inside": [
+     "D>X",
+     "F>P",
+     "F>X",
+     "G>F",
+     "G>S",
+     "S>D",
+     "S>F"
+    ],
+    "enters": [
+     "T>G"
+    ],
+    "leaves": [
+     "X>G",
+     "X>G"
+    ],
+    "count": 63,
+    "total": 63,
+    "variants": 1
+   },
+   "F": {
+    "inside": [
+     "D>Y",
+     "F>P",
+     "F>Y",
+     "G>F",
+     "G>S",
+     "S>D",
+     "S>F"
+    ],
+    "enters": [
+     "X>G"
+    ],
+    "leaves": [],
+    "count": 110,
+    "total": 110,
+    "variants": 1
+   },
+   "G": {
+    "inside": [
+     "D>P",
+     "F>X",
+     "G>F",
+     "G>S",
+     "S>D",
+     "S>T"
+    ],
+    "enters": [
+     "X>G"
+    ],
+    "leaves": [
+     "T>G",
+     "T>G",
+     "X>G"
+    ],
+    "count": 62,
+    "total": 63,
+    "variants": 2
+   },
+   "L": {
+    "inside": [
+     "D>Y",
+     "F>P",
+     "F>X",
+     "G>F",
+     "G>S",
+     "S>D",
+     "S>F"
+    ],
+    "enters": [
+     "X>G"
+    ],
+    "leaves": [
+     "X>G"
+    ],
+    "count": 8,
+    "total": 8,
+    "variants": 1
+   },
+   "P": {
+    "inside": [
+     "D>Y",
+     "F>X",
+     "F>Y",
+     "G>F",
+     "G>S",
+     "S>D",
+     "S>F"
+    ],
+    "enters": [
+     "X>G"
+    ],
+    "leaves": [
+     "X>G"
+    ],
+    "count": 46,
+    "total": 47,
+    "variants": 2
+   },
+   "S": {
+    "inside": [
+     "D>X",
+     "F>X",
+     "G>L",
+     "G>S",
+     "L>P",
+     "S>D",
+     "S>F"
+    ],
+    "enters": [
+     "T>G"
+    ],
+    "leaves": [
+     "X>G",
+     "X>G"
+    ],
+    "count": 63,
+    "total": 63,
+    "variants": 1
+   },
+   "T": {
+    "inside": [
+     "D>Y",
+     "F>P",
+     "F>P",
+     "G>F",
+     "G>S",
+     "S>D",
+     "S>F"
+    ],
+    "enters": [
+     "X>G"
+    ],
+    "leaves": [],
+    "count": 8,
+    "total": 8,
+    "variants": 1
+   },
+   "X": {
+    "inside": [
+     "D>Y",
+     "F>P",
+     "F>Y",
+     "G>F",
+     "G>S",
+     "S>D",
+     "S>F"
+    ],
+    "enters": [
+     "X>G"
+    ],
+    "leaves": [],
+    "count": 48,
+    "total": 48,
+    "variants": 1
+   },
+   "Y": {
+    "inside": [
+     "D>Y",
+     "F>Y",
+     "F>Y",
+     "G>F",
+     "G>S",
+     "S>D",
+     "S>F"
+    ],
+    "enters": [
+     "X>G"
+    ],
+    "leaves": [],
+    "count": 86,
+    "total": 86,
+    "variants": 1
+   }
+  },
+  "3": {
+   "D": {
+    "inside": [
+     "D>F",
+     "D>X",
+     "G>D",
+     "G>S",
+     "G>X",
+     "S>F",
+     "S>P"
+    ],
+    "enters": [
+     "L>G"
+    ],
+    "leaves": [
+     "P>G"
+    ],
+    "count": 8,
+    "total": 8,
+    "variants": 1
+   },
+   "F": {
+    "inside": [
+     "D>F",
+     "D>Y",
+     "G>D",
+     "G>S",
+     "G>Y",
+     "S>F",
+     "S>P"
+    ],
+    "enters": [
+     "P>G"
+    ],
+    "leaves": [
+     "P>G"
+    ],
+    "count": 14,
+    "total": 14,
+    "variants": 1
+   },
+   "G": {
+    "inside": [
+     "D>T",
+     "G>D",
+     "G>P",
+     "G>S",
+     "S>F",
+     "S>X"
+    ],
+    "enters": [
+     "P>G"
+    ],
+    "leaves": [
+     "D>G",
+     "P>G"
+    ],
+    "count": 7,
+    "total": 8,
+    "variants": 2
+   },
+   "L": {
+    "inside": [
+     "D>F",
+     "D>X",
+     "G>D",
+     "G>S",
+     "G>Y",
+     "S>F",
+     "S>P"
+    ],
+    "enters": [
+     "P>G"
+    ],
+    "leaves": [
+     "P>G"
+    ],
+    "count": 1,
+    "total": 1,
+    "variants": 1
+   },
+   "P": {
+    "inside": [
+     "D>F",
+     "D>X",
+     "G>D",
+     "G>S",
+     "G>Y",
+     "S>F",
+     "S>Y"
+    ],
+    "enters": [
+     "P>G"
+    ],
+    "leaves": [],
+    "count": 7,
+    "total": 7,
+    "variants": 1
+   },
+   "S": {
+    "inside": [
+     "D>F",
+     "D>X",
+     "G>D",
+     "G>S",
+     "G>X",
+     "S>L",
+     "S>P"
+    ],
+    "enters": [
+     "D>G"
+    ],
+    "leaves": [
+     "L>G",
+     "P>G"
+    ],
+    "count": 8,
+    "total": 8,
+    "variants": 1
+   },
+   "T": {
+    "inside": [
+     "D>F",
+     "D>P",
+     "G>D",
+     "G>S",
+     "G>Y",
+     "S>F",
+     "S>P"
+    ],
+    "enters": [
+     "P>G"
+    ],
+    "leaves": [
+     "P>G",
+     "P>G"
+    ],
+    "count": 1,
+    "total": 1,
+    "variants": 1
+   },
+   "X": {
+    "inside": [
+     "D>F",
+     "D>P",
+     "G>D",
+     "G>S",
+     "G>Y",
+     "S>F",
+     "S>Y"
+    ],
+    "enters": [
+     "P>G"
+    ],
+    "leaves": [
+     "P>G"
+    ],
+    "count": 5,
+    "total": 6,
+    "variants": 2
+   },
+   "Y": {
+    "inside": [
+     "D>F",
+     "D>Y",
+     "G>D",
+     "G>S",
+     "G>Y",
+     "S>F",
+     "S>Y"
+    ],
+    "enters": [
+     "P>G"
+    ],
+    "leaves": [],
+    "count": 10,
+    "total": 10,
+    "variants": 1
+   }
+  },
+  "4": {
+   "D": {
+    "inside": [
+     "D>X",
+     "F>P",
+     "F>X",
+     "G>F",
+     "G>S",
+     "S>D",
+     "S>F"
+    ],
+    "enters": [
+     "T>G"
+    ],
+    "leaves": [
+     "X>G",
+     "X>G"
+    ],
+    "count": 1,
+    "total": 1,
+    "variants": 1
+   },
+   "F": {
+    "inside": [
+     "D>Y",
+     "F>P",
+     "F>Y",
+     "G>F",
+     "G>S",
+     "S>D",
+     "S>F"
+    ],
+    "enters": [
+     "X>G"
+    ],
+    "leaves": [],
+    "count": 2,
+    "total": 2,
+    "variants": 1
+   },
+   "G": {
+    "inside": [
+     "D>P",
+     "F>X",
+     "G>F",
+     "G>S",
+     "S>D",
+     "S>T"
+    ],
+    "enters": [],
+    "leaves": [
+     "T>G",
+     "T>G",
+     "X>G"
+    ],
+    "count": 1,
+    "total": 1,
+    "variants": 1
+   },
+   "P": {
+    "inside": [
+     "D>Y",
+     "F>X",
+     "F>Y",
+     "G>F",
+     "G>S",
+     "S>D",
+     "S>F"
+    ],
+    "enters": [
+     "X>G"
+    ],
+    "leaves": [],
+    "count": 1,
+    "total": 1,
+    "variants": 1
+   },
+   "S": {
+    "inside": [
+     "D>X",
+     "F>X",
+     "G>L",
+     "G>S",
+     "L>P",
+     "S>D",
+     "S>F"
+    ],
+    "enters": [
+     "T>G"
+    ],
+    "leaves": [
+     "X>G",
+     "X>G"
+    ],
+    "count": 1,
+    "total": 1,
+    "variants": 1
+   },
+   "X": {
+    "inside": [
+     "D>Y",
+     "F>P",
+     "F>Y",
+     "G>F",
+     "G>S",
+     "S>D",
+     "S>F"
+    ],
+    "enters": [
+     "X>G"
+    ],
+    "leaves": [],
+    "count": 2,
+    "total": 2,
+    "variants": 1
+   }
+  }
+ },
+ "leaving_links_same": {
+  "2": {
+   "D": true,
+   "F": true,
+   "G": true,
+   "P": false,
+   "S": true,
+   "X": true
+  }
+ },
+ "same_two_levels_up": {
+  "2": {
+   "D": true,
+   "F": true,
+   "G": true,
+   "P": true,
+   "S": true,
+   "X": true
+  }
+ }
+}
